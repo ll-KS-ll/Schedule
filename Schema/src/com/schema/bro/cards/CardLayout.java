@@ -1,6 +1,7 @@
 package com.schema.bro.cards;
 
 import com.schema.bro.R;
+import com.schema.bro.ks.Lesson;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -27,11 +28,16 @@ public class CardLayout extends LinearLayout implements OnGlobalLayoutListener {
 		getViewTreeObserver().addOnGlobalLayoutListener(this);
 	}
 
+	public void addCard(Lesson lesson){
+		Card card = new Card(this.getContext(), lesson);
+		addView(card);
+	}
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onGlobalLayout() {
 		getViewTreeObserver().removeGlobalOnLayoutListener(this);
-
+		
 		final int heightPx = getContext().getResources().getDisplayMetrics().heightPixels;
 
 		boolean inversed = false;
