@@ -3,6 +3,7 @@
 
     <string name="app_name">Schema</string>
     <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello World!</string>
     
     <string name="monday">Måndag</string>
     <string name="tuesday">Tisdag</string>

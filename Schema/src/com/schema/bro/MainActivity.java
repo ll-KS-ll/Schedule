@@ -62,14 +62,13 @@ public class MainActivity extends FragmentActivity {
 		else if (day == Calendar.FRIDAY)
 			mViewPager.setCurrentItem(4);
 
-		database = new Schedule(this);
-		
+		//database = new Schedule(this);
 	}
 
 	@Override
 	protected void onResume(){
 		super.onResume();
-		database.update();
+		//database.update();
 	}
 	
 	@Override
@@ -190,6 +189,7 @@ public class MainActivity extends FragmentActivity {
 			@SuppressWarnings("unused")
 			Lesson[] lessons = database.get(section);
 			
+			return inflater.inflate(R.layout.card_holder, container, false);
 			
 			/*
 			int section = getArguments().getInt(ARG_SECTION_NUMBER);
@@ -213,7 +213,6 @@ public class MainActivity extends FragmentActivity {
 			}
 			*/
 
-			return null;
 		}
 	}
 
