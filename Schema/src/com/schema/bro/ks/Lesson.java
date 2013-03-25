@@ -162,6 +162,12 @@ public class Lesson implements Comparable<Lesson>{
 		this.startMinute = startMinute;
 	}
 	
+	public static String convertToString(String weekday, String startTime, String endTime, String name, String room,
+			String master){
+		return weekday + SEPARATOR + startTime + SEPARATOR + endTime
+				+ SEPARATOR + name + SEPARATOR + room + SEPARATOR + master;
+	}
+	
 	public String toString() {
 		return weekday + SEPARATOR + startTime + SEPARATOR + endTime
 				+ SEPARATOR + name + SEPARATOR + room + SEPARATOR + master;

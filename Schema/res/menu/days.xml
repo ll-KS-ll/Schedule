@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >    
+    <item
+        android:id="@+id/monday"
+        android:title="@string/title_section1"
+    />
+ 
+    <item
+        android:id="@+id/tuesday"
+        android:title="@string/title_section2"
+    />
+    
+        <item
+        android:id="@+id/wednesday"
+        android:title="@string/title_section3"
+    />
+    
+    <item
+        android:id="@+id/thursday"
+        android:title="@string/title_section4"
+    />
+ 
+    <item
+        android:id="@+id/friday"
+        android:title="@string/title_section5"
+    />
+    
+        <item
+        android:id="@+id/week"
+        android:title="@string/action_week"
+    />
+ 
+</menu>

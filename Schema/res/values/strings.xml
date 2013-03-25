@@ -3,7 +3,6 @@
 
     <string name="app_name">Schema</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world"></string>
     
     <string name="monday">Måndag</string>
     <string name="tuesday">Tisdag</string>
@@ -12,5 +11,21 @@
     <string name="friday">Fredag</string>
     <string name="saturday">Lördag</string>
     <string name="sunday">Söndag</string>
+
+    <string name="action_add">Add</string>
+    <string name="ok">Klar</string>
+    <string name="cancel">Avbryt</string>
+    <string name="title_section1">Måndag</string>
+    <string name="title_section2">Tisdag</string>
+    <string name="title_section3">Onsdag</string>
+    <string name="title_section4">Torsdag</string>
+    <string name="title_section5">Fredag</string>
+    <string name="title_theme_activity">Tema</string>
+    <string name="title_add_activity">Ny lektion</string>
+    <string name="title_share_activity">Dela schema</string>
+    <string name="title_novasoftware_activity">Nova Software</string>
+    <string name="title_about_activity">Om</string>
+    <string name="title_schoolmeal_activity">Skolmat</string>
+    <string name="action_week">Hela veckan</string>
 
 </resources>
