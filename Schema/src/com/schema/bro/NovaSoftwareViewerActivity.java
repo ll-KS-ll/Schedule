@@ -5,6 +5,7 @@ import java.net.URL;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -26,6 +27,9 @@ public class NovaSoftwareViewerActivity extends Activity {
 	private Intent intent;
 	
 	protected void onCreate(Bundle savedInstanceState) {
+		SharedPreferences mPrefs = getSharedPreferences("THEME", 0);
+		int themeID = mPrefs.getInt("theme_int", 0);
+		super.setTheme(themeID);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.image_view_activity);
 		

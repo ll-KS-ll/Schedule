@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -34,16 +35,20 @@ public class MainActivity extends FragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		SharedPreferences mPrefs = getSharedPreferences("THEME", 0);
+		int themeID = mPrefs.getInt("theme_int", 0);
+		super.setTheme(themeID);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.start_activity);
 
-		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+		mSectionsPagerAdapter = new SectionsPagerAdapter(
+				getSupportFragmentManager());
 
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		// Not visible pages to keep in memory
 		mViewPager.setOffscreenPageLimit(4);
-		
+
 		int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
 		if (day == Calendar.TUESDAY)
 			mViewPager.setCurrentItem(1);
@@ -76,7 +81,7 @@ public class MainActivity extends FragmentActivity {
 			break;
 		case R.id.share:
 			return super.onOptionsItemSelected(item);
-			//break;
+			// break;
 		case R.id.nova_software:
 			intent = new Intent(this, NovaSoftwareListActivity.class);
 			break;
@@ -100,10 +105,10 @@ public class MainActivity extends FragmentActivity {
 
 		private static final int NUMBER_OF_PAGES = 5;
 		private final CardFragment[] fragments = new CardFragment[NUMBER_OF_PAGES];
-		
+
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
-			for(int n=0; n < NUMBER_OF_PAGES; n++){
+			for (int n = 0; n < NUMBER_OF_PAGES; n++) {
 				CardFragment fragment = new CardFragment();
 				Bundle args = new Bundle();
 				args.putInt(CardFragment.ARG_SECTION_NUMBER, n);

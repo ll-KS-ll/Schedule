@@ -42,41 +42,39 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 	private boolean isStartTime = false;
 	private ImageView image;
 	private int val = 0;
+	private String day;
+	private AlertDialog dayDialog;
 
-	int[] imageIDs = { R.drawable.pic1, 
-			R.drawable.pic2, 
-			R.drawable.pic3,
-			R.drawable.pic4,
-			R.drawable.pic5,
-			R.drawable.pic6,
-			R.drawable.pic7,
-			R.drawable.pic8,
-			R.drawable.pic9,
-			R.drawable.pic10,
-			R.drawable.pic11,
-			R.drawable.pic12,
-			R.drawable.pic13,
-			R.drawable.pic14,
-			R.drawable.pic15,
-			R.drawable.pic16,
-			R.drawable.pic17,
-			};
+	int[] imageIDs = { R.drawable.pic1, R.drawable.pic2, R.drawable.pic3,
+			R.drawable.pic4, R.drawable.pic5, R.drawable.pic6, R.drawable.pic7,
+			R.drawable.pic8, R.drawable.pic9, R.drawable.pic10,
+			R.drawable.pic11, R.drawable.pic12, R.drawable.pic13,
+			R.drawable.pic14, R.drawable.pic15, R.drawable.pic16,
+			R.drawable.pic17, };
+
+	private String[] items = { "Måndag", "Tisdag", "Onsdag", "Torsdag",
+			"Fredag" };
 
 	String room, teacher, startTime, endTime;
 
 	protected void onCreate(Bundle savedInstanceState) {
+		SharedPreferences mPrefs = getSharedPreferences("THEME", 0);
+		int themeID = mPrefs.getInt("theme_boolean", 0);
+		super.setTheme(themeID);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.lesson_activity);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		startTime = endTime = "08:00";
 		room = teacher = " ";
+		day = "Måndag";
 
 		cursor = new MatrixCursor(matrix);
-		cursor.addRow(new Object[] { 0, "Startar:", startTime });
-		cursor.addRow(new Object[] { 1, "Slutar:", endTime });
-		cursor.addRow(new Object[] { 2, "Sal:", room });
-		cursor.addRow(new Object[] { 3, "Lärare:", teacher });
+		cursor.addRow(new Object[] { 0, "Dag:", day });
+		cursor.addRow(new Object[] { 1, "Startar:", startTime });
+		cursor.addRow(new Object[] { 2, "Slutar:", endTime });
+		cursor.addRow(new Object[] { 3, "Sal:", room });
+		cursor.addRow(new Object[] { 4, "Lärare:", teacher });
 
 		data = new SimpleCursorAdapter(this, R.layout.two_item_list_item,
 				cursor, columns, layouts, 0);
@@ -89,6 +87,20 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 
 		image = (ImageView) findViewById(R.id.lessonImage);
 		image.setImageResource(imageIDs[val]);
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(
+				LessonActivity.this);
+		builder.setTitle("Ange dag");
+		builder.setItems(items, new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				day = items[which];
+				UpdateListView();
+			}
+		});
+		builder.setCancelable(false);
+		dayDialog = builder.create();
 	}
 
 	@Override
@@ -119,21 +131,24 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 		cursor = null;
 
 		cursor = new MatrixCursor(matrix);
-		cursor.addRow(new Object[] { 0, "Startar:", startTime });
-		cursor.addRow(new Object[] { 1, "Slutar:", endTime });
-		cursor.addRow(new Object[] { 2, "Sal:", room });
-		cursor.addRow(new Object[] { 3, "Lärare:", teacher });
+		cursor.addRow(new Object[] { 0, "Dag:", day });
+		cursor.addRow(new Object[] { 1, "Startar:", startTime });
+		cursor.addRow(new Object[] { 2, "Slutar:", endTime });
+		cursor.addRow(new Object[] { 3, "Sal:", room });
+		cursor.addRow(new Object[] { 4, "Lärare:", teacher });
 
 		data.changeCursor(cursor);
 
 	}
 
 	public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-	    DecimalFormat formatter = new DecimalFormat("00");
+		DecimalFormat formatter = new DecimalFormat("00");
 		if (isStartTime == true)
-			startTime =  formatter.format(hourOfDay) + ":" + formatter.format(minute);
+			startTime = formatter.format(hourOfDay) + ":"
+					+ formatter.format(minute);
 		else
-			endTime = formatter.format(hourOfDay) + ":" + formatter.format(minute);
+			endTime = formatter.format(hourOfDay) + ":"
+					+ formatter.format(minute);
 		UpdateListView();
 	}
 
@@ -150,40 +165,45 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 		return true;
 	}
 
-	public void saveLesson(){
+	public void saveLesson() {
 		String name = edit_name.getText().toString();
-		String data = Lesson.convertToString("Måndag", startTime, endTime, name, room, teacher, val);
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		String data = Lesson.convertToString(day, startTime, endTime,
+				name, room, teacher, val);
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(this);
 		int n = prefs.getInt("count", 0);
 		prefs.edit().putString("lesson_" + n, data).commit();
 		prefs.edit().putInt("count", n + 1).commit();
 		Log.d("LessonACtivity", "Count: " + n + 1);
 		Log.d("LessonACtivity", "Lesson: " + data);
 	}
-	
+
 	private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener() {
 		@SuppressWarnings("deprecation")
 		public void onItemClick(AdapterView<?> parent, View view, int pos,
 				long id) {
 
 			switch (pos) {
-			case 0:
+ 			case 0:
+				dayDialog.show();
+ 				break;
+ 			case 1:
 				isStartTime = true;
-				DialogFragment newFragment1 = new TimePickerFragment();
-				newFragment1.show(getFragmentManager(), "timePicker");
-				break;
-			case 1:
+				DialogFragment startTimeFragement = new TimePickerFragment();
+				startTimeFragement.show(getFragmentManager(), "timePicker");
+ 				break;
+ 			case 2:
 				isStartTime = false;
-				DialogFragment newFragment2 = new TimePickerFragment();
-				newFragment2.show(getFragmentManager(), "timePicker");
-				break;
-			case 2:
+				DialogFragment endTimeFragement = new TimePickerFragment();
+				endTimeFragement.show(getFragmentManager(), "timePicker");
+ 				break;
+ 			case 3:
 				showDialog(DIALOG1);
 				break;
-			case 3:
-				showDialog(DIALOG2);
-				break;
-			}
+			case 4:
+ 				showDialog(DIALOG2);
+ 				break;
+ 			}
 		}
 	};
 
@@ -229,7 +249,7 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 		input.setSingleLine();
 		input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(20) });
 		input.setText(" ");
-		
+
 		builder.setView(input);
 		builder.setPositiveButton("Klar",
 				new DialogInterface.OnClickListener() {

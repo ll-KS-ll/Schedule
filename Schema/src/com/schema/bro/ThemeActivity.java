@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,8 +18,12 @@ import android.widget.AdapterView.OnItemClickListener;
 public class ThemeActivity extends Activity implements OnItemClickListener {
 
 	List<Map<String, String>> themeList = new ArrayList<Map<String, String>>();
+	private int themeID;
 
 	protected void onCreate(Bundle savedInstanceState) {
+		SharedPreferences mPrefs = getSharedPreferences("THEME", 0);
+		themeID = mPrefs.getInt("theme_int", 0);
+		super.setTheme(themeID);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.theme_activity);
 
@@ -38,7 +44,7 @@ public class ThemeActivity extends Activity implements OnItemClickListener {
 
 		themeList.add(createClass("theme", "Holo Dark"));
 		themeList.add(createClass("theme", "Holo Light"));
-		themeList.add(createClass("theme", "ANA"));
+		themeList.add(createClass("theme", "Mobilens tema"));
 
 	}
 
@@ -49,8 +55,26 @@ public class ThemeActivity extends Activity implements OnItemClickListener {
 		return className;
 	}
 
-	public void onItemClick(AdapterView<?> parent, View view, int position,
+	public void onItemClick(AdapterView<?> parent, View view, int pos,
 			long id) {
+		switch (pos) {
+		case 0:
+			themeID = android.R.style.Theme_Holo_Light_DarkActionBar;
+			break;
+		case 1:
+			themeID = android.R.style.Theme_Holo_Light;
+			break;
+		case 2:
+			themeID = android.R.style.Theme;
+			break;
+		}
+		SharedPreferences mPrefs = getSharedPreferences("THEME", 0);
+		SharedPreferences.Editor mEditor = mPrefs.edit();
+		mEditor.putInt("theme_int", themeID).commit();
 
+		Intent i = getBaseContext().getPackageManager()
+				.getLaunchIntentForPackage(getBaseContext().getPackageName());
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(i);
 	}
 }
