@@ -172,7 +172,7 @@ public class MainActivity extends FragmentActivity {
 		@Override
 		public void onPageSelected(int day) {
 			
-			Lesson[] lessons = database.get(day);
+			//Lesson[] lessons = database.get(day);
 
 			CardLayout card = (CardLayout) findViewById(R.id.card_holder);
 			/*
@@ -182,11 +182,13 @@ public class MainActivity extends FragmentActivity {
 					card.addCard(lessons[n]);
 			}else
 				Log.e("MainActivity", "Null stuff");
-			*/	
+			*/
+			/*
 			if (card != null)
 				card.addCard(lessons[0]);
 			else
 				Log.e("MainActivity", "Null stuff");
+			*/
 		}
 	}
 
