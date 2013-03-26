@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class Schedule {
 	
@@ -16,6 +17,7 @@ public class Schedule {
 		lessons = new PriorityList();
 		for(int n=0; n<count;n++){
 			lessons.add(new Lesson(data.getString("lesson_" + n, "empty")));
+			Log.d("Schedule", "Lesson #" + n + "  " + data.getString("lesson_" + n, "empty"));
 		}
 	}
 	

@@ -2,6 +2,8 @@ package com.schema.bro.ks;
 
 import java.util.StringTokenizer;
 
+import android.util.Log;
+
 public class Lesson implements Comparable<Lesson>{
 
 	private String weekday;
@@ -22,6 +24,7 @@ public class Lesson implements Comparable<Lesson>{
 		if(lessonString.equals("empty"))
 			return;
 		// Decode string
+		Log.d("Lesson", "String: " + lessonString);
 		StringTokenizer token = new StringTokenizer(lessonString, SEPARATOR);
 		weekday = token.nextToken();
 		startTime = token.nextToken();

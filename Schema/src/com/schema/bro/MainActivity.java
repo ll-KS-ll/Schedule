@@ -54,6 +54,8 @@ public class MainActivity extends FragmentActivity {
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		mViewPager.setOnPageChangeListener(mSectionsPagerAdapter);
 
+		database = new Schedule(this);
+		
 		int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
 		if (day == Calendar.TUESDAY)
 			mViewPager.setCurrentItem(1);
@@ -63,8 +65,6 @@ public class MainActivity extends FragmentActivity {
 			mViewPager.setCurrentItem(3);
 		else if (day == Calendar.FRIDAY)
 			mViewPager.setCurrentItem(4);
-
-		database = new Schedule(this);
 
 		mViewPager.getCurrentItem();
 	}
@@ -78,7 +78,6 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.items, menu);
-
 		return true;
 	}
 
@@ -175,18 +174,20 @@ public class MainActivity extends FragmentActivity {
 			Lesson[] lessons = database.get(day);
 
 			CardLayout card = (CardLayout) findViewById(R.id.card_holder);
-			/*
+			
 			if (card != null){
 				card.removeAllViews();
 				for(int n=0; n < lessons.length; n++)
 					card.addCard(lessons[n]);
 			}else
 				Log.e("MainActivity", "Null stuff");
-			*/	
+				
+			/*
 			if (card != null)
 				card.addCard(lessons[0]);
 			else
 				Log.e("MainActivity", "Null stuff");
+			*/
 		}
 	}
 

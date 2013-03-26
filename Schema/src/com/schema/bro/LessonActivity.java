@@ -13,6 +13,7 @@ import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -88,18 +89,24 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.button1:
-			String name = edit_name.getText().toString();
-			String data = Lesson.convertToString("Måndag", startTime, endTime, name, room, teacher);
-			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-			int n = prefs.getInt("count", 0) + 1;
-			prefs.edit().putString("lesson_" + n, data).commit();
-			prefs.edit().putInt("count", n).commit();
 			finish();
 			break;
 		case R.id.button2:
+			saveLesson();
 			finish();
 			break;
 		}
+	}
+	
+	public void saveLesson(){
+		String name = edit_name.getText().toString();
+		String data = Lesson.convertToString("Måndag", startTime, endTime, name, room, teacher);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		int n = prefs.getInt("count", -1) + 1;
+		prefs.edit().putString("lesson_" + n, data).commit();
+		prefs.edit().putInt("count", n).commit();
+		Log.d("LessonACtivity", "Count: " + n);
+		Log.d("LessonACtivity", "Lesson: " + data);
 	}
 
 	private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener() {

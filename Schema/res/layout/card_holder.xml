@@ -6,7 +6,7 @@
 
     <com.schema.bro.cards.CardLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/card_holder"
         android:background="#e3e3e3"
         android:orientation="vertical" >
