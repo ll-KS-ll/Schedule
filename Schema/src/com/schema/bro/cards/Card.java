@@ -2,6 +2,7 @@ package com.schema.bro.cards;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,7 +34,11 @@ public class Card extends LinearLayout implements OnClickListener{
 
 	public Card(Context context, Lesson lesson) {
 		super(context);
-		LayoutInflater.from(context).inflate(R.layout.card, this, true);
+		SharedPreferences mPrefs = context.getSharedPreferences("THEME", 0);
+		int cardStyleID = mPrefs.getInt("card_style_int", 0);
+		if (cardStyleID == 0)
+			cardStyleID = R.layout.card;
+		LayoutInflater.from(context).inflate(cardStyleID, this, true);
 
 		lessonData = lesson.toString();
 		ID = lesson.getID();

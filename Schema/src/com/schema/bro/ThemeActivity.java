@@ -18,7 +18,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class ThemeActivity extends Activity implements OnItemClickListener {
 
 	List<Map<String, String>> themeList = new ArrayList<Map<String, String>>();
-	private int themeID;
+	private int themeID, cardStyleID;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		SharedPreferences mPrefs = getSharedPreferences("THEME", 0);
@@ -42,9 +42,11 @@ public class ThemeActivity extends Activity implements OnItemClickListener {
 	private void initList() {
 		// We populate the classes
 
-		themeList.add(createClass("theme", "Holo Dark"));
-		themeList.add(createClass("theme", "Holo Light"));
-		themeList.add(createClass("theme", "Mobilens tema"));
+		themeList.add(createClass("theme", "Holo Dark  (Tema)"));
+		themeList.add(createClass("theme", "Holo Light  (Tema)"));
+		themeList.add(createClass("theme", "Mobilens  (Tema)"));
+		themeList.add(createClass("theme", "Standard  (Kort layout)"));
+		themeList.add(createClass("theme", "Tid i hörn  (Kort layout)"));
 
 	}
 
@@ -67,11 +69,18 @@ public class ThemeActivity extends Activity implements OnItemClickListener {
 		case 2:
 			themeID = android.R.style.Theme;
 			break;
+		case 3:
+			cardStyleID = R.layout.card;
+			break;
+		case 4:
+			cardStyleID = R.layout.card2;
+			break;
 		}
 		SharedPreferences mPrefs = getSharedPreferences("THEME", 0);
 		SharedPreferences.Editor mEditor = mPrefs.edit();
 		mEditor.putInt("theme_int", themeID).commit();
-
+		mEditor.putInt("card_style_int", cardStyleID).commit();
+		
 		Intent i = getBaseContext().getPackageManager()
 				.getLaunchIntentForPackage(getBaseContext().getPackageName());
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

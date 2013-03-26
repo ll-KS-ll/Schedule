@@ -254,17 +254,6 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 	}
 
 	/**
-	 * If a dialog has already been created, this is called to reset the dialog
-	 * before showing it a 2nd time. Optional.
-	 */
-	@Override
-	protected void onPrepareDialog(int id, Dialog dialog) {
-		// Clear the input box.
-		EditText text = (EditText) dialog.findViewById(TEXT_ID);
-		text.setText(" ");
-	}
-
-	/**
 	 * Create and return an example alert dialog with an edit text box.
 	 */
 	private Dialog createExampleDialog(String message, final int id) {
@@ -278,7 +267,10 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 		input.setId(TEXT_ID);
 		input.setSingleLine();
 		input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(20) });
-		input.setText("");
+		if (id == DIALOG1)
+			input.setText(room);
+		else if (id == DIALOG2)
+			input.setText(teacher);
 
 		builder.setView(input);
 		builder.setPositiveButton("Klar",
@@ -287,9 +279,9 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 					@Override
 					public void onClick(DialogInterface dialog, int whichButton) {
 						if (id == DIALOG1)
-							room = input.getText().toString();
+							room = input.getText().toString().trim();
 						else if (id == DIALOG2)
-							teacher = input.getText().toString();
+							teacher = input.getText().toString().trim();
 						UpdateListView();
 						return;
 					}
