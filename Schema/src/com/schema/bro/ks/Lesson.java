@@ -1,7 +1,6 @@
 package com.schema.bro.ks;
 
 import java.util.StringTokenizer;
-
 import android.util.Log;
 
 public class Lesson implements Comparable<Lesson>{
@@ -12,6 +11,7 @@ public class Lesson implements Comparable<Lesson>{
 	private String name;
 	private String room;
 	private String master;
+	private int image;
 	private int weekdayVal;
 	private int startHour;
 	private int startMinute;
@@ -32,12 +32,13 @@ public class Lesson implements Comparable<Lesson>{
 		name = token.nextToken();
 		room = token.nextToken();
 		master = token.nextToken();
+		image = Integer.parseInt(token.nextToken());
 		
 		init();
 	}
 	
 	public Lesson(String weekday, String startTime, String endTime, String name, String room,
-			String master) {
+			String master, int image) {
 
 		this.weekday = weekday;
 		this.startTime = startTime;
@@ -45,6 +46,7 @@ public class Lesson implements Comparable<Lesson>{
 		this.name = name;
 		this.room = room;
 		this.master = master;
+		this.image = image;
 		
 		init();
 	}
@@ -124,6 +126,10 @@ public class Lesson implements Comparable<Lesson>{
 		return endMinute;
 	}
 	
+	public int getImage() {
+		return image;
+	}
+	
 	public int getWeekdayValue() {
 		return weekdayVal;
 	}
@@ -165,10 +171,14 @@ public class Lesson implements Comparable<Lesson>{
 		this.startMinute = startMinute;
 	}
 	
+	public void setImage(int image) {
+		this.image = image;
+	}
+	
 	public static String convertToString(String weekday, String startTime, String endTime, String name, String room,
-			String master){
+			String master, int image){
 		return weekday + SEPARATOR + startTime + SEPARATOR + endTime
-				+ SEPARATOR + name + SEPARATOR + room + SEPARATOR + master;
+				+ SEPARATOR + name + SEPARATOR + room + SEPARATOR + master + SEPARATOR + String.valueOf(image);
 	}
 	
 	public String toString() {

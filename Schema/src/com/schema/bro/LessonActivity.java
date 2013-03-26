@@ -73,7 +73,7 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 		cursor.addRow(new Object[] { 0, "Startar:", startTime });
 		cursor.addRow(new Object[] { 1, "Slutar:", endTime });
 		cursor.addRow(new Object[] { 2, "Sal:", room });
-		cursor.addRow(new Object[] { 3, "L�rare:", teacher });
+		cursor.addRow(new Object[] { 3, "Lärare:", teacher });
 
 		data = new SimpleCursorAdapter(this, R.layout.two_item_list_item,
 				cursor, columns, layouts, 0);
@@ -148,7 +148,7 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 
 	public void saveLesson(){
 		String name = edit_name.getText().toString();
-		String data = Lesson.convertToString("Måndag", startTime, endTime, name, room, teacher);
+		String data = Lesson.convertToString("Måndag", startTime, endTime, name, room, teacher, val);
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		int n = prefs.getInt("count", -1) + 1;
 		prefs.edit().putString("lesson_" + n, data).commit();
