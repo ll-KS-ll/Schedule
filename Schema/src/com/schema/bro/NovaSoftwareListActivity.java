@@ -66,7 +66,7 @@ public class NovaSoftwareListActivity extends Activity implements OnItemClickLis
 		classList.add(createClass("class", "HA2"));
 		classList.add(createClass("class", "HP3"));
 		classList.add(createClass("class", "HU2"));
-		classList.add(createClass("class", "HVL�R3"));
+		classList.add(createClass("class", "HVLÄR3"));
 		classList.add(createClass("class", "IM"));
 		classList.add(createClass("class", "IM1"));
 		classList.add(createClass("class", "NA1"));

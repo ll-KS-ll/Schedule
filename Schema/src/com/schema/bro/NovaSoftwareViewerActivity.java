@@ -21,8 +21,8 @@ import android.widget.ImageView;
 public class NovaSoftwareViewerActivity extends Activity {
 
 	private ImageView image;
-	private int screenWidth;
-	private int screenHeight;
+	private static int screenWidth;
+	private static int screenHeight;
 	private int day = 0;
 	private Intent intent;
 	
@@ -96,7 +96,7 @@ public class NovaSoftwareViewerActivity extends Activity {
 		Log.d("viewer", "w: " + screenWidth + " h: " + screenHeight);
 		String ImageUrl = "http://www.novasoftware.se/ImgGen/schedulegenerator.aspx?format=png&schoolid=80740/sv-se&type=1&id={" 
 				+ intent.getExtras().getString("url")+ "}&period=&week=&mode=0&printer=0&colors=32&head=0&clock=0&foot=0&"
-				+ "day=" + day + "&width=" + screenWidth + "&height=" + screenHeight + "&maxwidth=2000&maxheight=2000.png";
+				+ "day=" + day + "&width=" + screenWidth/2 + "&height=" + screenHeight/2 + "&maxwidth=2000&maxheight=2000.png";
 		
 		image.setImageBitmap(LoadImageFromWebOperations(ImageUrl));
 	}
@@ -107,7 +107,8 @@ public class NovaSoftwareViewerActivity extends Activity {
 	        InputStream is = (InputStream) new URL(url).getContent();
 	        Drawable d = Drawable.createFromStream(is, "src");
 	        Bitmap bitmap = Bitmap.createBitmap(((BitmapDrawable)d).getBitmap());
-	        return bitmap;
+	        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, screenWidth, screenHeight, false);
+	        return resizedBitmap;
 	    } catch (Exception e) {
 	        return null;
 	    }
