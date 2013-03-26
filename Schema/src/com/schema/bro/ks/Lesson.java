@@ -10,6 +10,7 @@ public class Lesson implements Comparable<Lesson>{
 	private String name;
 	private String room;
 	private String master;
+	private int ID;
 	private int image;
 	private int weekdayVal;
 	private int startHour;
@@ -32,12 +33,13 @@ public class Lesson implements Comparable<Lesson>{
 		room = token.nextToken();
 		master = token.nextToken();
 		image = Integer.parseInt(token.nextToken());
+		ID = Integer.parseInt(token.nextToken());
 		
 		init();
 	}
 	
 	public Lesson(String weekday, String startTime, String endTime, String name, String room,
-			String master, int image) {
+			String master, int image, int ID) {
 
 		this.weekday = weekday;
 		this.startTime = startTime;
@@ -46,6 +48,7 @@ public class Lesson implements Comparable<Lesson>{
 		this.room = room;
 		this.master = master;
 		this.image = image;
+		this.ID = ID;
 		
 		init();
 	}
@@ -92,6 +95,10 @@ public class Lesson implements Comparable<Lesson>{
 		return Integer.parseInt(minute);
 	}
 	
+	public String getWeekday() {
+		return weekday;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -130,6 +137,10 @@ public class Lesson implements Comparable<Lesson>{
 	
 	public int getImage() {
 		return image;
+	}
+	
+	public int getID() {
+		return ID;
 	}
 	
 	public int getWeekdayValue() {
@@ -177,15 +188,21 @@ public class Lesson implements Comparable<Lesson>{
 		this.image = image;
 	}
 	
+	public void setID(int ID) {
+		this.ID = ID;
+	}
+	
 	public static String convertToString(String weekday, String startTime, String endTime, String name, String room,
-			String master, int image){
+			String master, int image, int ID){
 		return weekday + SEPARATOR + startTime + SEPARATOR + endTime
-				+ SEPARATOR + name + SEPARATOR + room + SEPARATOR + master + SEPARATOR + String.valueOf(image);
+				+ SEPARATOR + name + SEPARATOR + room + SEPARATOR + master + SEPARATOR + String.valueOf(image)
+				+ SEPARATOR + String.valueOf(ID);
 	}
 	
 	public String toString() {
 		return weekday + SEPARATOR + startTime + SEPARATOR + endTime
-				+ SEPARATOR + name + SEPARATOR + room + SEPARATOR + master;
+				+ SEPARATOR + name + SEPARATOR + room + SEPARATOR + master + SEPARATOR + String.valueOf(image)
+				+ SEPARATOR + String.valueOf(ID);
 	}
 
 	@Override

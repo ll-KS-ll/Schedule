@@ -72,6 +72,9 @@ public class MainActivity extends FragmentActivity {
 		switch (item.getItemId()) {
 		case R.id.add:
 			intent = new Intent(this, LessonActivity.class);
+			intent.putExtra("edit", false);
+			String day = mSectionsPagerAdapter.getDay(mViewPager.getCurrentItem());
+			intent.putExtra("day", day);
 			break;
 		case R.id.theme:
 			intent = new Intent(this, ThemeActivity.class);
@@ -127,6 +130,22 @@ public class MainActivity extends FragmentActivity {
 			return NUMBER_OF_PAGES;
 		}
 
+		public String getDay(int position) {
+			switch (position) {
+			case 0:
+				return getString(R.string.title_section1);
+			case 1:
+				return getString(R.string.title_section2);
+			case 2:
+				return getString(R.string.title_section3);
+			case 3:
+				return getString(R.string.title_section4);
+			case 4:
+				return getString(R.string.title_section5);
+			}
+			return null;
+		}
+		
 		@Override
 		public CharSequence getPageTitle(int position) {
 			switch (position) {

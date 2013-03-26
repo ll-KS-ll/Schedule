@@ -41,8 +41,9 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 	private static final int TEXT_ID = 0;
 	private boolean isStartTime = false;
 	private ImageView image;
-	private int val = 0;
-	private String day;
+	private int val = 0, ID = -1;
+	private String day, name;
+	private boolean edit = false;
 	private AlertDialog dayDialog;
 
 	int[] imageIDs = { R.drawable.pic1, R.drawable.pic2, R.drawable.pic3,
@@ -66,9 +67,30 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		startTime = endTime = "08:00";
-		room = teacher = " ";
+		room = teacher = name = " ";
 		day = "Måndag";
 
+		//Load data
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+		   edit = extras.getBoolean("edit", false);
+		   if(edit){
+			   Lesson lesson = new Lesson(extras.getString("lesson"));
+			   day = lesson.getWeekday();
+			   startTime = lesson.getStartTime();
+			   endTime = lesson.getEndTime();
+			   name = lesson.getName();
+			   room = lesson.getRoom();
+			   teacher = lesson.getMaster();
+			   val = lesson.getImage();
+			   ID = lesson.getID();
+		   }else{
+			  day = extras.getString("day", "Måndag");
+		   }
+		}else{
+			Log.e("LessonActivity:onCreate", "No extras");
+		}
+		
 		cursor = new MatrixCursor(matrix);
 		cursor.addRow(new Object[] { 0, "Dag:", day });
 		cursor.addRow(new Object[] { 1, "Startar:", startTime });
@@ -84,7 +106,8 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 		list.setOnItemClickListener(onListClick);
 		list.setScrollContainer(false);
 		edit_name = (EditText) findViewById(R.id.lessonText);
-
+		edit_name.setText(name);
+		
 		image = (ImageView) findViewById(R.id.lessonImage);
 		image.setImageResource(imageIDs[val]);
 
@@ -101,6 +124,7 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 		});
 		builder.setCancelable(false);
 		dayDialog = builder.create();
+		
 	}
 
 	@Override
@@ -156,7 +180,10 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.done:
-			saveLesson();
+			if(edit)
+				editLesson();
+			else
+				createLesson();
 			finish();
 			break;
 		default:
@@ -165,17 +192,20 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 		return true;
 	}
 
-	public void saveLesson() {
+	public void editLesson() {
 		String name = edit_name.getText().toString();
-		String data = Lesson.convertToString(day, startTime, endTime,
-				name, room, teacher, val);
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(this);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		String data = Lesson.convertToString(day, startTime, endTime, name, room, teacher, val, ID);
+		prefs.edit().putString("lesson_" + ID, data).commit();
+	}
+	
+	public void createLesson() {
+		String name = edit_name.getText().toString();
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		int n = prefs.getInt("count", 0);
+		String data = Lesson.convertToString(day, startTime, endTime, name, room, teacher, val, n);
 		prefs.edit().putString("lesson_" + n, data).commit();
 		prefs.edit().putInt("count", n + 1).commit();
-		Log.d("LessonACtivity", "Count: " + n + 1);
-		Log.d("LessonACtivity", "Lesson: " + data);
 	}
 
 	private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener() {
@@ -248,7 +278,7 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 		input.setId(TEXT_ID);
 		input.setSingleLine();
 		input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(20) });
-		input.setText(" ");
+		input.setText("");
 
 		builder.setView(input);
 		builder.setPositiveButton("Klar",
