@@ -1,6 +1,8 @@
 package com.schema.bro.cards;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,7 +29,11 @@ public class Card extends LinearLayout {
 
 	public Card(Context context, Lesson lesson) {
 		super(context);
-		LayoutInflater.from(context).inflate(R.layout.card, this, true);
+		SharedPreferences mPrefs = context.getSharedPreferences("THEME", 0);
+		int cardStyleID = mPrefs.getInt("card_style_int", 0);
+		if (cardStyleID == 0)
+			cardStyleID = R.layout.card;
+		LayoutInflater.from(context).inflate(cardStyleID, this, true);
 
 		icon = (ImageView) findViewById(R.id.cardLessonImage);
 		lessonText = (TextView) findViewById(R.id.cardLessonText);
