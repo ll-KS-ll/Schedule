@@ -2,16 +2,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true" >
+    android:fillViewport="true"
+    android:animateLayoutChanges="true" >
 
     <com.schema.bro.cards.CardLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/card_holder"
+        android:id="@+id/card_view"
         android:background="#e3e3e3"
-        android:orientation="vertical" >
-
-       
-    </com.schema.bro.cards.CardLayout>
+        android:orientation="vertical"
+        android:animateLayoutChanges="true" />
     
 </ScrollView>

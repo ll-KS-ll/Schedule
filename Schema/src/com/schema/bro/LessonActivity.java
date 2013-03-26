@@ -1,6 +1,7 @@
 package com.schema.bro;
 
-import com.schema.bro.ks.Lesson;
+import java.text.DecimalFormat;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -22,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TimePicker;
+
+import com.schema.bro.ks.Lesson;
 
 public class LessonActivity extends Activity implements OnTimeSetListener {
 
@@ -66,8 +69,8 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 		setContentView(R.layout.lesson_activity);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-		startTime = endTime = "00:00";
-		room = teacher = "";
+		startTime = endTime = "08:00";
+		room = teacher = " ";
 
 		cursor = new MatrixCursor(matrix);
 		cursor.addRow(new Object[] { 0, "Startar:", startTime });
@@ -119,17 +122,18 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 		cursor.addRow(new Object[] { 0, "Startar:", startTime });
 		cursor.addRow(new Object[] { 1, "Slutar:", endTime });
 		cursor.addRow(new Object[] { 2, "Sal:", room });
-		cursor.addRow(new Object[] { 3, "L�rrare:", teacher });
+		cursor.addRow(new Object[] { 3, "Lärare:", teacher });
 
 		data.changeCursor(cursor);
 
 	}
 
 	public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+	    DecimalFormat formatter = new DecimalFormat("00");
 		if (isStartTime == true)
-			startTime = String.valueOf(hourOfDay + ":" + minute);
+			startTime =  formatter.format(hourOfDay) + ":" + formatter.format(minute);
 		else
-			endTime = String.valueOf(hourOfDay + ":" + minute);
+			endTime = formatter.format(hourOfDay) + ":" + formatter.format(minute);
 		UpdateListView();
 	}
 
@@ -150,10 +154,10 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 		String name = edit_name.getText().toString();
 		String data = Lesson.convertToString("Måndag", startTime, endTime, name, room, teacher, val);
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		int n = prefs.getInt("count", -1) + 1;
+		int n = prefs.getInt("count", 0);
 		prefs.edit().putString("lesson_" + n, data).commit();
-		prefs.edit().putInt("count", n).commit();
-		Log.d("LessonACtivity", "Count: " + n);
+		prefs.edit().putInt("count", n + 1).commit();
+		Log.d("LessonACtivity", "Count: " + n + 1);
 		Log.d("LessonACtivity", "Lesson: " + data);
 	}
 	
@@ -193,7 +197,7 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 		case DIALOG1:
 			return createExampleDialog("Ange salens namn:", DIALOG1);
 		case DIALOG2:
-			return createExampleDialog("Ange l�rarens namn:", DIALOG2);
+			return createExampleDialog("Ange lärarens namn:", DIALOG2);
 		default:
 			return null;
 		}
@@ -205,10 +209,9 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 	 */
 	@Override
 	protected void onPrepareDialog(int id, Dialog dialog) {
-
 		// Clear the input box.
 		EditText text = (EditText) dialog.findViewById(TEXT_ID);
-		text.setText("");
+		text.setText(" ");
 	}
 
 	/**
@@ -225,8 +228,9 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 		input.setId(TEXT_ID);
 		input.setSingleLine();
 		input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(20) });
+		input.setText(" ");
+		
 		builder.setView(input);
-
 		builder.setPositiveButton("Klar",
 				new DialogInterface.OnClickListener() {
 

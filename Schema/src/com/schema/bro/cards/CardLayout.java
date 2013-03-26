@@ -1,14 +1,14 @@
 package com.schema.bro.cards;
 
-import com.schema.bro.R;
-import com.schema.bro.ks.Lesson;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
+
+import com.schema.bro.R;
+import com.schema.bro.ks.Lesson;
 
 public class CardLayout extends LinearLayout implements OnGlobalLayoutListener {
 
@@ -30,17 +30,14 @@ public class CardLayout extends LinearLayout implements OnGlobalLayoutListener {
 
 	public void addCard(Lesson lesson){
 		Card card = new Card(this.getContext(), lesson);
-		addView(card);
+		addView(card, 0);
 	}
 	
-	@SuppressWarnings("deprecation")
+	
 	@Override
 	public void onGlobalLayout() {
-		getViewTreeObserver().removeGlobalOnLayoutListener(this);
 		
 		final int heightPx = getContext().getResources().getDisplayMetrics().heightPixels;
-
-		boolean inversed = false;
 		final int childCount = getChildCount();
 
 		for (int i = 0; i < childCount; i++) {
@@ -54,17 +51,11 @@ public class CardLayout extends LinearLayout implements OnGlobalLayoutListener {
 				break;
 			}
 
-			if (!inversed) {
-				child.startAnimation(AnimationUtils.loadAnimation(getContext(),
-						R.animator.slide_up_left));
-			} else {
-				child.startAnimation(AnimationUtils.loadAnimation(getContext(),
-						R.animator.slide_up_right));
-			}
+			child.startAnimation(AnimationUtils.loadAnimation(getContext(), R.animator.slide_down));
 
-			inversed = !inversed;
 		}
-
+		 
 	}
+	
 
 }

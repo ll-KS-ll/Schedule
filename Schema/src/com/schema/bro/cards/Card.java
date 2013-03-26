@@ -39,8 +39,8 @@ public class Card extends LinearLayout {
 		icon.setImageResource(imageIDs[0]);
 		lessonText.setText(lesson.getName());
 		teacherText.setText(lesson.getMaster());
-		startTimeText.setText(lesson.getStartHour() + ":" + lesson.getStartMinute());
-		endTimeText.setText(lesson.getEndHour() + ":" + lesson.getEndMinute());
+		startTimeText.setText(lesson.getStartTime());
+		endTimeText.setText(lesson.getEndTime());
 		roomText.setText(lesson.getRoom());
 	}
 

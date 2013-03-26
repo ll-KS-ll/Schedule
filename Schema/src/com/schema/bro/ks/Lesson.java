@@ -1,7 +1,6 @@
 package com.schema.bro.ks;
 
 import java.util.StringTokenizer;
-import android.util.Log;
 
 public class Lesson implements Comparable<Lesson>{
 
@@ -23,8 +22,8 @@ public class Lesson implements Comparable<Lesson>{
 	public Lesson(String lessonString){
 		if(lessonString.equals("empty"))
 			return;
+		
 		// Decode string
-		Log.d("Lesson", "String: " + lessonString);
 		StringTokenizer token = new StringTokenizer(lessonString, SEPARATOR);
 		weekday = token.nextToken();
 		startTime = token.nextToken();
@@ -52,11 +51,14 @@ public class Lesson implements Comparable<Lesson>{
 	}
 	
 	private void init(){
+	
 		weekdayVal = setWeekdayValue(weekday);
 		startHour = setHour(startTime);
 		startMinute = setMinute(startTime);
 		endHour = setHour(endTime);
 		endMinute = setMinute(endTime);
+		
+		
 	}
 	
 	private int setWeekdayValue(String weekday){

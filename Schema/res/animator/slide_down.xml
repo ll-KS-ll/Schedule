@@ -4,19 +4,13 @@
 
     <translate
         android:duration="800"
-        android:fromYDelta="100%p"
+        android:fromYDelta="-100%p"
         android:toYDelta="0" />
 
     <alpha
         android:duration="800"
         android:fromAlpha="0.0"
         android:toAlpha="1.0" />
-
-    <rotate
-        android:duration="800"
-        android:fromDegrees="-25"
-        android:pivotX="100%"
-        android:pivotY="0"
-        android:toDegrees="0" />
+   
 
 </set>

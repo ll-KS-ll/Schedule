@@ -10,16 +10,10 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.schema.bro.cards.CardLayout;
-import com.schema.bro.ks.Lesson;
-import com.schema.bro.ks.Schedule;
+import com.schema.bro.cards.CardFragment;
 
 public class MainActivity extends FragmentActivity {
 
@@ -32,12 +26,10 @@ public class MainActivity extends FragmentActivity {
 	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
 	 */
 	private SectionsPagerAdapter mSectionsPagerAdapter;
-
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	private ViewPager mViewPager;
-	Schedule database;
 	private Intent intent;
 
 	@Override
@@ -49,9 +41,8 @@ public class MainActivity extends FragmentActivity {
 
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
-		mViewPager.setOnPageChangeListener(mSectionsPagerAdapter);
-
-		database = new Schedule(this);
+		// Not visible pages to keep in memory
+		mViewPager.setOffscreenPageLimit(4);
 		
 		int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
 		if (day == Calendar.TUESDAY)
@@ -63,13 +54,6 @@ public class MainActivity extends FragmentActivity {
 		else if (day == Calendar.FRIDAY)
 			mViewPager.setCurrentItem(4);
 
-		mViewPager.getCurrentItem();
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		database.update();
 	}
 
 	@Override
@@ -112,25 +96,30 @@ public class MainActivity extends FragmentActivity {
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
 	 * one of the sections/tabs/pages.
 	 */
-	public class SectionsPagerAdapter extends FragmentPagerAdapter  implements ViewPager.OnPageChangeListener {
+	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+		private static final int NUMBER_OF_PAGES = 5;
+		private final CardFragment[] fragments = new CardFragment[NUMBER_OF_PAGES];
+		
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
+			for(int n=0; n < NUMBER_OF_PAGES; n++){
+				CardFragment fragment = new CardFragment();
+				Bundle args = new Bundle();
+				args.putInt(CardFragment.ARG_SECTION_NUMBER, n);
+				fragment.setArguments(args);
+				fragments[n] = fragment;
+			}
 		}
 
 		@Override
 		public Fragment getItem(int position) {
-			Fragment fragment = new DummySectionFragment();
-			Bundle args = new Bundle();
-			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
-			fragment.setArguments(args);
-			
-			return fragment;
+			return fragments[position];
 		}
 
 		@Override
 		public int getCount() {
-			return 5;
+			return NUMBER_OF_PAGES;
 		}
 
 		@Override
@@ -153,51 +142,6 @@ public class MainActivity extends FragmentActivity {
 						Locale.getDefault());
 			}
 			return null;
-		}
-
-		@Override
-		public void onPageScrollStateChanged(int arg0) {
-			
-		}
-
-		@Override
-		public void onPageScrolled(int arg0, float arg1, int arg2) {
-			
-		}
-
-		@Override
-		public void onPageSelected(int day) {
-			
-			Lesson[] lessons = database.get(day);
-
-			CardLayout card = (CardLayout) findViewById(R.id.card_holder);
-			
-			if (card != null){
-				card.removeAllViews();
-				for(int n=0; n < lessons.length; n++)
-					card.addCard(lessons[n]);
-			}else
-				Log.e("MainActivity", "Card layout is null, can't show lessons");
-		}
-	}
-
-	/**
-	 * A dummy fragment representing a section of the app, but that simply
-	 * displays dummy text.
-	 */
-	public static class DummySectionFragment extends Fragment {
-
-		public static final String ARG_SECTION_NUMBER = "section_number";
-
-		public DummySectionFragment() {
-
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-
-			return inflater.inflate(R.layout.card_holder, container, false);
 		}
 	}
 
