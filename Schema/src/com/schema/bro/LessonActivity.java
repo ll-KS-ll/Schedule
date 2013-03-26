@@ -41,7 +41,7 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 	private static final int TEXT_ID = 0;
 	private boolean isStartTime = false;
 	private ImageView image;
-	private int val = 1;
+	private int val = 0;
 
 	int[] imageIDs = { R.drawable.pic1, 
 			R.drawable.pic2, 
@@ -88,7 +88,7 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 		edit_name = (EditText) findViewById(R.id.lessonText);
 
 		image = (ImageView) findViewById(R.id.lessonImage);
-		image.setImageResource(imageIDs[0]);
+		image.setImageResource(imageIDs[val]);
 	}
 
 	@Override

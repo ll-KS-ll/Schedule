@@ -36,7 +36,7 @@ public class Card extends LinearLayout {
 		endTimeText = (TextView) findViewById(R.id.cardEndTime);
 		roomText = (TextView) findViewById(R.id.cardRoom);
 
-		icon.setImageResource(imageIDs[0]);
+		icon.setImageResource(imageIDs[lesson.getImage()]);
 		lessonText.setText(lesson.getName());
 		teacherText.setText(lesson.getMaster());
 		startTimeText.setText(lesson.getStartTime());

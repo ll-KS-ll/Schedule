@@ -66,10 +66,10 @@
         <activity
             android:name="com.schema.bro.NovaSoftwareViewerActivity"
             android:label="@string/title_novasoftware_activity"
-            android:parentActivityName="com.bro.schema.NovaSoftwareListActivity" >
+            android:parentActivityName="com.schema.bro.NovaSoftwareListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.schema.bro.MainActivity" />
+                android:value="com.schema.bro.NovaSoftwareListActivity" />
         </activity>
     </application>
 
