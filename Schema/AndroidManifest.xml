@@ -26,42 +26,42 @@
         <activity
             android:name="com.schema.bro.ThemeActivity"
             android:label="@string/title_theme_activity"
-            android:parentActivityName="com.bro.schema.MainActivity" >
+            android:parentActivityName="com.schema.bro.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.bro.schema.MainActivity" />
+                android:value="com.schema.bro.MainActivity" />
         </activity>
         <activity
             android:name="com.schema.bro.NovaSoftwareListActivity"
             android:label="@string/title_novasoftware_activity"
-            android:parentActivityName="com.bro.schema.MainActivity" >
+            android:parentActivityName="com.schema.bro.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.bro.schema.MainActivity" />
+                android:value="com.schema.bro.MainActivity" />
         </activity>
         <activity
             android:name="com.schema.bro.AboutActivity"
             android:label="@string/title_about_activity"
-            android:parentActivityName="com.bro.schema.MainActivity" >
+            android:parentActivityName="com.schema.bro.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.bro.schema.MainActivity" />
+                android:value="com.schema.bro.MainActivity" />
         </activity>
         <activity
             android:name="com.schema.bro.LessonActivity"
             android:label="@string/title_add_activity"
-            android:parentActivityName="com.bro.schema.MainActivity" >
+            android:parentActivityName="com.schema.bro.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.bro.schema.MainActivity" />
+                android:value="com.schema.bro.MainActivity" />
         </activity>
         <activity
             android:name="com.schema.bro.SchoolMealActivity"
             android:label="@string/title_schoolmeal_activity"
-            android:parentActivityName="com.bro.schema.MainActivity" >
+            android:parentActivityName="com.schema.bro.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.bro.schema.MainActivity" />
+                android:value="com.schema.bro.MainActivity" />
         </activity>
         <activity
             android:name="com.schema.bro.NovaSoftwareViewerActivity"
@@ -69,7 +69,7 @@
             android:parentActivityName="com.bro.schema.NovaSoftwareListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.bro.schema.MainActivity" />
+                android:value="com.schema.bro.MainActivity" />
         </activity>
     </application>
 

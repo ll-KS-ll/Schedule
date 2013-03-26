@@ -94,8 +94,8 @@ public class MainActivity extends FragmentActivity {
 			intent = new Intent(this, AboutActivity.class);
 			break;
 		case R.id.share:
-
-			break;
+			return super.onOptionsItemSelected(item);
+			//break;
 		case R.id.nova_software:
 			intent = new Intent(this, NovaSoftwareListActivity.class);
 			break;
@@ -180,14 +180,7 @@ public class MainActivity extends FragmentActivity {
 				for(int n=0; n < lessons.length; n++)
 					card.addCard(lessons[n]);
 			}else
-				Log.e("MainActivity", "Null stuff");
-				
-			/*
-			if (card != null)
-				card.addCard(lessons[0]);
-			else
-				Log.e("MainActivity", "Null stuff");
-			*/
+				Log.e("MainActivity", "Card layout is null, can't show lessons");
 		}
 	}
 
