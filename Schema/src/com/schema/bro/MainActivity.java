@@ -45,11 +45,8 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.start_activity);
 
-		// Create the adapter that will return a fragment for each of the three
-		// primary sections of the app.
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		mViewPager.setOnPageChangeListener(mSectionsPagerAdapter);
@@ -190,10 +187,6 @@ public class MainActivity extends FragmentActivity {
 	 */
 	public static class DummySectionFragment extends Fragment {
 
-		/**
-		 * The fragment argument representing the section number for this
-		 * fragment.
-		 */
 		public static final String ARG_SECTION_NUMBER = "section_number";
 
 		public DummySectionFragment() {
