@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:onClick="onClick"
             android:src="@drawable/navigation_previous_item" />
 
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/prevImageButton"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:onClick="onClick"
             android:src="@drawable/navigation_next_item" />
 

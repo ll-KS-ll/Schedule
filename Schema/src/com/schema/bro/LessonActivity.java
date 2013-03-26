@@ -119,7 +119,7 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 		cursor.addRow(new Object[] { 0, "Startar:", startTime });
 		cursor.addRow(new Object[] { 1, "Slutar:", endTime });
 		cursor.addRow(new Object[] { 2, "Sal:", room });
-		cursor.addRow(new Object[] { 3, "L√§rare:", teacher });
+		cursor.addRow(new Object[] { 3, "L‰rrare:", teacher });
 
 		data.changeCursor(cursor);
 
@@ -148,7 +148,7 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 
 	public void saveLesson(){
 		String name = edit_name.getText().toString();
-		String data = Lesson.convertToString("M√•ndag", startTime, endTime, name, room, teacher);
+		String data = Lesson.convertToString("MÂndag", startTime, endTime, name, room, teacher);
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		int n = prefs.getInt("count", -1) + 1;
 		prefs.edit().putString("lesson_" + n, data).commit();
@@ -193,7 +193,7 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 		case DIALOG1:
 			return createExampleDialog("Ange salens namn:", DIALOG1);
 		case DIALOG2:
-			return createExampleDialog("Ange l√§rarens namn:", DIALOG2);
+			return createExampleDialog("Ange l‰rarens namn:", DIALOG2);
 		default:
 			return null;
 		}
