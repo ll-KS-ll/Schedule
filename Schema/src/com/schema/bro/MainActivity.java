@@ -95,11 +95,6 @@ public class MainActivity extends FragmentActivity implements OnItemSelectedList
 						case 1:
 							menuLayout = R.menu.nova;
 							break;
-
-						case 2:
-
-							break;
-
 						default:
 
 							break;

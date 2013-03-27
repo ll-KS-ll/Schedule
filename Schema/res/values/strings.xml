@@ -30,7 +30,6 @@
     <string-array name="labelMenu">
         <item>Schema</item>
         <item>Nova Software</item>
-        <item>Skolmat</item>
     </string-array>
     <string-array name="novaSpinner">
         <item>BF1</item>
