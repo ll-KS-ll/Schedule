@@ -266,7 +266,7 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 		final EditText input = new EditText(this);
 		input.setId(TEXT_ID);
 		input.setSingleLine();
-		input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(20) });
+		input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(30) });
 		if (id == DIALOG1)
 			input.setText(room);
 		else if (id == DIALOG2)
