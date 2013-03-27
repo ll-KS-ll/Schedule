@@ -1,7 +1,6 @@
 package com.schema.bro;
 
 import java.text.DecimalFormat;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -84,6 +83,7 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 			   teacher = lesson.getMaster();
 			   val = lesson.getImage();
 			   ID = lesson.getID();
+			   this.getActionBar();
 		   }else{
 			  day = extras.getString("day", "Måndag");
 		   }
@@ -130,6 +130,8 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.done, menu);
+		if(edit)
+			menu.add("Ta bort").setIcon(R.drawable.ic_action_remove_light).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 		return true;
 	}
 
@@ -178,6 +180,12 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getTitle().equals("Ta bort")){
+			removeLesson();
+			finish();
+			return true;
+		}
+		
 		switch (item.getItemId()) {
 		case R.id.done:
 			if(edit)
@@ -206,6 +214,11 @@ public class LessonActivity extends Activity implements OnTimeSetListener {
 		String data = Lesson.convertToString(day, startTime, endTime, name, room, teacher, val, n);
 		prefs.edit().putString("lesson_" + n, data).commit();
 		prefs.edit().putInt("count", n + 1).commit();
+	}
+	
+	public void removeLesson() {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		prefs.edit().putString("lesson_" + ID, "empty").commit();
 	}
 
 	private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener() {

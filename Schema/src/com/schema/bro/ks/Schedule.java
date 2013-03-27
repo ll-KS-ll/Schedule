@@ -16,9 +16,7 @@ public class Schedule {
 		int count = data.getInt("count", 0);
 		lessons = new PriorityList();
 		for (int n = 0; n < count; n++) {
-			// ' + "|" + n ' is for adding id's to already created lessons without id
-			// Could be removed as soon as Filip has resaved all his lessons
-			lessons.add(new Lesson(data.getString("lesson_" + n, "empty") + "|" + n));
+			lessons.add(new Lesson(data.getString("lesson_" + n, "empty")));
 		}
 	}
 
@@ -29,7 +27,7 @@ public class Schedule {
 		lessons = new PriorityList();
 
 		for (int n = 0; n < count; n++) {
-			Lesson tempLesson = new Lesson(data.getString("lesson_" + n, "empty") + "|" + n);
+			Lesson tempLesson = new Lesson(data.getString("lesson_" + n, "empty"));
 			int day = tempLesson.getWeekdayValue();
 			if (day == weekday) {
 				lessons.add(tempLesson);
