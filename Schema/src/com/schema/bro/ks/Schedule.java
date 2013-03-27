@@ -16,7 +16,9 @@ public class Schedule {
 		int count = data.getInt("count", 0);
 		lessons = new PriorityList();
 		for (int n = 0; n < count; n++) {
-			lessons.add(new Lesson(data.getString("lesson_" + n, "empty")));
+			String lesson = data.getString("lesson_" + n, "empty");
+			if(!lesson.equals("empty"))
+				lessons.add(new Lesson(lesson));
 		}
 	}
 
@@ -27,7 +29,10 @@ public class Schedule {
 		lessons = new PriorityList();
 
 		for (int n = 0; n < count; n++) {
-			Lesson tempLesson = new Lesson(data.getString("lesson_" + n, "empty"));
+			String lesson = data.getString("lesson_" + n, "empty");
+			if(lesson.equals("empty"))
+				continue;
+			Lesson tempLesson = new Lesson(lesson);
 			int day = tempLesson.getWeekdayValue();
 			if (day == weekday) {
 				lessons.add(tempLesson);
