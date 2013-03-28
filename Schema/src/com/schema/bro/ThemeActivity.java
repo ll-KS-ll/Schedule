@@ -1,89 +1,55 @@
 package com.schema.bro;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.AdapterView.OnItemClickListener;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
-public class ThemeActivity extends Activity implements OnItemClickListener {
+public class ThemeActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
-	List<Map<String, String>> themeList = new ArrayList<Map<String, String>>();
-	private int themeID, cardStyleID;
-
+	@SuppressWarnings("deprecation")
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		SharedPreferences mPrefs = getSharedPreferences("THEME", 0);
-		themeID = mPrefs.getInt("theme_int", 0);
+		int themeID = mPrefs.getInt("theme_int", 0);
 		super.setTheme(themeID);
+
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.theme_activity);
 
-		initList();
-
-		ListView lv = (ListView) findViewById(R.id.themeList);
-
-		SimpleAdapter simpleAdpt = new SimpleAdapter(this, themeList,
-				android.R.layout.simple_list_item_1, new String[] { "theme" },
-				new int[] { android.R.id.text1 });
-
-		lv.setAdapter(simpleAdpt);
-		lv.setOnItemClickListener(this);
-	}
-
-	private void initList() {
-		// We populate the classes
-
-		themeList.add(createClass("theme", "Holo Dark  (Tema)"));
-		themeList.add(createClass("theme", "Holo Light  (Tema)"));
-		themeList.add(createClass("theme", "Mobilens  (Tema)"));
-		themeList.add(createClass("theme", "Standard  (Kort layout)"));
-		themeList.add(createClass("theme", "Tid i hörn  (Kort layout)"));
-
-	}
-
-	private HashMap<String, String> createClass(String key, String name) {
-		HashMap<String, String> className = new HashMap<String, String>();
-		className.put(key, name);
-
-		return className;
-	}
-
-	public void onItemClick(AdapterView<?> parent, View view, int pos,
-			long id) {
-		switch (pos) {
-		case 0:
-			themeID = android.R.style.Theme_Holo_Light_DarkActionBar;
-			break;
-		case 1:
-			themeID = android.R.style.Theme_Holo_Light;
-			break;
-		case 2:
-			themeID = android.R.style.Theme;
-			break;
-		case 3:
-			cardStyleID = R.layout.card;
-			break;
-		case 4:
-			cardStyleID = R.layout.card2;
-			break;
-		}
-		SharedPreferences mPrefs = getSharedPreferences("THEME", 0);
-		SharedPreferences.Editor mEditor = mPrefs.edit();
-		mEditor.putInt("theme_int", themeID).commit();
-		mEditor.putInt("card_style_int", cardStyleID).commit();
+		addPreferencesFromResource(R.xml.theme);
 		
-		Intent i = getBaseContext().getPackageManager()
-				.getLaunchIntentForPackage(getBaseContext().getPackageName());
-		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(i);
+		Context context = getApplicationContext();
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+		settings.registerOnSharedPreferenceChangeListener(this);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+			String key) {
+		Log.d("Theme", "click");
+		
+	}
+
 }
+/*
+ * public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+ * switch (pos) { case 0: themeID =
+ * android.R.style.Theme_Holo_Light_DarkActionBar; break; case 1: themeID =
+ * android.R.style.Theme_Holo_Light; break; case 2: themeID =
+ * android.R.style.Theme; break; case 3: cardStyleID = R.layout.card; break;
+ * case 4: cardStyleID = R.layout.card2; break; } SharedPreferences mPrefs =
+ * getSharedPreferences("THEME", 0); SharedPreferences.Editor mEditor =
+ * mPrefs.edit(); mEditor.putInt("theme_int", themeID).commit();
+ * mEditor.putInt("card_style_int", cardStyleID).commit();
+ * 
+ * Intent i = getBaseContext().getPackageManager()
+ * .getLaunchIntentForPackage(getBaseContext().getPackageName());
+ * i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); startActivity(i); }
+ */

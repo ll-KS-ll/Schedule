@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="Tema">
+        <CheckBoxPreference
+            android:key="themeKey"
+            android:summary="Standard"
+            android:title="Ljust tema med mörk titlebar" />
+        <CheckBoxPreference
+            android:key="ggKey"
+            android:summary=""
+            android:title="Ljust tema" />
+        <CheckBoxPreference
+            android:summary=""
+            android:title="Mörkt tema" />
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="kortlayout">
+        <CheckBoxPreference
+            android:summary="Standard"
+            android:title="Tid längst ner till vänster" />
+        <CheckBoxPreference
+            android:summary=""
+            android:title="Tid i hörnen" />
+        <CheckBoxPreference
+            android:summary=""
+            android:title="Utan bild" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
