@@ -1,4 +1,4 @@
-package com.schema.bro.timepicker;
+package com.schema.bro.dialog;
 
 import com.schema.bro.LessonActivity;
 import com.schema.bro.R;

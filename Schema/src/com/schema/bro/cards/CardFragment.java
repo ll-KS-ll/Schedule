@@ -40,7 +40,25 @@ public class CardFragment extends Fragment{
 		cl.removeAllViews();
 	}
 	
+	public void addCard(Lesson lesson){
+		cl.addCard(lesson, database.addLesson(lesson));
+	}
+	
+	/** Not done yet*/
+	public void addCard(String lesson){
+		int n = database.addLesson(lesson);
+		if(n != -1)
+			cl.addCard(database.getLesson(n), n);
+	}
+	
+	public void update(){
+		int weekday = this.getArguments().getInt(ARG_SECTION_NUMBER);
+		database.update(weekday);
+		loadCards();
+	}
+	
 	public void loadCards(){
+		clearAllCards();
 		Lesson[] lessons = database.getWeekdayLessons();
 		for(int n=0; n<lessons.length; n++)
 			cl.addCard(lessons[n]);

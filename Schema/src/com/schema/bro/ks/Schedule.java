@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class Schedule {
 
@@ -13,17 +14,35 @@ public class Schedule {
 
 	public Schedule(Context context) {
 		data = PreferenceManager.getDefaultSharedPreferences(context);
-		int count = data.getInt("count", 0);
-		lessons = new PriorityList();
-		for (int n = 0; n < count; n++) {
-			String lesson = data.getString("lesson_" + n, "empty");
-			if(!lesson.equals("empty"))
-				lessons.add(new Lesson(lesson));
-		}
+		loadLessons();
 	}
 
 	public Schedule(Context context, int weekday) {
 		data = PreferenceManager.getDefaultSharedPreferences(context);
+		loadLessons(weekday);
+	}
+	
+	private void loadLessons(){
+		int count = data.getInt("count", 0);
+		lessons = new PriorityList();
+		for (int n = 0; n < count; n++) {
+			String lesson = data.getString("lesson_" + n, "empty");
+			if(!lesson.equals("empty")){
+				Lesson tempLesson;
+				try {
+					tempLesson = new Lesson(lesson);
+				} catch (Exception e) {
+					data.edit().putString("lesson_" + n, "empty").commit();
+					Log.e("Error", "Removed lesson_" + n + " due to it failed to load");
+					continue;
+				}
+				lessons.add(tempLesson);
+			}
+				
+		}
+	}
+	
+	private void loadLessons(int weekday){
 		int count = data.getInt("count", 0);
 
 		lessons = new PriorityList();
@@ -32,23 +51,42 @@ public class Schedule {
 			String lesson = data.getString("lesson_" + n, "empty");
 			if(lesson.equals("empty"))
 				continue;
-			Lesson tempLesson = new Lesson(lesson);
+			Lesson tempLesson;
+			try {
+				tempLesson = new Lesson(lesson);
+			} catch (Exception e) {
+				data.edit().putString("lesson_" + n, "empty").commit();
+				Log.e("Error", "Removed lesson_" + n + " due to it failed to load");
+				continue;
+			}
 			int day = tempLesson.getWeekdayValue();
 			if (day == weekday) {
 				lessons.add(tempLesson);
 			}
 		}
-
 	}
 
-	public void addLesson(String lesson) {
-		int count = data.getInt("count", 0) + 1;
-		data.edit().putInt("count", count).commit();
-		lessons.add(new Lesson(lesson));
-		data.edit().putString("lesson_" + count, lesson).commit();
+	public int addLesson(Lesson lesson) {
+		return lessons.add(lesson);
+	}
+	
+	public int addLesson(String lesson) {
+		Lesson les;
+		try {
+			les = new Lesson(lesson);
+		} catch (Exception e) {
+			Log.e("Error", "Lesson failed to load");
+			return -1;
+		}
+		return lessons.add(les);
 	}
 
-	public void removeLesson(int pos) {
+	public Lesson getLesson(int pos){
+		return (Lesson) lessons.get(pos);
+	}
+	
+	/** Not working */
+	protected void removeLesson(int pos) {
 		data.edit().putInt("count", data.getInt("count", 0) - 1).commit();
 		lessons.remove(pos);
 		data.edit().remove("lesson_" + pos).commit();
@@ -60,24 +98,11 @@ public class Schedule {
 		if (count == lessons.size())
 			return;
 
-		lessons = new PriorityList();
-		for (int n = 0; n < count; n++) {
-			lessons.add(new Lesson(data.getString("lesson_" + n, "empty")));
-		}
+		loadLessons();
 	}
 
 	public void update(int weekday) {
-		int count = data.getInt("count", 0);
-
-		lessons = new PriorityList();
-
-		for (int n = 0; n < count; n++) {
-			Lesson tempLesson = new Lesson(data.getString("lesson_" + n, "empty"));
-			int day = tempLesson.getWeekdayValue();
-			if (day == weekday) {
-				lessons.add(tempLesson);
-			}
-		}
+		loadLessons(weekday);
 	}
 
 	public Lesson[] getWeekdayLessons() {
@@ -115,14 +140,15 @@ public class Schedule {
 		private static final long serialVersionUID = 1L;
 
 		@SuppressWarnings("unchecked")
-		public void add(Comparable object) {
+		public int add(Comparable object) {
 			for (int i = 0; i < size(); i++) {
 				if (object.compareTo(get(i)) <= 0) {
 					add(i, object);
-					return;
+					return i;
 				}
 			}
 			addLast(object);
+			return size();
 		}
 	}
 }

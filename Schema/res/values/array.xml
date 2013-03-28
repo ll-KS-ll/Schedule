@@ -7,8 +7,6 @@
         <item>@string/wednesday</item>
         <item>@string/thursday</item>
         <item>@string/friday</item>
-        <item>@string/saturday</item>
-        <item>@string/sunday</item>
     </string-array>
 
 </resources>

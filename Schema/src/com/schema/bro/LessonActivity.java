@@ -21,8 +21,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+
+import com.schema.bro.dialog.CustomTimePicker;
 import com.schema.bro.ks.Lesson;
-import com.schema.bro.timepicker.CustomTimePicker;
 
 public class LessonActivity extends Activity implements
 		CustomTimePicker.NoticeDialogListener {
@@ -68,16 +69,21 @@ public class LessonActivity extends Activity implements
 		if (extras != null) {
 			edit = extras.getBoolean("edit", false);
 			if (edit) {
-				Lesson lesson = new Lesson(extras.getString("lesson"));
-				day = lesson.getWeekday();
-				startTime = lesson.getStartTime();
-				endTime = lesson.getEndTime();
-				name = lesson.getName();
-				room = lesson.getRoom();
-				teacher = lesson.getMaster();
-				val = lesson.getImage();
-				ID = lesson.getID();
-				this.getActionBar();
+				Lesson lesson;
+				try {
+					lesson = new Lesson(extras.getString("lesson"));
+					day = lesson.getWeekday();
+					startTime = lesson.getStartTime();
+					endTime = lesson.getEndTime();
+					name = lesson.getName();
+					room = lesson.getRoom();
+					teacher = lesson.getMaster();
+					val = lesson.getImage();
+					ID = lesson.getID();
+				} catch (Exception e) {
+					Log.e("ERROR", "Couldn't load lesson");
+				}
+				//this.getActionBar();
 			} else {
 				day = extras.getString("day", "Måndag");
 			}

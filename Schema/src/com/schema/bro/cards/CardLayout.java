@@ -23,7 +23,6 @@ public class CardLayout extends LinearLayout implements OnGlobalLayoutListener {
 	}
 
 	private void initLayoutObserver() {
-		// force vertical orientation and add observer
 		setOrientation(LinearLayout.VERTICAL);
 		getViewTreeObserver().addOnGlobalLayoutListener(this);
 	}
@@ -33,6 +32,10 @@ public class CardLayout extends LinearLayout implements OnGlobalLayoutListener {
 		addView(card, 0);
 	}
 	
+	public void addCard(Lesson lesson, int position){
+		Card card = new Card(this.getContext(), lesson);
+		addView(card, position);
+	}
 	
 	@Override
 	public void onGlobalLayout() {
@@ -56,6 +59,5 @@ public class CardLayout extends LinearLayout implements OnGlobalLayoutListener {
 		}
 		 
 	}
-	
 
 }
