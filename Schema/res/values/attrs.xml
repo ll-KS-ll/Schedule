@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="customAttrs">
+        <attr name="addIcon" format="reference" />
+        <attr name="doneIcon" format="reference" />
+        <attr name="accentColor" format="reference" />
+    </declare-styleable>
+
+</resources>

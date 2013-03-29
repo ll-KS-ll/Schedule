@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -35,9 +34,7 @@ public class MainActivity extends FragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		SharedPreferences mPrefs = getSharedPreferences("THEME", 0);
-		int themeID = mPrefs.getInt("theme_int", 0);
-		super.setTheme(themeID);
+		ThemeActivity.setTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.start_activity);
 
