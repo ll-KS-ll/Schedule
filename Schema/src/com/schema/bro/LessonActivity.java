@@ -52,9 +52,7 @@ public class LessonActivity extends Activity implements
 	
 
 	protected void onCreate(Bundle savedInstanceState) {
-		SharedPreferences mPrefs = getSharedPreferences("THEME", 0);
-		int themeID = mPrefs.getInt("theme_boolean", 0);
-		super.setTheme(themeID);
+		ThemeActivity.setTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.lesson_activity);
 		getActionBar().setDisplayHomeAsUpEnabled(true);

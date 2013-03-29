@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,9 +23,7 @@ public class NovaSoftwareListActivity extends Activity implements OnItemClickLis
 	String url;
 
 	protected void onCreate(Bundle savedInstanceState) {
-		SharedPreferences mPrefs = getSharedPreferences("THEME", 0);
-		int themeID = mPrefs.getInt("theme_int", 0);
-		super.setTheme(themeID);
+		ThemeActivity.setTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.novasoftware_activity);
 		

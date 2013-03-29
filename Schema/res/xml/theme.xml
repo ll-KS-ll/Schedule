@@ -1,29 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="Tema">
+    <PreferenceCategory android:title="Tema" >
         <CheckBoxPreference
-            android:key="themeKey"
+            android:defaultValue="true"
+            android:key="light_dark_actionbar"
             android:summary="Standard"
             android:title="Ljust tema med mörk titlebar" />
         <CheckBoxPreference
-            android:key="ggKey"
+            android:defaultValue="false"
+            android:key="light"
             android:summary=""
             android:title="Ljust tema" />
         <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="dark"
             android:summary=""
             android:title="Mörkt tema" />
+         <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="green"
+            android:summary=""
+            android:title="Grönt tema" />
+          <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="red"
+            android:summary=""
+            android:title="Rött tema" />
     </PreferenceCategory>
-    
-    <PreferenceCategory android:title="kortlayout">
+    <PreferenceCategory android:title="kortlayout" >
         <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="card_default"
             android:summary="Standard"
             android:title="Tid längst ner till vänster" />
         <CheckBoxPreference
-            android:summary=""
+            android:defaultValue="false"
+            android:summary="card_corner"
             android:title="Tid i hörnen" />
         <CheckBoxPreference
-            android:summary=""
+            android:defaultValue="false"
+            android:summary="card_no_image"
             android:title="Utan bild" />
     </PreferenceCategory>
 

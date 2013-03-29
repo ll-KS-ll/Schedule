@@ -1,12 +1,61 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme for API 14+. This theme completely replaces
         AppBaseTheme from BOTH res/values/styles.xml and
         res/values-v11/styles.xml on API 14+ devices.
     -->
-    <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- API 14 theme customizations can go here. -->
+    
+    <style name="ActionBarText" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+         <item name="android:textColor">@color/white</item>
+    </style>
+    
+    <style name="ActionBarGreen" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:background">@color/green_dark</item>
+        <item name="android:backgroundStacked">@color/green_dark</item>
+        <item name="android:backgroundSplit">@color/green_dark</item>
+        <item name="android:titleTextStyle">@style/ActionBarText</item>
+    </style>
+    
+    <style name="ActionBarRed" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:background">@color/red_dark</item>
+        <item name="android:backgroundStacked">@color/red_dark</item>
+        <item name="android:backgroundSplit">@color/red_dark</item>
+        <item name="android:titleTextStyle">@style/ActionBarText</item>
+    </style>
+    
+    <!-- THEMES -->
+    
+    <style name="LightDarkActionBar" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="addIcon">@drawable/ic_action_add_light</item>
+        <item name="doneIcon">@drawable/ic_action_accept_light</item>
+        <item name="accentColor">@color/blue</item>
+    </style>
+    
+    <style name="Light" parent="@android:style/Theme.Holo.Light">
+        <item name="addIcon">@drawable/ic_action_add</item>
+        <item name="doneIcon">@drawable/ic_action_accept</item>
+        <item name="accentColor">@color/blue</item>
+    </style>
+    
+    <style name="Dark" parent="@android:style/Theme.Holo">
+		<item name="addIcon">@drawable/ic_action_add_light</item>
+		<item name="doneIcon">@drawable/ic_action_accept_light</item>
+		<item name="accentColor">@color/blue</item>
+    </style>
+    
+    <style name="Green" parent="@android:style/Theme.Holo.Light">
+		<item name="addIcon">@drawable/ic_action_add_light</item>
+		<item name="doneIcon">@drawable/ic_action_accept_light</item>
+		<item name="android:actionBarStyle">@style/ActionBarGreen</item>
+		<item name="accentColor">@color/blue</item>
+    </style>
+    
+    <style name="Red" parent="@android:style/Theme.Holo.Light">
+		<item name="addIcon">@drawable/ic_action_add_light</item>
+		<item name="doneIcon">@drawable/ic_action_accept_light</item>
+		<item name="android:actionBarStyle">@style/ActionBarRed</item>
+		<item name="accentColor">@color/orange</item>
     </style>
 
 </resources>
