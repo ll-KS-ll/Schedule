@@ -2,26 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:gravity="center"
     android:orientation="vertical"
-    android:scaleX="0.80"
-    android:scaleY="0.80" >
+    android:scaleX="0.85"
+    android:scaleY="0.85" >
 
     <TextView
         android:id="@+id/titleTimePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="Title"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#707070"
-        android:textSize="24sp" />
+        android:textSize="22sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
         android:orientation="horizontal" >
 
         <NumberPicker
@@ -35,6 +32,7 @@
             android:layout_height="wrap_content"
             android:padding="1dp"
             android:text=":"
+            android:layout_gravity="center"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#707070"
             android:textSize="24sp" />

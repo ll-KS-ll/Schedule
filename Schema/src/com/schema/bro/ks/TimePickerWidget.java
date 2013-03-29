@@ -1,4 +1,4 @@
-package com.schema.bro.dialog;
+package com.schema.bro.ks;
 
 import java.text.DecimalFormat;
 
@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 public class TimePickerWidget extends LinearLayout{
 
-	//private int hour, minute;
 	private NumberPicker hourPicker, minutePicker;
 	private static final String[] displayMinutes = {
 		"00", "05", "10", "15", 
@@ -27,17 +26,17 @@ public class TimePickerWidget extends LinearLayout{
 	
 	public TimePickerWidget(Context context) {
 		super(context);
-		LayoutInflater.from(context).inflate(R.layout.time_picker, this, true);
+		LayoutInflater.from(context).inflate(R.layout.time_picker_widget, this, true);
 	}
 	
 	public TimePickerWidget(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		LayoutInflater.from(context).inflate(R.layout.time_picker, this, true);
+		LayoutInflater.from(context).inflate(R.layout.time_picker_widget, this, true);
 	}
 	
 	public TimePickerWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		LayoutInflater.from(context).inflate(R.layout.time_picker, this, true);
+		LayoutInflater.from(context).inflate(R.layout.time_picker_widget, this, true);
 	}
 	
 	public void init(int hour, int minute){

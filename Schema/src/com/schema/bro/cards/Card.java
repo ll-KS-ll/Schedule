@@ -63,17 +63,6 @@ public class Card extends LinearLayout implements OnClickListener{
 
 	@Override
 	public void onClick(View v) {
-		/*
-		Bundle bundle = new Bundle();
-		bundle.putString("lesson_key", "lesson_" + ID);
-		bundle.putString("lesson", lessonData);
-		
-		DialogFragment fragment = new LessonDialog();
-		fragment.setArguments(bundle);
-		// Can't get fragment manager.
-		//fragment.show(getSupportFragmentManager(), "add");
-		*/
-		
 		Intent intent = new Intent(getContext(), LessonActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.putExtra("edit", true);

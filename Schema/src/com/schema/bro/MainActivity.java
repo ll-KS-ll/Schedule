@@ -2,10 +2,10 @@ package com.schema.bro;
 
 import java.util.Calendar;
 import java.util.Locale;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -13,8 +13,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import com.schema.bro.cards.CardFragment;
-import com.schema.bro.dialog.LessonDialog;
 import com.schema.bro.ks.Lesson;
 
 public class MainActivity extends FragmentActivity {
@@ -71,16 +71,10 @@ public class MainActivity extends FragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.add:
-			/*
 			intent = new Intent(this, LessonActivity.class);
 			intent.putExtra("edit", false);
-			String day = mSectionsPagerAdapter.getDay(mViewPager.getCurrentItem());
-			intent.putExtra("day", day);
+			intent.putExtra("day", mViewPager.getCurrentItem());
 			break;
-			*/
-			DialogFragment fragment = new LessonDialog();
-			fragment.show(getSupportFragmentManager(), "add");
-			return true;
 		case R.id.theme:
 			intent = new Intent(this, ThemeActivity.class);
 			break;

@@ -1,49 +1,29 @@
 package com.schema.bro;
 
-import java.text.DecimalFormat;
-import java.util.StringTokenizer;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.InputFilter;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-
-import com.schema.bro.dialog.CustomTimePicker;
+import android.widget.Spinner;
 import com.schema.bro.ks.Lesson;
+import com.schema.bro.ks.TimePickerWidget;
 
-public class LessonActivity extends Activity implements
-		CustomTimePicker.NoticeDialogListener {
+public class LessonActivity extends Activity implements OnClickListener{
 
-	private ListView list;
-	private final String[] matrix = { "_id", "name", "value" };
-	private final String[] columns = { "name", "value" };
-	private final int[] layouts = { R.id.text1, R.id.text2 };
-	private SimpleCursorAdapter data;
-	private MatrixCursor cursor;
-	private EditText edit_name;
-	private static final int DIALOG1 = 0, DIALOG2 = 1;
-	private static final int TEXT_ID = 0;
-	private ImageView image;
 	private int val = 0, ID = -1;
-	private String day, name;
 	private boolean edit = false;
-	private AlertDialog dayDialog;
-	private String room, teacher, startTime, endTime;
-	private static final String[] items = { "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag" };
+	private TimePickerWidget startTimePicker, endTimePicker;
+	private Spinner spinny;
+	
 	private static final int[] imageIDs = { R.drawable.pic1, R.drawable.pic2, R.drawable.pic3,
 			R.drawable.pic4, R.drawable.pic5, R.drawable.pic6, R.drawable.pic7,
 			R.drawable.pic8, R.drawable.pic9, R.drawable.pic10,
@@ -53,78 +33,62 @@ public class LessonActivity extends Activity implements
 	
 
 	protected void onCreate(Bundle savedInstanceState) {
+		// Set theme (Changed to ThemeActivity.setTheme(this))
 		SharedPreferences mPrefs = getSharedPreferences("THEME", 0);
 		int themeID = mPrefs.getInt("theme_boolean", 0);
 		super.setTheme(themeID);
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.lesson_activity);
+		// If API is sufficient 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
-		startTime = endTime = "08:00";
-		room = teacher = " ";
-		day = "Måndag";
-
+		
+		// Time pickers
+		startTimePicker = (TimePickerWidget) findViewById(R.id.startTime);
+		startTimePicker.setTitle("Startar");
+		endTimePicker = (TimePickerWidget) findViewById(R.id.endTime);
+		endTimePicker.setTitle("Slutar");
+		
+		// Weekday spinner
+		spinny = (Spinner) findViewById(R.id.weekSpinner);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.weekdays, R.layout.spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinny.setAdapter(adapter);
+		
 		// Load data
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			edit = extras.getBoolean("edit", false);
 			if (edit) {
-				Lesson lesson;
-				try {
-					lesson = new Lesson(extras.getString("lesson"));
-					day = lesson.getWeekday();
-					startTime = lesson.getStartTime();
-					endTime = lesson.getEndTime();
-					name = lesson.getName();
-					room = lesson.getRoom();
-					teacher = lesson.getMaster();
-					val = lesson.getImage();
-					ID = lesson.getID();
-				} catch (Exception e) {
-					Log.e("ERROR", "Couldn't load lesson");
-				}
-				//this.getActionBar();
+					try{
+						Lesson lesson = new Lesson(extras.getString("lesson", "empty"));
+						spinny.setSelection(lesson.getWeekdayValue());
+						startTimePicker.init(lesson.getStartHour(), lesson.getStartMinute());
+						endTimePicker.init(lesson.getEndHour(), lesson.getEndMinute());
+						((EditText) findViewById(R.id.editName)).setText(lesson.getName());
+						((EditText) findViewById(R.id.editRoom)).setText(lesson.getRoom());
+						((EditText) findViewById(R.id.editTeacher)).setText(lesson.getMaster());
+						val = lesson.getImage();
+						ID = lesson.getID();
+					}catch(Exception ex){}
+					getActionBar().setTitle("Ändra lektion");
 			} else {
-				day = extras.getString("day", "Måndag");
+				startTimePicker.init(8, 20);
+				endTimePicker.init(9, 0);
+				spinny.setSelection(extras.getInt("day", 0));
 			}
 		} else {
 			Log.e("LessonActivity:onCreate", "No extras");
 		}
-
-		cursor = new MatrixCursor(matrix);
-		cursor.addRow(new Object[] { 0, "Dag:", day });
-		cursor.addRow(new Object[] { 1, "Startar:", startTime });
-		cursor.addRow(new Object[] { 2, "Slutar:", endTime });
-		cursor.addRow(new Object[] { 3, "Sal:", room });
-		cursor.addRow(new Object[] { 4, "Lärare:", teacher });
-
-		data = new SimpleCursorAdapter(this, R.layout.two_item_list_item,
-				cursor, columns, layouts, 0);
-
-		list = (ListView) findViewById(R.id.listView1);
-		list.setAdapter(data);
-		list.setOnItemClickListener(onListClick);
-		list.setScrollContainer(false);
-		edit_name = (EditText) findViewById(R.id.lessonText);
-		edit_name.setText(name);
-
-		image = (ImageView) findViewById(R.id.lessonImage);
-		image.setImageResource(imageIDs[val]);
-
-		AlertDialog.Builder builder = new AlertDialog.Builder(
-				LessonActivity.this);
-		builder.setTitle("Ange dag");
-		builder.setItems(items, new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				day = items[which];
-				UpdateListView();
-			}
-		});
-		builder.setCancelable(false);
-		dayDialog = builder.create();
-
+		
+		// Image Buttons
+		final ImageButton nextBtn = (ImageButton) findViewById(R.id.nextImageButton);
+		final ImageButton prevBtn = (ImageButton) findViewById(R.id.prevImageButton);
+		nextBtn.setOnClickListener(this);
+		prevBtn.setOnClickListener(this);
+		
+		// Image view
+		((ImageView) findViewById(R.id.lessonImage)).setImageResource(imageIDs[val]);
 	}
 
 	@Override
@@ -149,22 +113,7 @@ public class LessonActivity extends Activity implements
 				val = 0;
 			break;
 		}
-		image.setImageResource(imageIDs[val]);
-	}
-
-	public void UpdateListView() {
-		cursor.close();
-		cursor = null;
-
-		cursor = new MatrixCursor(matrix);
-		cursor.addRow(new Object[] { 0, "Dag:", day });
-		cursor.addRow(new Object[] { 1, "Startar:", startTime });
-		cursor.addRow(new Object[] { 2, "Slutar:", endTime });
-		cursor.addRow(new Object[] { 3, "Sal:", room });
-		cursor.addRow(new Object[] { 4, "Lärare:", teacher });
-
-		data.changeCursor(cursor);
-
+		((ImageView) findViewById(R.id.lessonImage)).setImageResource(imageIDs[val]);
 	}
 
 	@Override
@@ -190,160 +139,46 @@ public class LessonActivity extends Activity implements
 	}
 
 	public void editLesson() {
-		String name = edit_name.getText().toString();
-		if(name == null || name.equals(""))
-			name = "Lektions namn";
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		String data = Lesson.convertToString(day, startTime, endTime, name,
-				room, teacher, val, ID);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		String data = getInputData(ID);
 		prefs.edit().putString("lesson_" + ID, data).commit();
 	}
 
 	public void createLesson() {
-		String name = edit_name.getText().toString();
-		if(name == null || name.equals(""))
-			name = "Lektions namn";
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		int n = prefs.getInt("count", 0);
-		String data = Lesson.convertToString(day, startTime, endTime, name,
-				room, teacher, val, n);
-		prefs.edit().putString("lesson_" + n, data).commit();
-		prefs.edit().putInt("count", n + 1).commit();
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		int ID = prefs.getInt("count", 0);
+		String data = getInputData(ID);
+		prefs.edit().putString("lesson_" + ID, data).commit();
+		prefs.edit().putInt("count", ID + 1).commit();
 	}
 
 	public void removeLesson() {
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(this);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		prefs.edit().putString("lesson_" + ID, "empty").commit();
 	}
+	
+	public String getInputData(int ID){
+		final EditText edit_name = (EditText) findViewById(R.id.editName);
+		final EditText edit_teacher = (EditText) findViewById(R.id.editTeacher);
+		final EditText edit_room = (EditText) findViewById(R.id.editRoom);
+		
+		String name = edit_name.getText().toString();
+		String teacher = edit_teacher.getText().toString();
+		String room = edit_room.getText().toString();
+		String startTime = startTimePicker.getTime();
+		String endTime = endTimePicker.getTime();
+		String day = spinny.getSelectedItem().toString();
+		
+		if(name == null || name.equals(""))
+			name = "Lektions namn";
+		
+		if(teacher == null || teacher.equals(""))
+			teacher = " ";
+		
+		if(room == null || room.equals(""))
+			room = " ";
 
-	private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener() {
-		@SuppressWarnings("deprecation")
-		public void onItemClick(AdapterView<?> parent, View view, int pos,
-				long id) {
-
-			switch (pos) {
-			case 0:
-				dayDialog.show();
-				break;
-			case 1:
-				DialogFragment startTimeFragement = new CustomTimePicker();
-				startTimeFragement.show(getFragmentManager(), "start");
-				break;
-			case 2:
-				DialogFragment endTimeFragement = new CustomTimePicker();
-				endTimeFragement.show(getFragmentManager(), "end");
-				break;
-			case 3:
-				showDialog(DIALOG1);
-				break;
-			case 4:
-				showDialog(DIALOG2);
-				break;
-			}
-		}
-	};
-
-	/**
-	 * Called to create a dialog to be shown.
-	 */
-	@Override
-	protected Dialog onCreateDialog(int id) {
-
-		switch (id) {
-		case DIALOG1:
-			return createExampleDialog("Ange salens namn:", DIALOG1);
-		case DIALOG2:
-			return createExampleDialog("Ange lärarens namn:", DIALOG2);
-		default:
-			return null;
-		}
-	}
-
-	/**
-	 * Create and return an example alert dialog with an edit text box.
-	 */
-	private Dialog createExampleDialog(String message, final int id) {
-
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		// builder.setTitle("Hello User");
-		builder.setMessage(message);
-
-		// Use an EditText view to get user input.
-		final EditText input = new EditText(this);
-		input.setId(TEXT_ID);
-		input.setSingleLine();
-		input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(30) });
-		if (id == DIALOG1)
-			input.setText(room);
-		else if (id == DIALOG2)
-			input.setText(teacher);
-
-		builder.setView(input);
-		builder.setPositiveButton("Klar",
-				new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int whichButton) {
-						if (id == DIALOG1)
-							room = input.getText().toString().trim();
-						else if (id == DIALOG2)
-							teacher = input.getText().toString().trim();
-						UpdateListView();
-						return;
-					}
-				});
-
-		builder.setNegativeButton("Avbryt",
-				new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						return;
-					}
-				});
-
-		return builder.create();
-	}
-
-	public int getHour(String tag){
-		StringTokenizer token;	
-		if(tag.equals("start"))
-			token = new StringTokenizer(startTime, ":");
-		else 
-			token = new StringTokenizer(endTime, ":");
-		String hour = token.nextToken();
-		return Integer.parseInt(hour);
-	}
-
-	public int getMinute(String tag) {
-		StringTokenizer token;	
-		if(tag.equals("start"))
-			token = new StringTokenizer(startTime, ":");
-		else 
-			token = new StringTokenizer(endTime, ":");
-		token.nextToken(); // Hour
-		String minute = token.nextToken();
-		return Integer.parseInt(minute);
-	}
-
-	@Override
-	public void onDialogPositiveClick(String tag, int hour, int minutes) {
-		DecimalFormat formatter = new DecimalFormat("00");
-		if (tag.equals("start")) {
-			startTime = formatter.format(hour) + ":"
-					+ formatter.format(minutes);
-		} else if (tag.equals("end")) {
-			endTime = formatter.format(hour) + ":" + formatter.format(minutes);
-		}
-		UpdateListView();
-	}
-
-	@Override
-	public void onDialogNegativeClick() {
-		// Do nothing
+		return Lesson.convertToString(day, startTime, endTime, name, room, teacher, val, ID);
 	}
 
 }
