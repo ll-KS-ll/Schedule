@@ -1,17 +1,18 @@
 package com.schema.bro.ks;
 
 import java.util.StringTokenizer;
+import android.util.Log;
 
 public class Lesson implements Comparable<Lesson>{
 
-	private String weekday;
-	private String startTime;
-	private String endTime;
-	private String name;
-	private String room;
-	private String master;
-	private int ID;
-	private int image;
+	private String weekday = "null";
+	private String startTime = "null";
+	private String endTime = "null";
+	private String name = "null";
+	private String room = "null";
+	private String master = "null";
+	private int ID = -1;
+	private int image = -1;
 	private int weekdayVal;
 	private int startHour;
 	private int startMinute;
@@ -20,22 +21,28 @@ public class Lesson implements Comparable<Lesson>{
 	
 	public final static String SEPARATOR = "|";
 
-	public Lesson(String lessonString){
+	public Lesson(String lessonString) throws Exception{
 		if(lessonString.equals("empty"))
 			return;
 		
 		// Decode string
-		StringTokenizer token = new StringTokenizer(lessonString, SEPARATOR);
-		weekday = token.nextToken();
-		startTime = token.nextToken();
-		endTime = token.nextToken();
-		name = token.nextToken();
-		room = token.nextToken();
-		master = token.nextToken();
-		image = Integer.parseInt(token.nextToken());
-		ID = Integer.parseInt(token.nextToken());
+		try{
+			StringTokenizer token = new StringTokenizer(lessonString, SEPARATOR);
+			weekday = token.nextToken();
+			startTime = token.nextToken();
+			endTime = token.nextToken();
+			name = token.nextToken();
+			room = token.nextToken();
+			master = token.nextToken();
+			image = Integer.parseInt(token.nextToken());
+			ID = Integer.parseInt(token.nextToken());
+			init();
+		}catch(Exception ex){
+			Log.e("Lesson:Constuctor", "Couldn't load lesson. \n" + toString());
+			throw ex;
+		}
 		
-		init();
+		
 	}
 	
 	public Lesson(String weekday, String startTime, String endTime, String name, String room,

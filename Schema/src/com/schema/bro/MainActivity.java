@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.schema.bro.cards.CardFragment;
+import com.schema.bro.ks.Lesson;
 
 public class MainActivity extends FragmentActivity implements OnItemSelectedListener  {
 
@@ -48,8 +49,7 @@ public class MainActivity extends FragmentActivity implements OnItemSelectedList
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.start_activity);
 
-		mSectionsPagerAdapter = new SectionsPagerAdapter(
-				getSupportFragmentManager());
+		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -129,9 +129,7 @@ public class MainActivity extends FragmentActivity implements OnItemSelectedList
 		case R.id.add:
 			intent = new Intent(this, LessonActivity.class);
 			intent.putExtra("edit", false);
-			String day = mSectionsPagerAdapter.getDay(mViewPager
-					.getCurrentItem());
-			intent.putExtra("day", day);
+			intent.putExtra("day", mViewPager.getCurrentItem());
 			break;
 		case R.id.theme:
 			intent = new Intent(this, ThemeActivity.class);
@@ -157,6 +155,23 @@ public class MainActivity extends FragmentActivity implements OnItemSelectedList
 		return true;
 	}
 
+	public void update(){
+		for(int n=0; n < mSectionsPagerAdapter.getCount(); n++){
+			CardFragment fragment = mSectionsPagerAdapter.getFragment(n);
+			fragment.update();
+		}
+	}
+	
+	public void addLesson(String lesson, int day){
+		CardFragment fragment = mSectionsPagerAdapter.getFragment(day);
+		fragment.addCard(lesson);
+	}
+	
+	public void addLesson(Lesson lesson, int day){
+		CardFragment fragment = mSectionsPagerAdapter.getFragment(day);
+		fragment.addCard(lesson);
+	}
+	
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
 	 * one of the sections/tabs/pages.
@@ -177,6 +192,10 @@ public class MainActivity extends FragmentActivity implements OnItemSelectedList
 			}
 		}
 
+		public CardFragment getFragment(int position){
+			return fragments[position];
+		}
+		
 		@Override
 		public Fragment getItem(int position) {
 			return fragments[position];
@@ -338,7 +357,6 @@ public class MainActivity extends FragmentActivity implements OnItemSelectedList
 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 

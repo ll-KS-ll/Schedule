@@ -1,71 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:layout_marginTop="@dimen/activity_vertical_margin"
+    tools:ignore="HardcodedText" >
 
-    <EditText
-        android:id="@+id/lessonText"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#00000000"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="Lektionens namn"
-        android:inputType="text"
-        android:singleLine="true"
-        android:textSize="25dp" >
-    </EditText>
-
-    <View
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/holo_blue_dark" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.27" >
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_margin="5dp"
+        android:paddingBottom="@dimen/activity_vertical_margin" >
 
         <ImageButton
             android:id="@+id/prevImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:onClick="onClick"
+            android:layout_gravity="left|center_vertical"
+            android:background="?android:selectableItemBackground"
+            android:contentDescription="Previous image"
+            android:gravity="left|center_vertical"
             android:src="@drawable/navigation_previous_item" />
-
-        <ImageButton
-            android:id="@+id/nextImageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/prevImageButton"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:onClick="onClick"
-            android:src="@drawable/navigation_next_item" />
 
         <ImageView
             android:id="@+id/lessonImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:scaleType="fitXY" />
+            android:layout_gravity="center"
+            android:contentDescription="Lesson image"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/pic1" />
 
-    </RelativeLayout>
+        <ImageButton
+            android:id="@+id/nextImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:background="?android:selectableItemBackground"
+            android:contentDescription="Next image"
+            android:gravity="right|center_vertical"
+            android:src="@drawable/navigation_next_item" />
+    </LinearLayout>
 
-    <ListView
-        android:id="@+id/listView1"
-        android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:layout_weight="0.38"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin" >
-    </ListView>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:background="@android:color/holo_blue_light" />
+
+    <Spinner
+        android:id="@+id/weekSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       	android:layout_margin="5dp" />
+
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Lektions namn"
+        android:layout_margin="5dp" >
+
+        <requestFocus />
+    </EditText>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100" >
+
+        <com.schema.bro.ks.TimePickerWidget
+            android:id="@+id/startTime"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="50" >
+        </com.schema.bro.ks.TimePickerWidget>
+
+        <com.schema.bro.ks.TimePickerWidget
+            android:id="@+id/endTime"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="50"
+            android:gravity="right" >
+        </com.schema.bro.ks.TimePickerWidget>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@android:color/holo_blue_light" />
+
+    <EditText
+        android:id="@+id/editTeacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Lärare"
+       	android:layout_margin="5dp" />
+
+    <EditText
+        android:id="@+id/editRoom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Lektions sal"
+        android:layout_margin="5dp" />
 
 </LinearLayout>

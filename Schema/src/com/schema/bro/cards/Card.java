@@ -58,6 +58,7 @@ public class Card extends LinearLayout implements OnClickListener{
 		roomText.setText(lesson.getRoom());
 		
 		setOnClickListener(this);
+		
 	}
 
 	@Override
