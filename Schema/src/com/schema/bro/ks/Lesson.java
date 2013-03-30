@@ -1,6 +1,8 @@
 package com.schema.bro.ks;
 
+import java.util.Calendar;
 import java.util.StringTokenizer;
+
 import android.util.Log;
 
 public class Lesson implements Comparable<Lesson>{
@@ -154,6 +156,23 @@ public class Lesson implements Comparable<Lesson>{
 		return weekdayVal;
 	}
 
+	public String getTimeLeft(boolean during){
+		return String.valueOf(getTimeLeftVal(during));
+	}
+	
+	public int getTimeLeftVal(boolean during){
+		int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		int minute = Calendar.getInstance().get(Calendar.MINUTE);
+		if(during){
+			int hourDif = hour - endHour;
+			int minuteDif = minute - endMinute;
+			return hourDif * 60 + minuteDif;
+		}else{
+			int hourDif = hour - startHour;
+			int minuteDif = minute - startMinute;
+			return hourDif * 60 + minuteDif;
+		}
+	}
 
 	public void setWeekday(String weekday){
 		this.weekday = weekday;

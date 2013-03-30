@@ -32,6 +32,11 @@ public class CardLayout extends LinearLayout implements OnGlobalLayoutListener {
 		addView(card, 0);
 	}
 	
+	public void addNextLessonCard(Lesson nextLesson, boolean during){
+		NextLessonCard nextCard = new NextLessonCard(getContext(), nextLesson, during);
+		addView(nextCard, 0);
+	}
+	
 	public void addCard(Lesson lesson, int position){
 		Card card = new Card(this.getContext(), lesson);
 		addView(card, position);

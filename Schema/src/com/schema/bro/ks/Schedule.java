@@ -1,5 +1,6 @@
 package com.schema.bro.ks;
 
+import java.util.Calendar;
 import java.util.LinkedList;
 
 import android.content.Context;
@@ -11,14 +12,17 @@ public class Schedule {
 
 	private PriorityList lessons;
 	private SharedPreferences data;
-
+	private Lesson nextLesson;
+	
 	public Schedule(Context context) {
 		data = PreferenceManager.getDefaultSharedPreferences(context);
+		nextLesson = null;
 		loadLessons();
 	}
 
 	public Schedule(Context context, int weekday) {
 		data = PreferenceManager.getDefaultSharedPreferences(context);
+		nextLesson = null;
 		loadLessons(weekday);
 	}
 	
@@ -134,6 +138,43 @@ public class Schedule {
 		return les;
 	}
 
+	public int showNextLessonCard(){
+		int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+		int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		int minute = Calendar.getInstance().get(Calendar.MINUTE);
+		for(int i=0; i<lessons.size(); i++){
+			Lesson lesson = (Lesson) lessons.get(i);
+			// Check if it's the same day, if not continue
+			if(lesson.getWeekdayValue() != day)
+				continue;
+			
+			if(lesson.getStartHour() >= hour){
+				if(lesson.getStartMinute() >= minute){
+					// Lesson occurs after current time
+					nextLesson = lesson;
+					return 0;
+				}
+			}
+			
+			if(lesson.getEndHour() >= hour){
+				if(lesson.getEndMinute() >= minute){
+					// Lesson ends after current time
+					nextLesson = lesson;
+					return 1;
+				}
+			}
+		}
+		// No lesson match at all
+		nextLesson = null;
+		return -1;
+	}
+	
+	public Lesson getNextLesson(){
+		if(nextLesson == null)
+			showNextLessonCard();
+		return nextLesson;
+	}
+	
 	@SuppressWarnings("rawtypes")
 	public static class PriorityList extends LinkedList {
 

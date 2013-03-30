@@ -37,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/cardEndTime"
         android:layout_alignTop="@+id/cardStartTime"
+        android:contentDescription="Lesson image"
         android:src="@drawable/pic1" />
 
     <TextView

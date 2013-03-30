@@ -62,6 +62,26 @@ public class CardFragment extends Fragment{
 		Lesson[] lessons = database.getWeekdayLessons();
 		for(int n=0; n<lessons.length; n++)
 			cl.addCard(lessons[n]);
+		checkIfToShowNextLessonCard();
 	}
+
+	/** Shortest name ever!... xD*/
+	private void checkIfToShowNextLessonCard(){
+		int checker = database.showNextLessonCard();
+		if(checker == -1){
+			return;
+		}
+		
+		if(checker == 0){
+			// before
+			cl.addNextLessonCard(database.getNextLesson(), false);
+		}
+		
+		if(checker == 1){
+			// during
+			cl.addNextLessonCard(database.getNextLesson(), true);
+		}
+	}
+	
 	
 }
