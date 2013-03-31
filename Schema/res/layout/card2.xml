@@ -1,7 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/nowCardStyle"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    tools:ignore="HardcodedText" >
 
     <TextView
         android:id="@+id/cardStartTime"
@@ -37,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/cardEndTime"
         android:layout_alignTop="@+id/cardStartTime"
+        android:contentDescription="Lesson image"
         android:src="@drawable/pic1" />
 
     <TextView

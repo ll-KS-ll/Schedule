@@ -67,4 +67,6 @@
         <item>VUX</item>
     </string-array>
 
+    <string name="title_activity_test">TestActivit</string>
+
 </resources>
