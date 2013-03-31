@@ -156,7 +156,7 @@ public class LessonActivity extends Activity implements OnClickListener{
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		prefs.edit().putString("lesson_" + ID, "empty").commit();
 	}
-	
+
 	public String getInputData(int ID){
 		final EditText edit_name = (EditText) findViewById(R.id.editName);
 		final EditText edit_teacher = (EditText) findViewById(R.id.editTeacher);

@@ -44,7 +44,6 @@ public class ThemeActivity extends Activity implements OnItemClickListener {
 
 		themeList.add(createClass("theme", "Holo Dark  (Tema)"));
 		themeList.add(createClass("theme", "Holo Light  (Tema)"));
-		themeList.add(createClass("theme", "Mobilens  (Tema)"));
 		themeList.add(createClass("theme", "Standard  (Kort layout)"));
 		themeList.add(createClass("theme", "Tid i hörn  (Kort layout)"));
 
@@ -67,12 +66,9 @@ public class ThemeActivity extends Activity implements OnItemClickListener {
 			themeID = android.R.style.Theme_Holo_Light;
 			break;
 		case 2:
-			themeID = android.R.style.Theme;
-			break;
-		case 3:
 			cardStyleID = R.layout.card;
 			break;
-		case 4:
+		case 3:
 			cardStyleID = R.layout.card2;
 			break;
 		}

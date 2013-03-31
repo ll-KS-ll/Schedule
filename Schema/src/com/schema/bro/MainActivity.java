@@ -1,79 +1,85 @@
 package com.schema.bro;
 
-import java.util.Calendar;
-import java.util.Locale;
-
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
-import com.schema.bro.cards.CardFragment;
-import com.schema.bro.ks.Lesson;
+import com.schema.bro.cards.CardPagerFragment;
+import com.schema.bro.nova.NovaOnItemSelectedListener;
+import com.schema.bro.nova.NovaPagerFragment;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements ActionBar.OnNavigationListener {
 
-	/**
-	 * The {@link android.support.v4.view.PagerAdapter} that will provide
-	 * fragments for each of the sections. We use a
-	 * {@link android.support.v4.app.FragmentPagerAdapter} derivative, which
-	 * will keep every loaded fragment in memory. If this becomes too memory
-	 * intensive, it may be best to switch to a
-	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-	 */
-	private SectionsPagerAdapter mSectionsPagerAdapter;
-	/**
-	 * The {@link ViewPager} that will host the section contents.
-	 */
-	private ViewPager mViewPager;
-	private Intent intent;
-
+	public static final int SCHEDULE = 0;
+	public static final int NOVA = 1;
+	public static final int SCHOOL_MEAL = 2;
+	public static final String START_NAVIAGTION_STATE = "start_navigation_state";
+	
+	private int state;
+	private Fragment fragment;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		SharedPreferences mPrefs = getSharedPreferences("THEME", 0);
 		int themeID = mPrefs.getInt("theme_int", 0);
 		super.setTheme(themeID);
+		
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.start_activity);
+		setContentView(R.layout.main_activity);
 
-		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		state = prefs.getInt(START_NAVIAGTION_STATE, SCHEDULE); // Set state
+		
+		final ActionBar actionBar = getActionBar();
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
-		mViewPager = (ViewPager) findViewById(R.id.pager);
-		mViewPager.setAdapter(mSectionsPagerAdapter);
-		// Not visible pages to keep in memory
-		mViewPager.setOffscreenPageLimit(4);
-
-		int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-		if (day == Calendar.TUESDAY)
-			mViewPager.setCurrentItem(1);
-		else if (day == Calendar.WEDNESDAY)
-			mViewPager.setCurrentItem(2);
-		else if (day == Calendar.THURSDAY)
-			mViewPager.setCurrentItem(3);
-		else if (day == Calendar.FRIDAY)
-			mViewPager.setCurrentItem(4);
-
+		ArrayAdapter<String> spinnerMenu = new ArrayAdapter<String>(actionBar.getThemedContext(),android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.labelMenu));
+		actionBar.setListNavigationCallbacks(spinnerMenu, this);
+		actionBar.setSelectedNavigationItem(state);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.items, menu);
+		if(state == 1){
+			getMenuInflater().inflate(R.menu.nova, menu);
+			Spinner spinClass;
+			MenuItem item = menu.findItem(R.id.classSpinner);
+			spinClass = (Spinner) item.getActionView();
+
+			ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(
+					getActionBar().getThemedContext(), android.R.layout.simple_list_item_1, getResources()
+							.getStringArray(R.array.novaSpinner));
+
+			spinClass.setAdapter(spinnerAdapter);
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+			int pos = prefs.getInt("class_spinner_pos", 0);
+			spinClass.setSelection(pos);
+			if(fragment != null)
+				spinClass.setOnItemSelectedListener(new NovaOnItemSelectedListener(fragment));
+		}else{
+			getMenuInflater().inflate(R.menu.schedule, menu);
+		}
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent;
 		switch (item.getItemId()) {
 		case R.id.add:
 			intent = new Intent(this, LessonActivity.class);
 			intent.putExtra("edit", false);
-			intent.putExtra("day", mViewPager.getCurrentItem());
+			CardPagerFragment frag = (CardPagerFragment) fragment;
+			intent.putExtra("day", frag.getSelectedDay());
 			break;
 		case R.id.theme:
 			intent = new Intent(this, ThemeActivity.class);
@@ -84,9 +90,6 @@ public class MainActivity extends FragmentActivity {
 		case R.id.share:
 			return super.onOptionsItemSelected(item);
 			// break;
-		case R.id.nova_software:
-			intent = new Intent(this, NovaSoftwareListActivity.class);
-			break;
 		case R.id.school_meal:
 			intent = new Intent(this, SchoolMealActivity.class);
 			break;
@@ -98,95 +101,28 @@ public class MainActivity extends FragmentActivity {
 		startActivity(intent);
 		return true;
 	}
-
-	public void update(){
-		for(int n=0; n < mSectionsPagerAdapter.getCount(); n++){
-			CardFragment fragment = mSectionsPagerAdapter.getFragment(n);
-			fragment.update();
+	
+	@Override
+	public boolean onNavigationItemSelected(int position, long id) {
+		switch(position){
+		case SCHEDULE:
+			fragment = new CardPagerFragment();
+			break;
+		case NOVA:
+			fragment = new NovaPagerFragment();
+			break;
+		case SCHOOL_MEAL:
+			// Change to school meal fragment!
+			fragment = new CardPagerFragment();
+			break;
+		default: return true;
 		}
+		getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+		state = getActionBar().getSelectedNavigationIndex();
+		invalidateOptionsMenu();
+		return true;
 	}
 	
-	public void addLesson(String lesson, int day){
-		CardFragment fragment = mSectionsPagerAdapter.getFragment(day);
-		fragment.addCard(lesson);
-	}
 	
-	public void addLesson(Lesson lesson, int day){
-		CardFragment fragment = mSectionsPagerAdapter.getFragment(day);
-		fragment.addCard(lesson);
-	}
-	
-	/**
-	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-	 * one of the sections/tabs/pages.
-	 */
-	public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-		private static final int NUMBER_OF_PAGES = 5;
-		private final CardFragment[] fragments = new CardFragment[NUMBER_OF_PAGES];
-
-		public SectionsPagerAdapter(FragmentManager fm) {
-			super(fm);
-			for (int n = 0; n < NUMBER_OF_PAGES; n++) {
-				CardFragment fragment = new CardFragment();
-				Bundle args = new Bundle();
-				args.putInt(CardFragment.ARG_SECTION_NUMBER, n);
-				fragment.setArguments(args);
-				fragments[n] = fragment;
-			}
-		}
-
-		public CardFragment getFragment(int position){
-			return fragments[position];
-		}
-		
-		@Override
-		public Fragment getItem(int position) {
-			return fragments[position];
-		}
-
-		@Override
-		public int getCount() {
-			return NUMBER_OF_PAGES;
-		}
-
-		public String getDay(int position) {
-			switch (position) {
-			case 0:
-				return getString(R.string.title_section1);
-			case 1:
-				return getString(R.string.title_section2);
-			case 2:
-				return getString(R.string.title_section3);
-			case 3:
-				return getString(R.string.title_section4);
-			case 4:
-				return getString(R.string.title_section5);
-			}
-			return null;
-		}
-		
-		@Override
-		public CharSequence getPageTitle(int position) {
-			switch (position) {
-			case 0:
-				return getString(R.string.title_section1).toUpperCase(
-						Locale.getDefault());
-			case 1:
-				return getString(R.string.title_section2).toUpperCase(
-						Locale.getDefault());
-			case 2:
-				return getString(R.string.title_section3).toUpperCase(
-						Locale.getDefault());
-			case 3:
-				return getString(R.string.title_section4).toUpperCase(
-						Locale.getDefault());
-			case 4:
-				return getString(R.string.title_section5).toUpperCase(
-						Locale.getDefault());
-			}
-			return null;
-		}
-	}
 
 }

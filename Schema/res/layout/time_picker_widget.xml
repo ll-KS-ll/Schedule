@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:scaleX="0.85"
-    android:scaleY="0.85" >
+    android:scaleY="0.85"
+    tools:ignore="HardcodedText,MissingPrefix" >
 
     <TextView
         android:id="@+id/titleTimePicker"
@@ -30,9 +32,9 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:padding="1dp"
             android:text=":"
-            android:layout_gravity="center"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#707070"
             android:textSize="24sp" />

@@ -2,12 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.schema.bro"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0.0" >
 
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="17" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -26,14 +27,6 @@
         <activity
             android:name="com.schema.bro.ThemeActivity"
             android:label="@string/title_theme_activity"
-            android:parentActivityName="com.schema.bro.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.schema.bro.MainActivity" />
-        </activity>
-        <activity
-            android:name="com.schema.bro.NovaSoftwareListActivity"
-            android:label="@string/title_novasoftware_activity"
             android:parentActivityName="com.schema.bro.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -62,14 +55,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.schema.bro.MainActivity" />
-        </activity>
-        <activity
-            android:name="com.schema.bro.NovaSoftwareViewerActivity"
-            android:label="@string/title_novasoftware_activity"
-            android:parentActivityName="com.schema.bro.NovaSoftwareListActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.schema.bro.NovaSoftwareListActivity" />
         </activity>
     </application>
 

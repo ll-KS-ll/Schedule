@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import com.schema.bro.R;
 
 public class AboutActivity extends PreferenceActivity {
 
