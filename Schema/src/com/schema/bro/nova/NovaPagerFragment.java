@@ -1,12 +1,16 @@
 package com.schema.bro.nova;
 
 import java.util.Calendar;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.schema.bro.R;
 
 public class NovaPagerFragment extends Fragment{
@@ -34,6 +38,18 @@ public class NovaPagerFragment extends Fragment{
 			pager.setCurrentItem(4);
 
 		return rootView;
+	}
+	
+	public void setClassURL(String classURL){
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		prefs.edit().putString("class_url", classURL).commit();
+		for(int n=0; n<5; n++){
+			NovaFragment novaFragment = adapter.getFragment(n);
+			if(novaFragment != null){
+				//novaFragment.setClassURL(classURL);
+				//novaFragment.setImageView();
+			}
+		}
 	}
 
 }

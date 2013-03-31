@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.schema.bro.cards.CardPagerFragment;
+import com.schema.bro.nova.NovaOnItemSelectedListener;
 import com.schema.bro.nova.NovaPagerFragment;
 
 public class MainActivity extends FragmentActivity implements ActionBar.OnNavigationListener {
@@ -60,7 +61,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 							.getStringArray(R.array.novaSpinner));
 
 			spinClass.setAdapter(spinnerAdapter);
-			//spinClass.setOnItemSelectedListener(new NovaFragment());
+			if(fragment != null)
+				spinClass.setOnItemSelectedListener(new NovaOnItemSelectedListener(fragment));
 		}else{
 			getMenuInflater().inflate(R.menu.schedule, menu);
 		}
