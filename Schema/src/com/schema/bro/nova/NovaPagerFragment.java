@@ -68,7 +68,7 @@ public class NovaPagerFragment extends Fragment {
 		int screenHeight = metrics.heightPixels;
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		String classURL = prefs.getString("class_url", "not_set");
+		String classURL = prefs.getString("class_url", NovaOnItemSelectedListener.BF1);
 		
 		String url1 = assembleURL(classURL, 0, screenWidth, screenHeight);
 		String url2 = assembleURL(classURL, 1, screenWidth, screenHeight);

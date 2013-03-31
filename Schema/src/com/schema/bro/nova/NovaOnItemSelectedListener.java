@@ -9,6 +9,10 @@ public class NovaOnItemSelectedListener implements OnItemSelectedListener {
 
 	private NovaPagerFragment fragment;
 
+	public static final String BF1= "5ECAD1FC-388E-468D-880F-634BA6EF8C9D";
+	public static final String BF2= "487830F6-5C23-4A08-BA2F-1D6B82BFD80E";
+	public static final String BF3= "8C95EECD-0352-45D2-B22E-5FA4F9D79A67";
+	
 	public NovaOnItemSelectedListener(Fragment fragment) {
 		this.fragment = (NovaPagerFragment) fragment;
 	}
@@ -18,13 +22,13 @@ public class NovaOnItemSelectedListener implements OnItemSelectedListener {
 		String classURL;
 		switch (pos) {
 		case 0:
-			classURL = "5ECAD1FC-388E-468D-880F-634BA6EF8C9D";
+			classURL = BF1;
 			break;
 		case 1:
-			classURL = "487830F6-5C23-4A08-BA2F-1D6B82BFD80E";
+			classURL = BF2;
 			break;
 		case 2:
-			classURL = "8C95EECD-0352-45D2-B22E-5FA4F9D79A67";
+			classURL = BF3;
 			break;
 		case 3:
 			classURL = "C8FF7C6D-EF3F-42DF-BBF2-31EFACC1EBF0";

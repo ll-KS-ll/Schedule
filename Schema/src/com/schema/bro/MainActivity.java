@@ -37,7 +37,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		state = prefs.getInt(START_NAVIAGTION_STATE, SCHEDULE); // Set state
-		state = NOVA; //DEBUG
 		
 		final ActionBar actionBar = getActionBar();
 		actionBar.setDisplayShowTitleEnabled(false);
