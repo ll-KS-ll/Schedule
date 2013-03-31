@@ -33,11 +33,7 @@ public class LessonActivity extends Activity implements OnClickListener{
 	
 
 	protected void onCreate(Bundle savedInstanceState) {
-		// Set theme (Changed to ThemeActivity.setTheme(this))
-		SharedPreferences mPrefs = getSharedPreferences("THEME", 0);
-		int themeID = mPrefs.getInt("theme_boolean", 0);
-		super.setTheme(themeID);
-		
+		ThemeActivity.setTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.lesson_activity);
 		// If API is sufficient 

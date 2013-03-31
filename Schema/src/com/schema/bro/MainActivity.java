@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
 import com.schema.bro.cards.CardPagerFragment;
 import com.schema.bro.nova.NovaOnItemSelectedListener;
 import com.schema.bro.nova.NovaPagerFragment;
@@ -28,10 +27,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		SharedPreferences mPrefs = getSharedPreferences("THEME", 0);
-		int themeID = mPrefs.getInt("theme_int", 0);
-		super.setTheme(themeID);
-		
+		ThemeActivity.setTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_activity);
 
