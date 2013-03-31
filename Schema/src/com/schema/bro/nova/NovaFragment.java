@@ -1,89 +1,69 @@
 package com.schema.bro.nova;
 
-import java.io.InputStream;
-import java.net.URL;
-
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
+import android.widget.ImageView.ScaleType;
 import com.schema.bro.R;
+import com.schema.bro.R.color;
 
 public class NovaFragment extends Fragment{
 
-	private ImageView image;
-	private static int screenWidth;
-	private static int screenHeight;
-	private int day = 0;
-	private String classURL;
-	private static final String URL_FIRST = "http://www.novasoftware.se/ImgGen/schedulegenerator.aspx?format=png&schoolid=80740/sv-se&type=1&id={";
-	private static final String URL_SECOND = "}&period=&week=&mode=0&printer=0&colors=32&head=0&clock=0&foot=0&";
-	private static final String URL_THIRD = "&maxwidth=2000&maxheight=2000.png";
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		final View view = inflater.inflate(R.layout.nova_fragment, container, false);
+		final ImageView image = (ImageView) view.findViewById(R.id.novaFragmentImageView);
 		
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		classURL = prefs.getString("class_url", "not_set");
-		
-		// Should only use one layout
-		View view;
-		if(!classURL.equals("not_set")){
-			view = inflater.inflate(R.layout.image_view_activity, container, false);
-			image = (ImageView) view.findViewById(R.id.imageView1);
-		}else{
-			view = inflater.inflate(R.layout.nova_no_content, container, false);
-		}
+		final AnimationDrawable animation = new AnimationDrawable();
+		for(int n=0; n<4; n++)
+			animation.addFrame(getDrawableLoadingFrame(n), 300);
+		animation.setOneShot(false);
+		image.setImageDrawable(animation);
+		animation.start();
 		
 		return view;
 	}
 	
-	@Override
-	public void onResume() {
-		super.onResume();
+	public void setImageView(Bitmap bitmap){
+		if(bitmap == null){
+			Log.e("NovaFragment", "Bitmap is null");
+			return;
+		}
 		
-		DisplayMetrics metrics = new DisplayMetrics();
-		getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		screenWidth = metrics.widthPixels; 
-		screenHeight = metrics.heightPixels;
+		if(getView() == null){
+			Log.e("NovaFragment", "View is null");
+			return;
+		}
 		
-		if(!classURL.equals("not_set"))
-			setImageView();
-	}
-
-	public void setImageView(){
-		Log.d("viewer", "w: " + screenWidth + " h: " + screenHeight);
-		
-		String ImageUrl = URL_FIRST + classURL + URL_SECOND
-				+ "day=" + day + "&width=" + screenWidth/2 + "&height=" + screenHeight/2 + URL_THIRD;
-		
-		image.setImageBitmap(LoadImageFromWebOperations(ImageUrl));
-	}
-
-	public void setClassURL(String classURL){
-		this.classURL = classURL;
+		final ImageView image = (ImageView) getView().findViewById(R.id.novaFragmentImageView);
+		if(image != null){
+			image.setScaleType(ScaleType.FIT_XY);
+			image.setImageBitmap(bitmap);
+		}else{
+			Log.e("NovaFragment", "ImageView is null");
+		}
 	}
 	
-	public static Bitmap LoadImageFromWebOperations(String url) {
-	    try {
-	        InputStream is = (InputStream) new URL(url).getContent();
-	        Drawable d = Drawable.createFromStream(is, "src");
-	        Bitmap bitmap = Bitmap.createBitmap(((BitmapDrawable)d).getBitmap());
-	        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, screenWidth, screenHeight, false);
-	        return resizedBitmap;
-	    } catch (Exception e) {
-	        return null;
-	    }
+	public BitmapDrawable getDrawableLoadingFrame(int n){
+		Bitmap bitmap = Bitmap.createBitmap(400, 400, Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(bitmap);
+		Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		paint.setTextSize(50);
+		paint.setColor(color.gray);
+		String text = "Loading";
+		for(int i=0; i<n; i++)
+			text += ".";
+		canvas.drawText(text, 100, 205, paint);
+		return new BitmapDrawable(getResources(), bitmap);
 	}
-	
+
 }

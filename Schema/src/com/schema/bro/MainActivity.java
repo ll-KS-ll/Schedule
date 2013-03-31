@@ -61,6 +61,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 							.getStringArray(R.array.novaSpinner));
 
 			spinClass.setAdapter(spinnerAdapter);
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+			int pos = prefs.getInt("class_spinner_pos", 0);
+			spinClass.setSelection(pos);
 			if(fragment != null)
 				spinClass.setOnItemSelectedListener(new NovaOnItemSelectedListener(fragment));
 		}else{
@@ -88,9 +91,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 		case R.id.share:
 			return super.onOptionsItemSelected(item);
 			// break;
-		case R.id.nova_software:
-			intent = new Intent(this, NovaSoftwareListActivity.class);
-			break;
 		case R.id.school_meal:
 			intent = new Intent(this, SchoolMealActivity.class);
 			break;

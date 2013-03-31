@@ -9,9 +9,7 @@
     <item
         android:id="@+id/share"
         android:title="@string/title_share_activity"/>
-    <item
-        android:id="@+id/nova_software"
-        android:title="@string/title_novasoftware_activity"/>
+   
     <item
         android:id="@+id/school_meal"
         android:title="@string/title_schoolmeal_activity"/>

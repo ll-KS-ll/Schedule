@@ -121,7 +121,7 @@ public class NovaOnItemSelectedListener implements OnItemSelectedListener {
 		}
 		
 		if(fragment.isResumed())
-			fragment.setClassURL(classURL);
+			fragment.changeClass(classURL, pos);
 	}
 
 	@Override
