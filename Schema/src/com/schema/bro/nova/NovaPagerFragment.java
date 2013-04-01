@@ -112,6 +112,8 @@ public class NovaPagerFragment extends Fragment {
 
 		@Override
 		protected void onPostExecute(Bitmap[] result) {
+			if (isCancelled())
+				return;
 			for (int i = 0; i < result.length; i++) {
 				NovaFragment novaFrag = adapter.getFragment(i);
 				if(novaFrag != null)
