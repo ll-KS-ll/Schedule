@@ -1,23 +1,24 @@
 package com.schema.bro;
 
+import com.schema.bro.ks.Customizer;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import com.schema.bro.R;
 
-public class AboutActivity extends PreferenceActivity {
+public class SettingsActivity extends PreferenceActivity{
 
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		ThemeActivity.setTheme(this);
-		
+		Customizer.setTheme(this);
 		super.onCreate(savedInstanceState);
 		
-		addPreferencesFromResource(R.xml.about);
+		addPreferencesFromResource(R.xml.settings);
 		
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
+	
 }

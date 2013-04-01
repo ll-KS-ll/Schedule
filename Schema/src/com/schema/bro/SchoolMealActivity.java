@@ -1,5 +1,7 @@
 package com.schema.bro;
 
+import com.schema.bro.ks.Customizer;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,7 +12,7 @@ public class SchoolMealActivity extends Activity{
 
 	@SuppressLint("SetJavaScriptEnabled")
 	protected void onCreate(Bundle savedInstanceState) {
-		ThemeActivity.setTheme(this);
+		Customizer.setTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.school_meal_activity);
 		

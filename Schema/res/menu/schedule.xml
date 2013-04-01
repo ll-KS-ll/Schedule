@@ -13,10 +13,7 @@
         android:id="@+id/school_meal"
         android:title="@string/title_schoolmeal_activity"/>
     <item
-        android:id="@+id/theme"
-        android:title="@string/title_theme_activity"/>
-    <item
-        android:id="@+id/about"
-        android:title="@string/title_about_activity"/>
+        android:id="@+id/settings"
+        android:title="@string/title_settings_activity"/>
 
 </menu>

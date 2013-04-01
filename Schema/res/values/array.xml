@@ -9,4 +9,54 @@
         <item>@string/friday</item>
     </string-array>
 
+    <string-array name="navigation_list">
+        <item>Kort</item>
+        <item>Nova</item>
+        <item>Skollunch</item>
+        <item>Sist använd</item>
+    </string-array>
+    
+    <string-array name="navigation_list_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    
+    <string-array name="theme_list">
+        <item>Ljus med mörk titel bar</item>
+        <item>Ljust</item>
+        <item>Mörkt</item>
+        <item>Grönt</item>
+        <item>Rött</item>
+    </string-array>
+    
+    <string-array name="theme_list_values">
+        <item>0</item>
+       	<item>1</item>
+       	<item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    
+    <string-array name="card_list">
+        <item>Standard</item>
+        <item>Tid i hörnen</item>
+    </string-array>
+    
+    <string-array name="card_list_values">
+        <item>0</item>
+       	<item>1</item>
+    </string-array>
+    
+    <string-array name="widget_list">
+        <item>Standard</item>
+        <item>Annan fin ^^</item>
+    </string-array>
+    
+    <string-array name="widget_list_values">
+        <item>0</item>
+       	<item>1</item>
+    </string-array>
+    
 </resources>

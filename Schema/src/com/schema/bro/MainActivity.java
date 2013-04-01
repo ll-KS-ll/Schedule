@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import com.schema.bro.cards.CardPagerFragment;
+import com.schema.bro.ks.Customizer;
 import com.schema.bro.nova.NovaOnItemSelectedListener;
 import com.schema.bro.nova.NovaPagerFragment;
 
@@ -20,19 +21,23 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 	public static final int SCHEDULE = 0;
 	public static final int NOVA = 1;
 	public static final int SCHOOL_MEAL = 2;
+	public static final int LAST_USED = 3;
 	public static final String START_NAVIAGTION_STATE = "start_navigation_state";
+	public static final String LAST_USED_STATE = "last_used_navigation_state";
 	
 	private int state;
 	private Fragment fragment;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		ThemeActivity.setTheme(this);
+		Customizer.setTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_activity);
 
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		state = prefs.getInt(START_NAVIAGTION_STATE, SCHEDULE); // Set state
+		state = Integer.parseInt(prefs.getString(START_NAVIAGTION_STATE, "0")); // Set state
+		if(state == LAST_USED)
+			state = prefs.getInt(LAST_USED_STATE, SCHEDULE);
 		
 		final ActionBar actionBar = getActionBar();
 		actionBar.setDisplayShowTitleEnabled(false);
@@ -44,8 +49,19 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 	}
 
 	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		int temp = Integer.parseInt(prefs.getString(START_NAVIAGTION_STATE, "0"));
+		if(temp == LAST_USED){
+			prefs.edit().putInt(LAST_USED_STATE, state).commit();
+		}
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		if(state == 1){
+		if(state == NOVA){
 			getMenuInflater().inflate(R.menu.nova, menu);
 			Spinner spinClass;
 			MenuItem item = menu.findItem(R.id.classSpinner);
@@ -77,17 +93,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 			CardPagerFragment frag = (CardPagerFragment) fragment;
 			intent.putExtra("day", frag.getSelectedDay());
 			break;
-		case R.id.theme:
-			intent = new Intent(this, ThemeActivity.class);
-			break;
-		case R.id.about:
-			intent = new Intent(this, AboutActivity.class);
-			break;
 		case R.id.share:
 			return super.onOptionsItemSelected(item);
 			// break;
 		case R.id.school_meal:
 			intent = new Intent(this, SchoolMealActivity.class);
+			break;
+		case R.id.settings:
+			intent = new Intent(this, SettingsActivity.class);
 			break;
 		default:
 			return super.onOptionsItemSelected(item);

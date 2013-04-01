@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+
+import com.schema.bro.ks.Customizer;
 import com.schema.bro.ks.Lesson;
 import com.schema.bro.ks.TimePickerWidget;
 
@@ -33,7 +35,7 @@ public class LessonActivity extends Activity implements OnClickListener{
 	
 
 	protected void onCreate(Bundle savedInstanceState) {
-		ThemeActivity.setTheme(this);
+		Customizer.setTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.lesson_activity);
 		// If API is sufficient 
