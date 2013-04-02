@@ -33,14 +33,6 @@
                 android:value="com.schema.bro.MainActivity" />
         </activity>
         <activity
-            android:name="com.schema.bro.SchoolMealActivity"
-            android:label="@string/title_schoolmeal_activity"
-            android:parentActivityName="com.schema.bro.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.schema.bro.MainActivity" />
-        </activity>
-        <activity
             android:name="com.schema.bro.SettingsActivity"
             android:label="@string/title_settings_activity"
             android:parentActivityName="com.schema.bro.MainActivity" >

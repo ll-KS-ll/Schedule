@@ -15,6 +15,7 @@ import com.schema.bro.cards.CardPagerFragment;
 import com.schema.bro.ks.Customizer;
 import com.schema.bro.nova.NovaOnItemSelectedListener;
 import com.schema.bro.nova.NovaPagerFragment;
+import com.schema.bro.schoolmeal.SchoolMealFragment;
 
 public class MainActivity extends FragmentActivity implements ActionBar.OnNavigationListener {
 
@@ -96,9 +97,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 		case R.id.share:
 			return super.onOptionsItemSelected(item);
 			// break;
-		case R.id.school_meal:
-			intent = new Intent(this, SchoolMealActivity.class);
-			break;
 		case R.id.settings:
 			intent = new Intent(this, SettingsActivity.class);
 			break;
@@ -121,8 +119,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 			fragment = new NovaPagerFragment();
 			break;
 		case SCHOOL_MEAL:
-			// Change to school meal fragment!
-			fragment = new CardPagerFragment();
+			fragment = new SchoolMealFragment();
 			break;
 		default: return true;
 		}

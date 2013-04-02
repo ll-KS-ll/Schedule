@@ -19,12 +19,12 @@
     <string name="title_section5">Fredag</string>
     <string name="title_add_activity">Lägg till lektion</string>
     <string name="title_share_activity">Dela schema</string>
-    <string name="title_schoolmeal_activity">Skolmat</string>
     <string name="title_settings_activity">Inställningar</string>
     
     <string-array name="labelMenu">
         <item>Schema</item>
         <item>Nova Software</item>
+        <item>Skolmat</item>
     </string-array>
     
     <string-array name="novaSpinner">

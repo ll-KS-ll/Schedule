@@ -10,9 +10,6 @@
         android:id="@+id/share"
         android:title="@string/title_share_activity"/>
     <item
-        android:id="@+id/school_meal"
-        android:title="@string/title_schoolmeal_activity"/>
-    <item
         android:id="@+id/settings"
         android:title="@string/title_settings_activity"/>
 
