@@ -19,6 +19,8 @@ import com.schema.bro.R.color;
 
 public class NovaFragment extends Fragment{
 
+	Bitmap novaImage;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		final View view = inflater.inflate(R.layout.nova_fragment, container, false);
@@ -34,11 +36,21 @@ public class NovaFragment extends Fragment{
 		return view;
 	}
 	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if(novaImage != null)
+			novaImage.recycle();
+		novaImage = null;
+	}
+
 	public void setImageView(Bitmap bitmap){
 		if(bitmap == null){
 			Log.e("NovaFragment", "Bitmap is null");
 			return;
 		}
+		
+		novaImage = Bitmap.createBitmap(bitmap);
 		
 		if(getView() == null){
 			Log.e("NovaFragment", "View is null");
@@ -48,14 +60,14 @@ public class NovaFragment extends Fragment{
 		final ImageView image = (ImageView) getView().findViewById(R.id.novaFragmentImageView);
 		if(image != null){
 			image.setScaleType(ScaleType.FIT_XY);
-			image.setImageBitmap(bitmap);
+			image.setImageBitmap(novaImage);
 		}else{
 			Log.e("NovaFragment", "ImageView is null");
 		}
 	}
 	
 	public BitmapDrawable getDrawableLoadingFrame(int n){
-		Bitmap bitmap = Bitmap.createBitmap(400, 400, Bitmap.Config.ARGB_8888);
+		Bitmap bitmap = Bitmap.createBitmap(235, 55, Bitmap.Config.ARGB_8888);
 		Canvas canvas = new Canvas(bitmap);
 		Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		paint.setTextSize(50);
@@ -63,7 +75,7 @@ public class NovaFragment extends Fragment{
 		String text = "Loading";
 		for(int i=0; i<n; i++)
 			text += ".";
-		canvas.drawText(text, 100, 205, paint);
+		canvas.drawText(text, 5, 40, paint);
 		return new BitmapDrawable(getResources(), bitmap);
 	}
 

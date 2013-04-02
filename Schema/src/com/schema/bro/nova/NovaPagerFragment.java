@@ -55,12 +55,6 @@ public class NovaPagerFragment extends Fragment {
 		return rootView;
 	}
 
-	@Override
-	public void onResume() {
-		super.onResume();
-		loadImages();
-	}
-
 	private void loadImages(){
 		DisplayMetrics metrics = new DisplayMetrics();
 		getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -121,8 +115,6 @@ public class NovaPagerFragment extends Fragment {
 				else
 					Log.e("NovaPagerFragment", "fragment is null");
 			}
-			
-			
 		}
 	}
 
