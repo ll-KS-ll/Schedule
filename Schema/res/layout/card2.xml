@@ -3,7 +3,7 @@
     style="@style/nowCardStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:ignore="HardcodedText" >
+    android:id="@+id/cardWidget">
 
     <TextView
         android:id="@+id/cardStartTime"
@@ -19,20 +19,6 @@
         android:textSize="@dimen/timeText"
         android:textStyle="italic" />
 
-    <TextView
-        android:id="@+id/cardEndTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="100dp"
-        android:text="13:30"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#707070"
-        android:textSize="@dimen/timeText"
-        android:textStyle="italic" />
-
     <ImageView
         android:id="@+id/cardLessonImage"
         android:layout_width="wrap_content"
@@ -43,22 +29,11 @@
         android:src="@drawable/pic1" />
 
     <TextView
-        android:id="@+id/cardRoom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/cardEndTime"
-        android:layout_alignBottom="@+id/cardEndTime"
-        android:layout_alignLeft="@+id/cardLessonText"
-        android:text="E3"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#707070" />
-
-    <TextView
         android:id="@+id/cardLessonText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/cardStartTime"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/cardStartTime"
         android:text="Programmering C"
         android:textColor="#707070"
         android:textSize="@dimen/lessonText"
@@ -68,12 +43,34 @@
         android:id="@+id/cardTeacher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="90dp"
+        android:layout_alignLeft="@+id/cardLessonText"
+        android:layout_below="@+id/cardLessonText"
         android:text="Anders Andersson"
         android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#707070" />
+
+    <TextView
+        android:id="@+id/cardEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/cardTeacher"
+        android:layout_marginRight="10dp"
+        android:text="13:30"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#707070"
+        android:textSize="@dimen/timeText"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/cardRoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/cardEndTime"
+        android:layout_alignBottom="@+id/cardEndTime"
+        android:layout_alignLeft="@+id/cardTeacher"
+        android:text="E3"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#707070" />
 
 </RelativeLayout>

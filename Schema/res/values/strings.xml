@@ -26,11 +26,13 @@
     <string name="title_about_activity">Om</string>
     <string name="title_schoolmeal_activity">Skolmat</string>
     <string name="action_week">Hela veckan</string>
+    <string name="widget_text">Inga lektioner hittades för den här dagen</string>
 
     <string-array name="labelMenu">
         <item>Schema</item>
         <item>Nova Software</item>
     </string-array>
+    
     <string-array name="novaSpinner">
         <item>BF1</item>
         <item>BF2</item>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialLayout="@layout/widget_no_lessons"
+    android:minWidth="294dp"
+    android:minHeight="142dp"
+    android:updatePeriodMillis="60000" />
