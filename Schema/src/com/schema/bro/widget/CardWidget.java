@@ -4,11 +4,7 @@ import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.schema.bro.MainActivity;
-import com.schema.bro.R;
-import com.schema.bro.ks.Lesson;
-import com.schema.bro.ks.Schedule;
-
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -17,8 +13,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
-import android.util.Log;
 import android.widget.RemoteViews;
+
+import com.schema.bro.MainActivity;
+import com.schema.bro.R;
+import com.schema.bro.ks.Lesson;
+import com.schema.bro.ks.Schedule;
 
 public class CardWidget extends AppWidgetProvider {
 
@@ -39,8 +39,10 @@ public class CardWidget extends AppWidgetProvider {
 		private TypedArray images;
 		private Context context;
 		private PendingIntent pendingIntent;
+		@SuppressWarnings("unused")
 		private SharedPreferences mPrefs;
-		int cardStyleID, daysWithLessons = 0;
+		@SuppressWarnings("unused")
+		private int cardStyleID, daysWithLessons = 0;
 
 		public LessonCard(Context context, AppWidgetManager appWidgetManager) {
 			this.context = context;
@@ -66,6 +68,7 @@ public class CardWidget extends AppWidgetProvider {
 			return day;
 		}
 
+		@SuppressLint("Recycle")
 		public void updateCard() {
 			for (int j = 0; j < 5; j++) {
 				database = new Schedule(context, j);

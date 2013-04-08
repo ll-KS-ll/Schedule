@@ -2,7 +2,6 @@ package com.schema.bro.cards;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 
 import com.schema.bro.LessonActivity;
 import com.schema.bro.R;
+import com.schema.bro.ks.Customizer;
 import com.schema.bro.ks.Lesson;
 
 public class Card extends LinearLayout implements OnClickListener{
@@ -34,11 +34,8 @@ public class Card extends LinearLayout implements OnClickListener{
 
 	public Card(Context context, Lesson lesson) {
 		super(context);
-		SharedPreferences mPrefs = context.getSharedPreferences("THEME", 0);
-		int cardStyleID = mPrefs.getInt("card_style_int", 0);
-		if (cardStyleID == 0)
-			cardStyleID = R.layout.card;
-		LayoutInflater.from(context).inflate(cardStyleID, this, true);
+		
+		LayoutInflater.from(context).inflate(Customizer.getCardStyle(context), this, true);
 
 		lessonData = lesson.toString();
 		ID = lesson.getID();

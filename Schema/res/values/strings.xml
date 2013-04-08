@@ -2,15 +2,13 @@
 <resources>
 
     <string name="app_name">Schema</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Inställningar</string>
     <string name="hello_world">Hello World!</string>
     <string name="monday">Måndag</string>
     <string name="tuesday">Tisdag</string>
     <string name="wednesday">Onsdag</string>
     <string name="thursday">Torsdag</string>
     <string name="friday">Fredag</string>
-    <string name="saturday">Lördag</string>
-    <string name="sunday">Söndag</string>
     <string name="action_add">Add</string>
     <string name="ok">Klar</string>
     <string name="cancel">Avbryt</string>
@@ -19,18 +17,15 @@
     <string name="title_section3">Onsdag</string>
     <string name="title_section4">Torsdag</string>
     <string name="title_section5">Fredag</string>
-    <string name="title_theme_activity">Tema</string>
     <string name="title_add_activity">Lägg till lektion</string>
     <string name="title_share_activity">Dela schema</string>
-    <string name="title_novasoftware_activity">Nova Software</string>
-    <string name="title_about_activity">Om</string>
-    <string name="title_schoolmeal_activity">Skolmat</string>
-    <string name="action_week">Hela veckan</string>
-    <string name="widget_text">Inga lektioner hittades för den här dagen</string>
+    <string name="title_settings_activity">Inställningar</string>
+    <string name="widget_text">Inga lektioner hittades</string>
 
     <string-array name="labelMenu">
         <item>Schema</item>
         <item>Nova Software</item>
+        <item>Skolmat</item>
     </string-array>
     
     <string-array name="novaSpinner">
@@ -68,7 +63,5 @@
         <item>TE3</item>
         <item>VUX</item>
     </string-array>
-
-    <string name="title_activity_test">TestActivit</string>
 
 </resources>

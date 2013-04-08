@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="Schema" >
+        <ListPreference
+            android:defaultValue="0"
+            android:dialogTitle="Välj start schema"
+            android:entries="@array/navigation_list"
+            android:entryValues="@array/navigation_list_values"
+            android:key="start_navigation_state"
+            android:summary="Ändra vilken typ av schema som visas när appen startas"
+            android:title="Start schema" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:enabled="false"
+            android:key="notification"
+            android:summary="Visa en notfikation i notifications centret om nästa lektion"
+            android:title="Notification" />
+        
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:enabled="false"
+            android:key="notification_sound"
+            android:summary="Spela upp ett ljud när nästa lektion börjar"
+            android:title="Notifications ljud" />
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="Utseende" >
+        <ListPreference
+            android:defaultValue="0"
+            android:dialogTitle="Välj tema"
+            android:entries="@array/theme_list"
+            android:entryValues="@array/theme_list_values"
+            android:key="app_theme"
+            android:summary="Ändra appens utseende"
+            android:title="App tema" />
+        
+        <ListPreference
+            android:defaultValue="0"
+            android:dialogTitle="Välj utseende"
+            android:entries="@array/card_list"
+            android:entryValues="@array/card_list_values"
+            android:key="card_layout"
+            android:summary="Ändra utsesndet på lektions korten"
+            android:title="Kort utseende" />
+        
+        <ListPreference
+            android:defaultValue="0"
+            android:dialogTitle="Välj utseende"
+             android:enabled="false"
+            android:entries="@array/widget_list"
+            android:entryValues="@array/widget_list_values"
+            android:key="widget_layout"
+            android:summary="Ändra utseendet på hemskärms widgeten"
+            android:title="Widget utseendet" />
+    </PreferenceCategory>
+   
+    <PreferenceCategory android:title="Om" >
+        <Preference
+            android:summary="Filip Brolund\nVictor Karlsson Sehlin"
+            android:title="Skapare" />
+        <Preference
+            android:summary="1.0.0"
+            android:title="Version" />
+        <Preference
+            android:summary="fbrolund@gmail.com\nkarlssonsehlin@gmail.com"
+            android:title="Kontakt" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
