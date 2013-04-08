@@ -31,7 +31,6 @@ public class CardFragment extends Fragment{
 		int weekday = this.getArguments().getInt(CardPagerAdapter.ARG_SECTION_NUMBER);
 		
 		database = new Schedule(this.getActivity(), weekday);
-		clearAllCards();
 		loadCards();
 	}
 

@@ -1,7 +1,9 @@
 package com.schema.bro;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -25,15 +27,10 @@ public class LessonActivity extends Activity implements OnClickListener{
 	private boolean edit = false;
 	private TimePickerWidget startTimePicker, endTimePicker;
 	private Spinner spinny;
-	
-	private static final int[] imageIDs = { R.drawable.pic1, R.drawable.pic2, R.drawable.pic3,
-			R.drawable.pic4, R.drawable.pic5, R.drawable.pic6, R.drawable.pic7,
-			R.drawable.pic8, R.drawable.pic9, R.drawable.pic10,
-			R.drawable.pic11, R.drawable.pic12, R.drawable.pic13,
-			R.drawable.pic14, R.drawable.pic15, R.drawable.pic16,
-			R.drawable.pic17, };
+	private TypedArray images;
 	
 
+	@SuppressLint("Recycle")
 	protected void onCreate(Bundle savedInstanceState) {
 		Customizer.setTheme(this);
 		super.onCreate(savedInstanceState);
@@ -86,7 +83,8 @@ public class LessonActivity extends Activity implements OnClickListener{
 		prevBtn.setOnClickListener(this);
 		
 		// Image view
-		((ImageView) findViewById(R.id.lessonImage)).setImageResource(imageIDs[val]);
+		images = getResources().obtainTypedArray(R.array.imageIDs);
+		((ImageView) findViewById(R.id.lessonImage)).setImageResource(images.getResourceId(val, -1));
 	}
 
 	@Override
@@ -103,15 +101,15 @@ public class LessonActivity extends Activity implements OnClickListener{
 		case R.id.prevImageButton:
 			val--;
 			if (val < 0)
-				val = imageIDs.length - 1;
+				val = images.length() - 1;
 			break;
 		case R.id.nextImageButton:
 			val++;
-			if (val > imageIDs.length - 1)
+			if (val > images.length() - 1)
 				val = 0;
 			break;
 		}
-		((ImageView) findViewById(R.id.lessonImage)).setImageResource(imageIDs[val]);
+		((ImageView) findViewById(R.id.lessonImage)).setImageResource(images.getResourceId(val, -1));
 	}
 
 	@Override

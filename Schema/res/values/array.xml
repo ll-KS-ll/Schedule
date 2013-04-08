@@ -77,6 +77,15 @@
         <item>@drawable/pic15</item>
         <item>@drawable/pic16</item>
         <item>@drawable/pic17</item>
+        <item>@drawable/pic18</item>
+        <item>@drawable/pic19</item>
+        <item>@drawable/pic20</item>
+        <item>@drawable/pic21</item>
+        <item>@drawable/pic22</item>
+        <item>@drawable/pic23</item>
+        <item>@drawable/pic24</item>
+        <item>@drawable/pic25</item>
+        <item>@drawable/pic26</item>
     </string-array>
 
 </resources>

@@ -108,7 +108,7 @@ public class CardWidget extends AppWidgetProvider {
 		public Lesson getCurrentLesson() {
 				database = new Schedule(context, getDay());
 				Calendar c = Calendar.getInstance();
-				int currentTime = c.get(Calendar.HOUR) * 60 + c.get(Calendar.MINUTE);
+				int currentTime = c.get(Calendar.HOUR_OF_DAY) * 60 + c.get(Calendar.MINUTE);
 				int compareTime = 10000; 
 				Lesson lesson = null;
 				for (int i = 0; i < database.getWeekdayLessons().length; i++) {
