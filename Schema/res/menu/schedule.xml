@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/add"
+        android:icon="?attr/addIcon"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_add"/>
+    <item
+        android:id="@+id/share"
+        android:title="@string/title_share_activity"/>
+    <item
+        android:id="@+id/settings"
+        android:title="@string/title_settings_activity"/>
+
+</menu>

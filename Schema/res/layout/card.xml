@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/nowCardStyle"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:id="@+id/cardWidget">
 
     <ImageView
         android:id="@+id/cardLessonImage"
@@ -25,19 +26,6 @@
         android:textColor="#707070"
         android:textSize="@dimen/lessonText"
         android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/cardStartTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/cardLessonImage"
-        android:layout_below="@+id/cardLessonImage"
-        android:layout_marginTop="44dp"
-        android:text="12:00"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#707070"
-        android:textSize="@dimen/timeText"
-        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/cardTime"
@@ -70,8 +58,8 @@
         android:layout_alignBottom="@+id/cardLessonImage"
         android:layout_alignLeft="@+id/cardLessonText"
         android:text="Anders Andersson"
-        android:textColor="#707070"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#707070" />
 
     <TextView
         android:id="@+id/cardRoom"
@@ -84,5 +72,28 @@
         android:text="E3"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#707070" />
+
+    <TextView
+        android:id="@+id/cardStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/cardLessonImage"
+        android:layout_below="@+id/cardLessonImage"
+        android:layout_marginTop="20dp"
+        android:text="12:00"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#707070"
+        android:textSize="@dimen/timeText"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/cardTimeTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/cardRoom"
+        android:layout_alignRight="@+id/cardRoom"
+        android:textColor="#FF0000"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

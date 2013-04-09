@@ -12,7 +12,6 @@ import com.schema.bro.ks.Schedule;
 
 public class CardFragment extends Fragment{
 
-	public static final String ARG_SECTION_NUMBER = "section_number";
 	private CardLayout cl;
 	private Schedule database;
 	
@@ -29,10 +28,9 @@ public class CardFragment extends Fragment{
 	public void onResume() {
 		super.onResume();
 		
-		int weekday = this.getArguments().getInt(ARG_SECTION_NUMBER);
+		int weekday = this.getArguments().getInt(CardPagerAdapter.ARG_SECTION_NUMBER);
 		
 		database = new Schedule(this.getActivity(), weekday);
-		clearAllCards();
 		loadCards();
 	}
 
@@ -52,7 +50,7 @@ public class CardFragment extends Fragment{
 	}
 	
 	public void update(){
-		int weekday = this.getArguments().getInt(ARG_SECTION_NUMBER);
+		int weekday = this.getArguments().getInt(CardPagerAdapter.ARG_SECTION_NUMBER);
 		database.update(weekday);
 		loadCards();
 	}

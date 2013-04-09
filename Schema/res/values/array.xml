@@ -9,4 +9,83 @@
         <item>@string/friday</item>
     </string-array>
 
+    <string-array name="navigation_list">
+        <item>Kort</item>
+        <item>Nova</item>
+        <item>Skollunch</item>
+        <item>Sist använd</item>
+    </string-array>
+    
+    <string-array name="navigation_list_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    
+    <string-array name="theme_list">
+        <item>Ljus med mörk titel bar</item>
+        <item>Ljust</item>
+        <item>Mörkt</item>
+        <item>Grönt</item>
+        <item>Rött</item>
+    </string-array>
+    
+    <string-array name="theme_list_values">
+        <item>0</item>
+       	<item>1</item>
+       	<item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    
+    <string-array name="card_list">
+        <item>Standard</item>
+        <item>Tid i hörnen</item>
+    </string-array>
+    
+    <string-array name="card_list_values">
+        <item>0</item>
+       	<item>1</item>
+    </string-array>
+    
+    <string-array name="widget_list">
+        <item>Standard</item>
+        <item>Annan fin ^^</item>
+    </string-array>
+    
+    <string-array name="widget_list_values">
+        <item>0</item>
+       	<item>1</item>
+    </string-array>
+    
+    <string-array name="imageIDs">
+        <item>@drawable/pic1</item>
+        <item>@drawable/pic2</item>
+        <item>@drawable/pic3</item>
+        <item>@drawable/pic4</item>
+        <item>@drawable/pic5</item>
+        <item>@drawable/pic6</item>
+        <item>@drawable/pic7</item>
+        <item>@drawable/pic8</item>
+        <item>@drawable/pic9</item>
+        <item>@drawable/pic10</item>
+        <item>@drawable/pic11</item>
+        <item>@drawable/pic12</item>
+        <item>@drawable/pic13</item>
+        <item>@drawable/pic14</item>
+        <item>@drawable/pic15</item>
+        <item>@drawable/pic16</item>
+        <item>@drawable/pic17</item>
+        <item>@drawable/pic18</item>
+        <item>@drawable/pic19</item>
+        <item>@drawable/pic20</item>
+        <item>@drawable/pic21</item>
+        <item>@drawable/pic22</item>
+        <item>@drawable/pic23</item>
+        <item>@drawable/pic24</item>
+        <item>@drawable/pic25</item>
+        <item>@drawable/pic26</item>
+    </string-array>
+
 </resources>

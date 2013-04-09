@@ -2,17 +2,13 @@
 <resources>
 
     <string name="app_name">Schema</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Inställningar</string>
     <string name="hello_world">Hello World!</string>
-    
     <string name="monday">Måndag</string>
     <string name="tuesday">Tisdag</string>
     <string name="wednesday">Onsdag</string>
     <string name="thursday">Torsdag</string>
     <string name="friday">Fredag</string>
-    <string name="saturday">Lördag</string>
-    <string name="sunday">Söndag</string>
-
     <string name="action_add">Add</string>
     <string name="ok">Klar</string>
     <string name="cancel">Avbryt</string>
@@ -21,12 +17,51 @@
     <string name="title_section3">Onsdag</string>
     <string name="title_section4">Torsdag</string>
     <string name="title_section5">Fredag</string>
-    <string name="title_theme_activity">Tema</string>
     <string name="title_add_activity">Lägg till lektion</string>
     <string name="title_share_activity">Dela schema</string>
-    <string name="title_novasoftware_activity">Nova Software</string>
-    <string name="title_about_activity">Om</string>
-    <string name="title_schoolmeal_activity">Skolmat</string>
-    <string name="action_week">Hela veckan</string>
+    <string name="title_settings_activity">Inställningar</string>
+    <string name="widget_text">Inga lektioner hittades</string>
+
+    <string-array name="labelMenu">
+        <item>Schema</item>
+        <item>Nova Software</item>
+        <item>Skolmat</item>
+    </string-array>
+    
+    <string-array name="novaSpinner">
+        <item>BF1</item>
+        <item>BF2</item>
+        <item>BF3</item>
+        <item>EC3</item>
+        <item>EE1</item>
+        <item>EE2</item>
+        <item>EK1</item>
+        <item>EK2</item>
+        <item>ES1</item>
+        <item>ES2</item>
+        <item>ES3</item>
+        <item>HA1</item>
+        <item>HA2</item>
+        <item>HP3</item>
+        <item>HU2</item>
+        <item>HVLÄR3</item>
+        <item>IM</item>
+        <item>IM1</item>
+        <item>NA1</item>
+        <item>NA2</item>
+        <item>NV3</item>
+        <item>PRE</item>
+        <item>SA1A</item>
+        <item>SA2B</item>
+        <item>SA2</item>
+        <item>SMAS1</item>
+        <item>SMAS3</item>
+        <item>SMAS4</item>
+        <item>SP3</item>
+        <item>TE1</item>
+        <item>TE2</item>
+        <item>TE3</item>
+        <item>VUX</item>
+    </string-array>
 
 </resources>
