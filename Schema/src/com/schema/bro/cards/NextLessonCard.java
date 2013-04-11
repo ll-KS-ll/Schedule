@@ -39,7 +39,7 @@ public class NextLessonCard extends LinearLayout{
 
 		icon.setImageResource(imageIDs[lesson.getImage()]);
 		lessonText.setText(lesson.getName());
-		timeLeftText.setText(lesson.getTimeLeft(during));
+		timeLeftText.setText(lesson.getTimeLeft(during) + " min");
 		teacherText.setText(lesson.getMaster());
 		startTimeText.setText(lesson.getStartTime());
 		endTimeText.setText(lesson.getEndTime());
