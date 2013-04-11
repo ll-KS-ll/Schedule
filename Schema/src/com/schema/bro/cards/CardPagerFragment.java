@@ -57,8 +57,6 @@ public class CardPagerFragment extends Fragment{
 		}
 	}
 	
-	
-	
 	public int getSelectedDay(){
 		return pager.getCurrentItem();
 	}

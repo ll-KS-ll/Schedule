@@ -18,7 +18,7 @@
     <string name="title_section4">Torsdag</string>
     <string name="title_section5">Fredag</string>
     <string name="title_add_activity">Lägg till lektion</string>
-    <string name="title_share_activity">Dela schema</string>
+    <string name="title_share_activity">Dela scheman</string>
     <string name="title_settings_activity">Inställningar</string>
     <string name="widget_text">Inga lektioner hittades</string>
 
@@ -27,7 +27,6 @@
         <item>Nova Software</item>
         <item>Skolmat</item>
     </string-array>
-    
     <string-array name="novaSpinner">
         <item>BF1</item>
         <item>BF2</item>
@@ -63,5 +62,7 @@
         <item>TE3</item>
         <item>VUX</item>
     </string-array>
+
+    <string name="title_activity_share">Dela schema</string>
 
 </resources>

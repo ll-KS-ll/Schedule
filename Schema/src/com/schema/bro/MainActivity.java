@@ -95,8 +95,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 			intent.putExtra("day", frag.getSelectedDay());
 			break;
 		case R.id.share:
-			return super.onOptionsItemSelected(item);
-			// break;
+			intent = new Intent(this, ShareActivity.class);
+			break;
 		case R.id.settings:
 			intent = new Intent(this, SettingsActivity.class);
 			break;
