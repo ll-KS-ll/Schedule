@@ -139,6 +139,12 @@ public class ReceiveSchedule extends DialogFragment{
 	            	connectionManager = new ManageBluetoothConnection(context, socket);
 	                connectionManager.start();
 	                
+	                while(connectionManager.isAlive()){
+	                	try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) { }
+	                }
+	                
 	                try {
 						mmServerSocket.close();
 					} catch (IOException e) { }
@@ -153,7 +159,8 @@ public class ReceiveSchedule extends DialogFragment{
 		public void cancel() {
 	        try {
 	            mmServerSocket.close();
-	            connectionManager.cancel();
+	            if(connectionManager != null)
+	            	connectionManager.cancel();
 	        } catch (IOException e) { }
 	    }
 	}

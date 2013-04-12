@@ -48,11 +48,13 @@ public class ManageBluetoothConnection extends Thread {
                 Schedule database = new Schedule(context);
                 database.addSchedule(data);
                 
-                this.cancel();
+                break;
             } catch (IOException e) {
                 break;
             }
         }
+        
+        this.cancel();
     }
  
     /* Call this from the main activity to send data to the remote device */

@@ -216,7 +216,8 @@ public class ShareSchedule extends DialogFragment implements OnItemClickListener
 		public void cancel() {
 	        try {
 	            mmSocket.close();
-	            connectionManager.cancel();
+	            if(connectionManager != null)
+	            	connectionManager.cancel();
 	        } catch (IOException e) { }
 	    }
 	}

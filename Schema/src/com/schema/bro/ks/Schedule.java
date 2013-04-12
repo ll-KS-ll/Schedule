@@ -101,11 +101,6 @@ public class Schedule {
 	}
 	
 	public void update() {
-		int count = data.getInt("count", 0);
-
-		if (count == lessons.size())
-			return;
-
 		loadLessons();
 	}
 
@@ -151,7 +146,56 @@ public class Schedule {
 		return les;
 	}
 	
-	/** <b>Not tested yet</b>*/
+	/** Get the current lesson. 
+	 * <p><b>Not fully tested yet</b>
+	 * 
+	 * @return lesson - An upcoming or ongoing lesson
+	*/
+	public Lesson getCurrentLesson(){
+		if(lessons.isEmpty()){
+			Log.e("Schedule:getNextLesson", "There is less than two lessons added");
+			return null;
+		}
+		
+		int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+		final int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		final int minute = Calendar.getInstance().get(Calendar.MINUTE);
+		int curTime = hour * 60 + minute;
+		
+		boolean found = false;
+		Lesson tempLesson = null;
+		
+		while(!found){
+			for(int n=lessons.size()-1; n >= 0; n--){
+				Lesson lesson = (Lesson) lessons.get(n);
+				
+				if(day == lesson.getWeekdayValue())
+					continue;
+				
+				//int lesStartTime = lesson.getStartHour() * 60 + lesson.getStartMinute();
+				int lesEndTime = lesson.getEndHour() * 60 + lesson.getEndMinute();
+				
+				if(curTime >= lesEndTime ){
+					Log.i("Schedule:getCurrentLesson", "Got current lesson");
+					found = true;
+					tempLesson = lesson;
+					break;
+				}
+			}
+			day++;
+			if(day == Calendar.SATURDAY)
+				day = Calendar.MONDAY;
+			curTime = 1500;
+		}
+		
+		return tempLesson;
+	}
+	
+	/** Get the lesson after the current one 
+	 * <p<b>Not fully tested yet</b>
+	 * 
+	 * @return lesson - The lesson after the upcoming or ongoing lesson 
+	*/
 	public Lesson getNextLesson(){
 		if(lessons.size() < 2){
 			Log.e("Schedule:getNextLesson", "There is less than two lessons added");
@@ -159,89 +203,75 @@ public class Schedule {
 		}
 		
 		int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-		int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-		int minute = Calendar.getInstance().get(Calendar.MINUTE);
+		final int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		final int minute = Calendar.getInstance().get(Calendar.MINUTE);
+		int curTime = hour * 60 + minute;
 		
-		for(int n=lessons.size()-1; n >= 0; n--){
-			Lesson lesson = (Lesson) lessons.get(n);
-			
-			if(day == lesson.getWeekdayValue())
-				continue;
-			
-			int curTime = hour * 60 + minute;
-			int lesStartTime = lesson.getStartHour() * 60 + lesson.getStartMinute();
-			int lesEndTime = lesson.getEndHour() * 60 + lesson.getEndMinute();
-			
-			if(curTime >= lesStartTime && curTime <= lesEndTime){
-				Log.d("Schedule:getNextLesson", "Got current lesson");
-				if(n < lessons.size()){
-					return getLesson(n);
-				}else{
-					return getLesson(0);
+		boolean found = false;
+		Lesson tempLesson = null;
+		
+		while(!found){
+			for(int n=lessons.size()-1; n >= 0; n--){
+				Lesson lesson = (Lesson) lessons.get(n);
+				
+				if(day == lesson.getWeekdayValue())
+					continue;
+				
+				//int lesStartTime = lesson.getStartHour() * 60 + lesson.getStartMinute();
+				int lesEndTime = lesson.getEndHour() * 60 + lesson.getEndMinute();
+				
+				if(curTime >= lesEndTime){
+					Log.i("Schedule:getNextLesson", "Got next lesson");
+					found = true;
+					if(n + 1< lessons.size()){
+						tempLesson = getLesson(n + 1);
+					}else{
+						tempLesson = getLesson(0);
+					}
+					break;
 				}
 			}
+			day++;
+			if(day == Calendar.SATURDAY)
+				day = Calendar.MONDAY;
+			curTime = 1500;
 		}
-		Log.e("Schedule:getNextLesson", "Couldn't get next lesson");
-		return null;
+		
+		return tempLesson;
 	}
 	
-	/** <b>Not tested yet</b>*/
-	public Lesson getCurrentLesson(){
-		if(isEmpty()){
-			Log.e("Schedule:getCurrentLesson", "There is no lessons added");
-			return null;
-		}
-		
-		int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-		int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-		int minute = Calendar.getInstance().get(Calendar.MINUTE);
-		
-		Lesson[] todayLessons = getLessons(day);
-		for(int n = todayLessons.length - 1; n >= 0; n--){
-			Lesson lesson = todayLessons[n];
-			int curTime = hour * 60 + minute;
-			int lesStartTime = lesson.getStartHour() * 60 + lesson.getStartMinute();
-			int lesEndTime = lesson.getEndHour() * 60 + lesson.getEndMinute();
-			
-			if(curTime >= lesStartTime && curTime <= lesEndTime){
-				Log.v("Schedule:getCurrentLesson", "Got current lesson");
-				return lesson;
-			}
-		}
-		
-		Log.d("Schedule:getCurrentLesson", "Couldn't find any current lessons");
-		return null;
-		//Log.d("Schedule:getCurrentLesson", "Found no current lesson for today, tries tomorrow instead");
-		//return getCurrentLesson(day + 1);
-	}
-	
-	/*
-	private Lesson getCurrentLesson(int day){
-		if(isEmpty()){
-			Log.e("Schedule:getCurrentLesson", "There is no lessons added");
-			return null;
-		}
-		
-		int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-		int minute = Calendar.getInstance().get(Calendar.MINUTE);
-		
-		Lesson[] todayLessons = getLessons(day);
-		for(int n = todayLessons.length - 1; n >= 0; n--){
-			Lesson lesson = todayLessons[n];
-			int curTime = hour * 60 + minute;
-			int lesStartTime = lesson.getStartHour() * 60 + lesson.getStartMinute();
-			int lesEndTime = lesson.getEndHour() * 60 + lesson.getEndMinute();
-			
-			if(curTime >= lesStartTime && curTime <= lesEndTime){
-				Log.v("Schedule:getCurrentLesson", "Got current lesson");
-				return lesson;
-			}
-		}
-		
-		Log.d("Schedule:getCurrentLesson", "Found no current lesson for today, tries tomorrow instead");
-		return null;
-	}
+	/** Get an ongoing lesson if there is one at the moment 
+	 * <p><b>Not tested yet</b>
+	 * 
+	 * @return lesson - An ongoing lesson if there is one, else null  
 	*/
+	public Lesson getOngoingLesson(){
+		if(isEmpty()){
+			Log.e("Schedule:getOngoingLesson", "There is no lessons added");
+			return null;
+		}
+		
+		final int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+		final int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		final int minute = Calendar.getInstance().get(Calendar.MINUTE);
+		final int curTime = hour * 60 + minute;
+		
+		Lesson[] todayLessons = getLessons(day);
+		for(int n = todayLessons.length - 1; n >= 0; n--){
+			Lesson lesson = todayLessons[n];
+			int lesStartTime = lesson.getStartHour() * 60 + lesson.getStartMinute();
+			int lesEndTime = lesson.getEndHour() * 60 + lesson.getEndMinute();
+			
+			if(curTime >= lesStartTime && curTime <= lesEndTime){
+				Log.i("Schedule:getOngoingLesson", "Got current lesson");
+				return lesson;
+			}
+		}
+		
+		Log.d("Schedule:getOngoingLesson", "There is no lessons right now");
+		return null;
+	}
+	
 	
 	/*
 	public int showNextLessonCard(){
