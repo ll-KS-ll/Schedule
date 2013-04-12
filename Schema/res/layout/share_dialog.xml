@@ -2,24 +2,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:gravity="center"
+    android:orientation="vertical"
     tools:ignore="HardcodedText" >
 
-    <ListView
-        android:id="@+id/shareBluetoothDeviceList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ListView>
-
-    <TextView
+    <ImageView
         android:id="@+id/shareDialogTextInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="7dp"
-        android:text="Letar enheter..."
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/gray" />
+        android:contentDescription="Text animation"
+        android:layout_margin="24dp" />
+    
+    <ListView
+        android:id="@+id/shareBluetoothDeviceList"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

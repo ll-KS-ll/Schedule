@@ -18,37 +18,39 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.schema.bro.R;
 import com.schema.bro.ShareActivity;
 import com.schema.bro.ks.Schedule;
+import com.schema.bro.ks.TextLoaderAnimator;
 
-public class ShareSchedule extends DialogFragment implements OnItemClickListener{
+public class ShareSchedule extends DialogFragment implements OnItemClickListener, OnClickListener{
 	
 	private BluetoothAdapter mBluetoothAdapter;
 	private static final int REQUEST_ENABLE_BT = 42;
-	private boolean connected;
+	private boolean connected, connecting;
 	private ConnectThread connect;
 	private Context context;
 	private View view; 
 	private ListView listView;
 	private ArrayAdapter<String> adapter;
 	private LinkedList<String> addresses;
+	private TextLoaderAnimator animator;
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 	    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-	    connected = false;
+	    connected = connecting = false;
 	    
 	    adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1);
 	    addresses = new LinkedList<String>();
@@ -59,11 +61,17 @@ public class ShareSchedule extends DialogFragment implements OnItemClickListener
 	    listView.setOnItemClickListener(this);
 	    
 	    builder.setView(view).setTitle("Dela schema till...")
-	           .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+	           .setNegativeButton("Avsluta", new DialogInterface.OnClickListener() {
 	               public void onClick(DialogInterface dialog, int id) {
 	            	   mBluetoothAdapter.cancelDiscovery();
 	               }
-	           });      
+	           });
+	    
+	    final ImageView imageView = (ImageView) view.findViewById(R.id.shareDialogTextInfo);
+	    imageView.setOnClickListener(this);
+		animator = new TextLoaderAnimator(getActivity(), imageView, "Letar enheter");
+		animator.stop();
+		
 	    return builder.create();
 	}
 	
@@ -86,7 +94,7 @@ public class ShareSchedule extends DialogFragment implements OnItemClickListener
 	private void connectBluetooth() {
 		connected = true;
 		
-		context = this.getActivity();
+		context = getActivity();
 		
 		Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 		// If there are paired devices
@@ -100,6 +108,8 @@ public class ShareSchedule extends DialogFragment implements OnItemClickListener
 		}
 
 		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+		filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+		filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 		getActivity().registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
 		
 		mBluetoothAdapter.startDiscovery();
@@ -122,26 +132,41 @@ public class ShareSchedule extends DialogFragment implements OnItemClickListener
 	private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
-			// When discovery finds a device
 			if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-				// Get the BluetoothDevice object from the Intent
 				BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-				adapter.add(device.getName());
-				addresses.add(device.getAddress());
-				adapter.notifyDataSetChanged();
+				if(!addresses.contains(device.getAddress())){
+					adapter.add(device.getName());
+					addresses.add(device.getAddress());
+					adapter.notifyDataSetChanged();
+				}
+			}else if(BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)){
+				animator.changeText("Letar enheter");
+			}else if(BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)){
+				if(!connecting){
+					animator.changeText("Leta efter fler enheter");
+					animator.stop();
+				}
 			}
 		}
 	};
 	
 	@Override
+	public void onClick(View view){
+		if(mBluetoothAdapter != null)
+			if(mBluetoothAdapter.isEnabled() && !mBluetoothAdapter.isDiscovering())
+				mBluetoothAdapter.startDiscovery();
+	}
+	
+	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		connecting = true;
 		mBluetoothAdapter.cancelDiscovery();
 		BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(addresses.get(position));
 		
-		final TextView tv = (TextView) this.view.findViewById(R.id.shareDialogTextInfo);
-    	tv.setText("Försöker koppla till " + device.getName());
-    	listView.setVisibility(View.GONE);
-		
+		getDialog().setTitle("Föröver schema");
+		animator.changeText("Försöker koppla till " + device.getName());
+		listView.setVisibility(View.GONE);
+    	
 		connect = new ConnectThread(device);
 		connect.start();
 	}
@@ -160,8 +185,17 @@ public class ShareSchedule extends DialogFragment implements OnItemClickListener
 		
 		view.post(new Runnable() {
 	        public void run() {
-	        	final TextView tv = (TextView) view.findViewById(R.id.shareDialogTextInfo);
-	        	tv.setText("Skickar schema...");
+	        	animator.changeText("Skickar schema");
+	        }
+		});
+	}
+	
+	public void onSent(){
+		view.post(new Runnable() {
+	        public void run() {
+	        	getDialog().setTitle("Schema delat");
+	        	animator.changeText("Ditt schema har skickats!");
+	        	animator.stop();
 	        }
 		});
 	}
@@ -201,7 +235,6 @@ public class ShareSchedule extends DialogFragment implements OnItemClickListener
 	            return;
 	        }
 	 
-	       Log.d("Schema Bluetooth", "Connected!!");
 	       onConnected();
 	       
 	       connectionManager = new ManageBluetoothConnection(context, mmSocket);
@@ -209,7 +242,7 @@ public class ShareSchedule extends DialogFragment implements OnItemClickListener
 	       connectionManager.write(database.getSchedule());
 	       
 	       this.cancel();
-	       dismiss();
+	       onSent();
 	    }
 	 
 	    /** Will cancel an in-progress connection, and close the socket */

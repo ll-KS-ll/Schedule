@@ -16,11 +16,12 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.schema.bro.R;
 import com.schema.bro.ShareActivity;
+import com.schema.bro.ks.TextLoaderAnimator;
 
 public class ReceiveSchedule extends DialogFragment{
 	
@@ -29,6 +30,8 @@ public class ReceiveSchedule extends DialogFragment{
 	private AcceptThread connect;
 	private static final int REQUEST_ENABLE_BT = 7;
 	private View view;
+	private TextLoaderAnimator animator;
+	
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -37,20 +40,26 @@ public class ReceiveSchedule extends DialogFragment{
 	    LayoutInflater inflater = getActivity().getLayoutInflater();
 	    view = inflater.inflate(R.layout.receive_dialog, null);
 	    
-	    builder.setView(view).setTitle("Väntar på schema...")
-	           .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+	    builder.setView(view).setTitle("Ta emot schema")
+	           .setNegativeButton("Avsluta", new DialogInterface.OnClickListener() {
 	               public void onClick(DialogInterface dialog, int id) {
 	            	   if(connect != null)
 	            		   connect.cancel();
 	            	   mBluetoothAdapter.cancelDiscovery();
 	               }
-	           });      
+	           });     
+	    
+	    final ImageView imageView = (ImageView) view.findViewById(R.id.recieveDialogTextInfo);
+		animator = new TextLoaderAnimator(getActivity(), imageView, "Väntar på enhet");
+		
 	    return builder.create();
 	}
 	
 	@Override
 	public void onResume(){
 		super.onResume();
+		
+		animator.start();
 		
 		if(mBluetoothAdapter == null)
 			mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -96,10 +105,19 @@ public class ReceiveSchedule extends DialogFragment{
 	}
 	
 	public void onConnected(){
-		final TextView tv = (TextView) view.findViewById(R.id.recieveDialogTextInfo);
-		tv.post(new Runnable() {
+		view.post(new Runnable() {
 	        public void run() {
-	        	tv.setText("Tar emot data..");
+	        	animator.changeText("Tar emot data");
+	        }
+		});
+	}
+	
+	public void onSent(){
+		view.post(new Runnable() {
+	        public void run() {
+	        	getDialog().setTitle("Schema mottaget");
+	        	animator.changeText("Nytt schema tillagt!");
+	        	animator.stop();
 	        }
 		});
 	}
@@ -148,11 +166,12 @@ public class ReceiveSchedule extends DialogFragment{
 	                try {
 						mmServerSocket.close();
 					} catch (IOException e) { }
+	                
+	                onSent();
 	                break;
 	            }
 	        }
 	        
-	        dismiss();
 	    }
 	 
 	    /** Will cancel the listening socket, and cause the thread to finish */

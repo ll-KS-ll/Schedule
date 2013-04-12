@@ -5,7 +5,6 @@ import java.util.Calendar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,8 +39,6 @@ public class CardPagerFragment extends Fragment{
 			pager.setCurrentItem(3);
 		else if (day == Calendar.FRIDAY)
 			pager.setCurrentItem(4);
-		
-		Log.v("CardPagerFragment", "day: " + day);
 		
 		return rootView;
 	}
