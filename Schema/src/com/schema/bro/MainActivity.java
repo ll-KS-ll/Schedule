@@ -19,6 +19,11 @@ import com.schema.bro.schoolmeal.SchoolMealFragment;
 
 public class MainActivity extends FragmentActivity implements ActionBar.OnNavigationListener {
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+
+	}
+
 	public static final int SCHEDULE = 0;
 	public static final int NOVA = 1;
 	public static final int SCHOOL_MEAL = 2;
@@ -95,8 +100,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 			intent.putExtra("day", frag.getSelectedDay());
 			break;
 		case R.id.share:
-			return super.onOptionsItemSelected(item);
-			// break;
+			intent = new Intent(this, ShareActivity.class);
+			break;
 		case R.id.settings:
 			intent = new Intent(this, SettingsActivity.class);
 			break;

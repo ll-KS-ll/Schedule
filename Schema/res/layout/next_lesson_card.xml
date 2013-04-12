@@ -1,0 +1,115 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/nowCardStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <TextView
+         android:id="@+id/cardStaticTimeLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Tid kvar:"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/lessonText" />
+    
+    <TextView
+        android:id="@+id/cardTimeLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/cardStaticTimeLeft"
+        android:layout_alignBottom="@+id/cardStaticTimeLeft"
+        android:layout_toRightOf="@+id/cardStaticTimeLeft"
+        android:text="10 min"
+        android:layout_marginLeft="5dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#33b5e5"
+         android:textStyle="italic"
+        android:textSize="@dimen/timeText" />
+    
+    <TextView
+        android:id="@+id/cardStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="50dp"
+        android:text="12:00"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/lessonText" />
+
+     <TextView
+        android:id="@+id/cardStaticSeparator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/cardStartTime"
+        android:layout_alignBottom="@+id/cardStartTime"
+        android:layout_toRightOf="@+id/cardStartTime"
+        android:text="-"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/lessonText" />
+    
+    <TextView
+        android:id="@+id/cardEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/cardStartTime"
+        android:layout_alignBottom="@+id/cardStartTime"
+        android:layout_toRightOf="@+id/cardStaticSeparator"
+        android:text="13:30"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/lessonText" />
+
+    <TextView
+        android:id="@+id/cardLessonText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="90dp"
+        android:text="Programmering C"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/lessonText"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/cardTeacher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/cardLessonText"
+        android:layout_below="@+id/cardLessonText"
+        android:text="Anders Andersson"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/gray" />
+
+    <ImageView
+        android:id="@+id/cardLessonImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/cardTeacher"
+        android:layout_marginRight="5dp"
+       	android:layout_alignParentRight="true"
+        android:src="@drawable/pic1"
+        android:contentDescription="Lesson image"/>
+
+    <TextView
+        android:id="@+id/cardRoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@+id/cardTimeLeft"
+        android:layout_marginRight="10dp"
+        android:text="E3"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/gray"
+        android:textStyle="bold" />
+
+</RelativeLayout>

@@ -1,9 +1,7 @@
 package com.schema.bro.widget;
 
-import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -13,8 +11,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.util.Log;
 import android.widget.RemoteViews;
-
 import com.schema.bro.MainActivity;
 import com.schema.bro.R;
 import com.schema.bro.ks.Lesson;
@@ -23,11 +21,9 @@ import com.schema.bro.ks.Schedule;
 public class CardWidget extends AppWidgetProvider {
 
 	@Override
-	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
-			int[] appWidgetIds) {
+	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(new LessonCard(context, appWidgetManager), 1,
-				60000);
+		timer.scheduleAtFixedRate(new LessonCard(context, appWidgetManager), 1, 60000);
 	}
 
 	private class LessonCard extends TimerTask {
@@ -46,6 +42,7 @@ public class CardWidget extends AppWidgetProvider {
 
 		public LessonCard(Context context, AppWidgetManager appWidgetManager) {
 			this.context = context;
+			database = new Schedule(context);
 			this.appWidgetManager = appWidgetManager;
 			thisWidget = new ComponentName(context, CardWidget.class);
 			Intent intent = new Intent(context, MainActivity.class);
@@ -53,6 +50,7 @@ public class CardWidget extends AppWidgetProvider {
 			mPrefs = context.getSharedPreferences("THEME", 0);
 		}
 
+		/*
 		public int getDay() {
 			int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
 			if (day == Calendar.MONDAY)
@@ -67,27 +65,30 @@ public class CardWidget extends AppWidgetProvider {
 				day = 4;
 			return day;
 		}
+		*/
 
 		@SuppressLint("Recycle")
 		public void updateCard() {
-			for (int j = 0; j < 5; j++) {
-				database = new Schedule(context, j);
-				if (database.getWeekdayLessons().length != 0) {
-					daysWithLessons++;
-					break;
-				}
-			}
-			if (daysWithLessons == 0)
-				remoteViews = new RemoteViews(context.getPackageName(),
-						R.layout.widget_no_lessons);
+			if (database.isEmpty())
+				remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_no_lessons);
 			else {
-				/*
+				/* Filip Brolund
 				cardStyleID = mPrefs.getInt("card_style_int", 0);
 				if (cardStyleID == 0)
 					cardStyleID = R.layout.card;
-					*/
+				*/
+				
+				//lesson = database.getNextLesson();
+				lesson = database.getCurrentLesson();
+				if(lesson == null){
+					Log.e("CardWidget", "Lesson is null");
+					remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_no_lessons);
+					remoteViews.setOnClickPendingIntent(R.id.cardWidget, pendingIntent);
+					return;
+				}
+				
 				remoteViews = new RemoteViews(context.getPackageName(),R.layout.card);
-				lesson = getCurrentLesson();
+				
 				images = context.getResources().obtainTypedArray(R.array.imageIDs);
 
 				remoteViews.setImageViewResource(R.id.cardLessonImage,
@@ -105,6 +106,7 @@ public class CardWidget extends AppWidgetProvider {
 			remoteViews.setOnClickPendingIntent(R.id.cardWidget, pendingIntent);
 		}
 
+		/*
 		public Lesson getCurrentLesson() {
 				database = new Schedule(context, getDay());
 				Calendar c = Calendar.getInstance();
@@ -138,7 +140,8 @@ public class CardWidget extends AppWidgetProvider {
 					//remoteViews.setTextViewText(R.id.cardTimeTo, null);	
 			return lesson;
 		}
-
+		*/
+		
 		@Override
 		public void run() {
 			updateCard();

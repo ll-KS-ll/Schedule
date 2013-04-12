@@ -1,6 +1,8 @@
 package com.schema.bro.ks;
 
+import java.util.Calendar;
 import java.util.StringTokenizer;
+
 import android.util.Log;
 
 public class Lesson implements Comparable<Lesson>{
@@ -73,18 +75,18 @@ public class Lesson implements Comparable<Lesson>{
 	
 	private int setWeekdayValue(String weekday){
 		if(weekday.equals("Måndag"))
-			return 0;
+			return Calendar.MONDAY;
 		else if(weekday.equals("Tisdag"))
-			return 1;
+			return Calendar.TUESDAY;
 		else if(weekday.equals("Onsdag"))
-			return 2;
+			return Calendar.WEDNESDAY;
 		else if(weekday.equals("Torsdag"))
-			return 3;
+			return Calendar.THURSDAY;
 		else if(weekday.equals("Fredag"))
-			return 4;
+			return Calendar.FRIDAY;
 		else if(weekday.equals("Lördag")
 				|| weekday.equals("Söndag"))
-			return 6;
+			return 7;
 		
 		return -1;
 	}
@@ -154,6 +156,33 @@ public class Lesson implements Comparable<Lesson>{
 		return weekdayVal;
 	}
 
+	/** Get the time until this lesson starts or until it ends.
+	 * 
+	 * @param during - true if to compare with end time, otherwise false. 
+	 * @return timeLeft - the time left in minutes until start or end time.
+	 */
+	public String getTimeLeft(boolean during){
+		return String.valueOf(getTimeLeftVal(during));
+	}
+	
+	/** Get the time until this lesson starts or until it ends.
+	 * 
+	 * @param during - true if to compare with end time, otherwise false. 
+	 * @return timeLeft - the time left in minutes until start or end time.
+	 */
+	public int getTimeLeftVal(boolean during){
+		int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		int minute = Calendar.getInstance().get(Calendar.MINUTE);
+		if(during){
+			int hourDif = hour - endHour;
+			int minuteDif = minute - endMinute;
+			return Math.abs(hourDif * 60 + minuteDif);
+		}else{
+			int hourDif = hour - startHour;
+			int minuteDif = minute - startMinute;
+			return Math.abs(hourDif * 60 + minuteDif);
+		}
+	}
 
 	public void setWeekday(String weekday){
 		this.weekday = weekday;
