@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +18,7 @@ import android.widget.Spinner;
 
 import com.schema.bro.ks.Customizer;
 import com.schema.bro.ks.Lesson;
+import com.schema.bro.ks.Schedule;
 import com.schema.bro.ks.TimePickerWidget;
 
 public class LessonActivity extends Activity implements OnClickListener{
@@ -57,7 +57,7 @@ public class LessonActivity extends Activity implements OnClickListener{
 			if (edit) {
 					try{
 						Lesson lesson = new Lesson(extras.getString("lesson", "empty"));
-						spinny.setSelection(lesson.getWeekdayValue());
+						spinny.setSelection(lesson.getWeekdayValue() - 2);
 						startTimePicker.init(lesson.getStartHour(), lesson.getStartMinute());
 						endTimePicker.init(lesson.getEndHour(), lesson.getEndMinute());
 						((EditText) findViewById(R.id.editName)).setText(lesson.getName());
@@ -135,13 +135,13 @@ public class LessonActivity extends Activity implements OnClickListener{
 	}
 
 	public void editLesson() {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences prefs = getSharedPreferences(Schedule.PREFS_NAME, 0);
 		String data = getInputData(ID);
 		prefs.edit().putString("lesson_" + ID, data).commit();
 	}
 
 	public void createLesson() {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences prefs = getSharedPreferences(Schedule.PREFS_NAME, 0);
 		int ID = prefs.getInt("count", 0);
 		String data = getInputData(ID);
 		prefs.edit().putString("lesson_" + ID, data).commit();
@@ -149,7 +149,7 @@ public class LessonActivity extends Activity implements OnClickListener{
 	}
 
 	public void removeLesson() {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences prefs = getSharedPreferences(Schedule.PREFS_NAME, 0);
 		prefs.edit().putString("lesson_" + ID, "empty").commit();
 	}
 

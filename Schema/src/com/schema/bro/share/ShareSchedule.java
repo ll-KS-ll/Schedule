@@ -25,17 +25,21 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.schema.bro.R;
 import com.schema.bro.ShareActivity;
+import com.schema.bro.ks.Schedule;
 
 public class ShareSchedule extends DialogFragment implements OnItemClickListener{
 	
 	private BluetoothAdapter mBluetoothAdapter;
-	private int REQUEST_ENABLE_BT = 42;
+	private static final int REQUEST_ENABLE_BT = 42;
 	private boolean connected;
-	
+	private ConnectThread connect;
+	private Context context;
+	private View view; 
 	private ListView listView;
 	private ArrayAdapter<String> adapter;
 	private LinkedList<String> addresses;
@@ -49,7 +53,7 @@ public class ShareSchedule extends DialogFragment implements OnItemClickListener
 	    adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1);
 	    addresses = new LinkedList<String>();
 	    LayoutInflater inflater = getActivity().getLayoutInflater();
-	    View view = inflater.inflate(R.layout.share_dialog, null);
+	    view = inflater.inflate(R.layout.share_dialog, null);
 	    listView = (ListView) view.findViewById(R.id.shareBluetoothDeviceList);
 	    listView.setAdapter(adapter);
 	    listView.setOnItemClickListener(this);
@@ -80,7 +84,9 @@ public class ShareSchedule extends DialogFragment implements OnItemClickListener
 	}
 
 	private void connectBluetooth() {
-		 connected = true;
+		connected = true;
+		
+		context = this.getActivity();
 		
 		Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 		// If there are paired devices
@@ -131,7 +137,12 @@ public class ShareSchedule extends DialogFragment implements OnItemClickListener
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		mBluetoothAdapter.cancelDiscovery();
 		BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(addresses.get(position));
-		ConnectThread connect = new ConnectThread(device);
+		
+		final TextView tv = (TextView) this.view.findViewById(R.id.shareDialogTextInfo);
+    	tv.setText("Försöker koppla till " + device.getName());
+    	listView.setVisibility(View.GONE);
+		
+		connect = new ConnectThread(device);
 		connect.start();
 	}
 	
@@ -140,12 +151,26 @@ public class ShareSchedule extends DialogFragment implements OnItemClickListener
 		super.onDestroy();
 		mBluetoothAdapter.cancelDiscovery();
 		getActivity().unregisterReceiver(mReceiver);
+		if(connect != null)
+			connect.cancel();
+	}
+	
+	public void onConnected(){
+		mBluetoothAdapter.cancelDiscovery();
+		
+		view.post(new Runnable() {
+	        public void run() {
+	        	final TextView tv = (TextView) view.findViewById(R.id.shareDialogTextInfo);
+	        	tv.setText("Skickar schema...");
+	        }
+		});
 	}
 	
 	private class ConnectThread extends Thread {
 	    
 		private final BluetoothSocket mmSocket;
-	 
+		private ManageBluetoothConnection connectionManager;
+		
 	    public ConnectThread(BluetoothDevice device) {
 	        // Use a temporary object that is later assigned to mmSocket,
 	        // because mmSocket is final
@@ -176,16 +201,22 @@ public class ShareSchedule extends DialogFragment implements OnItemClickListener
 	            return;
 	        }
 	 
-	        Log.e("Schema Bluetooth", "Connected!!");
-	       //ManageBluetoothConnection connectionManager = new ManageBluetoothConnection(mmSocket);
-	       //connectionManager.write("".getBytes());
+	       Log.d("Schema Bluetooth", "Connected!!");
+	       onConnected();
+	       
+	       connectionManager = new ManageBluetoothConnection(context, mmSocket);
+	       Schedule database = new Schedule(context);
+	       connectionManager.write(database.getSchedule());
+	       
+	       this.cancel();
+	       dismiss();
 	    }
 	 
 	    /** Will cancel an in-progress connection, and close the socket */
-	    @SuppressWarnings("unused")
 		public void cancel() {
 	        try {
 	            mmSocket.close();
+	            connectionManager.cancel();
 	        } catch (IOException e) { }
 	    }
 	}

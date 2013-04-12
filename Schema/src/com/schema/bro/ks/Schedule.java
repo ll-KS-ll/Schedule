@@ -2,20 +2,21 @@ package com.schema.bro.ks;
 
 import java.util.Calendar;
 import java.util.LinkedList;
+import java.util.StringTokenizer;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class Schedule {
 
 	private PriorityList lessons;
 	private SharedPreferences data;
+	public static final String PREFS_NAME = "MY_SCHEDULE";
 	//private Lesson nextLesson;
 	
 	public Schedule(Context context) {
-		data = PreferenceManager.getDefaultSharedPreferences(context);
+		data =  context.getSharedPreferences(PREFS_NAME, 0);
 		//nextLesson = null;
 		loadLessons();
 	}
@@ -98,7 +99,7 @@ public class Schedule {
 		lessons.remove(pos);
 		data.edit().remove("lesson_" + pos).commit();
 	}
-
+	
 	public void update() {
 		int count = data.getInt("count", 0);
 
@@ -283,6 +284,51 @@ public class Schedule {
 		return nextLesson;
 	}
 	*/
+	
+	/**
+	 * Clear the entire schedule.
+	 */
+	public void clear(){
+		data.edit().clear().commit();
+		lessons.clear();
+		if(lessons.isEmpty())
+			Log.d("Schedule:clear", "All lessons where removed");
+	}
+	
+
+	/** Add an entire schedule.
+	 * 
+	 * @param schedule - a string with information for the whole schedule
+	 */
+	public void addSchedule(String schedule){
+		clear();
+		StringTokenizer token = new StringTokenizer(schedule, "\n");
+		
+		int count = 0;
+		while(token.hasMoreTokens()){
+			String lesson = token.nextToken();
+			data.edit().putString("lesson_" + count, lesson).commit();
+			count++;
+		}
+		data.edit().putInt("count", count).commit();
+		Log.d("Schedule:addSchedule", count + " lessons where added");
+	}
+	
+	/** Get the entire schedule as an 
+	 * 	byte array for sending to another unit.
+	 * 
+	 * @return schedule - The entire schedule as an byte array.
+	 */
+	public byte[] getSchedule(){
+		String schedule = "";
+		for(int n=0; n < lessons.size(); n++){
+			Lesson lesson = getLesson(n);
+			schedule += lesson.toString();
+			if(n != lessons.size() - 1)
+				schedule += "\n";
+		}
+		return schedule.getBytes();
+	}
 	
 	public boolean isEmpty(){
 		return lessons.isEmpty();

@@ -9,13 +9,14 @@ import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.schema.bro.R;
@@ -23,19 +24,18 @@ import com.schema.bro.ShareActivity;
 
 public class ReceiveSchedule extends DialogFragment{
 	
-    // Server listen, waits on client, wait for pair, discoverable, recive
-    // Client connect, starts connection, try pair, discover, give
-	
-	
+	private Context context;
 	private BluetoothAdapter mBluetoothAdapter;
 	private AcceptThread connect;
+	private static final int REQUEST_ENABLE_BT = 7;
+	private View view;
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 	    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 	    
 	    LayoutInflater inflater = getActivity().getLayoutInflater();
-	    View view = inflater.inflate(R.layout.receive_dialog, null);
+	    view = inflater.inflate(R.layout.receive_dialog, null);
 	    
 	    builder.setView(view).setTitle("Väntar på schema...")
 	           .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -58,7 +58,7 @@ public class ReceiveSchedule extends DialogFragment{
 		if(mBluetoothAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE){
 			Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
 			discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-			startActivity(discoverableIntent);
+			startActivityForResult(discoverableIntent, REQUEST_ENABLE_BT);
 		}else{
 			connectBluetooth();
 		}
@@ -66,6 +66,7 @@ public class ReceiveSchedule extends DialogFragment{
 	}
 	
 	private void connectBluetooth() {
+		context = this.getActivity();
 		connect = new AcceptThread();
 		connect.start();
 	}
@@ -73,18 +74,40 @@ public class ReceiveSchedule extends DialogFragment{
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode != Activity.RESULT_CANCELED) {
-			connectBluetooth();
-		}else if(resultCode == Activity.RESULT_CANCELED){
-			Toast toast = Toast.makeText(getActivity(), "Enehetn behöver vara synlig för att ta emot scehman", Toast.LENGTH_SHORT);
+		
+		if (resultCode == Activity.RESULT_CANCELED) {
+			Toast toast = Toast.makeText(getActivity(), "Eneheten behöver vara synlig för att ta emot scehman", Toast.LENGTH_SHORT);
 			toast.show();
 			dismiss();
+		}else{
+			connectBluetooth();
 		}
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if(connect != null){
+			connect.cancel();
+			try {
+				connect.join();
+			} catch (InterruptedException e) { }
+		}
+	}
+	
+	public void onConnected(){
+		final TextView tv = (TextView) view.findViewById(R.id.recieveDialogTextInfo);
+		tv.post(new Runnable() {
+	        public void run() {
+	        	tv.setText("Tar emot data..");
+	        }
+		});
 	}
 	
 	private class AcceptThread extends Thread {
 	    
 		private final BluetoothServerSocket mmServerSocket;
+		private ManageBluetoothConnection connectionManager;
 		
 	    public AcceptThread() {
 	        // Use a temporary object that is later assigned to mmServerSocket,
@@ -100,6 +123,7 @@ public class ReceiveSchedule extends DialogFragment{
 	    
 	    public void run() {
 	        BluetoothSocket socket = null;
+	       
 	        // Keep listening until exception occurs or a socket is returned
 	        while (true) {
 	            try {
@@ -107,12 +131,13 @@ public class ReceiveSchedule extends DialogFragment{
 	            } catch (IOException e) {
 	                break;
 	            }
+	            
 	            // If a connection was accepted
 	            if (socket != null) {
-	                // Do work to manage the connection (in a separate thread)
-	            	Log.e("Schema Bluetooth", "Connected!!");
-	                //ManageBluetoothConnection connectionManager = new ManageBluetoothConnection(socket);
-	                //connectionManager.run();
+	            	
+	            	onConnected();
+	            	connectionManager = new ManageBluetoothConnection(context, socket);
+	                connectionManager.start();
 	                
 	                try {
 						mmServerSocket.close();
@@ -120,12 +145,15 @@ public class ReceiveSchedule extends DialogFragment{
 	                break;
 	            }
 	        }
+	        
+	        dismiss();
 	    }
 	 
 	    /** Will cancel the listening socket, and cause the thread to finish */
 		public void cancel() {
 	        try {
 	            mmServerSocket.close();
+	            connectionManager.cancel();
 	        } catch (IOException e) { }
 	    }
 	}

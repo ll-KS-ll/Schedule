@@ -3,19 +3,24 @@ package com.schema.bro.share;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
+import com.schema.bro.ks.Schedule;
 
 public class ManageBluetoothConnection extends Thread {
-    private final BluetoothSocket mmSocket;
+    
+	private final BluetoothSocket mmSocket;
     private final InputStream mmInStream;
     private final OutputStream mmOutStream;
- 
-    public ManageBluetoothConnection(BluetoothSocket socket) {
+    private Context context;
+    
+    public ManageBluetoothConnection(Context context, BluetoothSocket socket) {
         mmSocket = socket;
         InputStream tmpIn = null;
         OutputStream tmpOut = null;
  
+        this.context = context;
+        
         // Get the input and output streams, using temp objects because
         // member streams are final
         try {
@@ -34,10 +39,16 @@ public class ManageBluetoothConnection extends Thread {
         // Keep listening to the InputStream until an exception occurs
         while (true) {
             try {
-                // Read from the InputStream
+            	// Read from the InputStream
                 bytes = mmInStream.read(buffer);
-                // Send the obtained bytes to the UI activity
-              //  mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer).sendToTarget();
+                byte[] readableBytes = new byte[bytes];
+                System.arraycopy(buffer, 0, readableBytes, 0, bytes);
+                String data = new String(readableBytes);
+                
+                Schedule database = new Schedule(context);
+                database.addSchedule(data);
+                
+                this.cancel();
             } catch (IOException e) {
                 break;
             }
@@ -48,6 +59,7 @@ public class ManageBluetoothConnection extends Thread {
     public void write(byte[] bytes) {
         try {
             mmOutStream.write(bytes);
+            mmOutStream.flush();
         } catch (IOException e) { }
     }
  
