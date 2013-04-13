@@ -24,6 +24,11 @@
             android:key="notification_sound"
             android:summary="Spela upp ett ljud när nästa lektion börjar"
             android:title="Notifications ljud" />
+        
+        <Preference
+            android:key="clear"
+            android:summary="Ta bort alla lektioner ifrån schemat"
+            android:title="Rensa schema" />
     </PreferenceCategory>
     
     <PreferenceCategory android:title="Utseende" >
