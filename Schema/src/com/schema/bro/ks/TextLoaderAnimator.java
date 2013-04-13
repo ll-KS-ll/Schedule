@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 
 import com.schema.bro.R.color;
 
@@ -36,6 +37,10 @@ public class TextLoaderAnimator {
 	
 	public void setTextSize(int textSize){
 		this.textSize = textSize;
+	}
+	
+	public void setScaleType(ScaleType scaleType){
+		imageView.setScaleType(scaleType);
 	}
 	
 	public void stop(){
