@@ -87,7 +87,7 @@ public class CardWidget extends AppWidgetProvider {
 					return;
 				}
 				
-				remoteViews = new RemoteViews(context.getPackageName(),R.layout.card);
+				remoteViews = new RemoteViews(context.getPackageName(),R.layout.card_tablerow);
 				
 				images = context.getResources().obtainTypedArray(R.array.imageIDs);
 
