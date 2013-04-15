@@ -48,7 +48,7 @@ public class Customizer {
 
 		switch (cardID) {
 		case 0:
-			return R.layout.card_tablerow;
+			return R.layout.card;
 		case 1:
 			return R.layout.card2;
 		default: 
