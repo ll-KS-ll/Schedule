@@ -98,8 +98,8 @@ public class CardWidget extends AppWidgetProvider {
 		remoteViews.setTextViewText(R.id.cardRoom, lesson.getRoom());
 		Calendar c = Calendar.getInstance();
 		final int currentTime = c.get(Calendar.HOUR_OF_DAY) * 60 + c.get(Calendar.MINUTE);
-		final int lessonStartTime = (lesson.getEndHour() * 60 + lesson.getEndMinute() - currentTime);
-		if (currentTime < lessonStartTime)
+		final int lessonStartTime = (lesson.getStartHour() * 60 + lesson.getStartMinute());
+		if (currentTime <= lessonStartTime)
 			remoteViews.setTextViewText(R.id.cardTimeLeft,"Tid kvar: " + lesson.getTimeLeft(false) + "m");
 		else
 			remoteViews.setTextViewText(R.id.cardTimeLeft,"Tid kvar: " + lesson.getTimeLeft(true) + "m");
