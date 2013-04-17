@@ -169,13 +169,12 @@ public class Schedule {
 			for(int n=lessons.size()-1; n >= 0; n--){
 				Lesson lesson = (Lesson) lessons.get(n);
 				
-				if(day == lesson.getWeekdayValue())
+				if(day != lesson.getWeekdayValue())
 					continue;
 				
-				//int lesStartTime = lesson.getStartHour() * 60 + lesson.getStartMinute();
 				int lesEndTime = lesson.getEndHour() * 60 + lesson.getEndMinute();
 				
-				if(curTime >= lesEndTime ){
+				if(curTime <= lesEndTime ){
 					Log.i("Schedule:getCurrentLesson", "Got current lesson");
 					found = true;
 					tempLesson = lesson;
@@ -185,7 +184,7 @@ public class Schedule {
 			day++;
 			if(day == Calendar.SATURDAY)
 				day = Calendar.MONDAY;
-			curTime = 1500;
+			curTime = 0;
 		}
 		
 		return tempLesson;
@@ -214,13 +213,12 @@ public class Schedule {
 			for(int n=lessons.size()-1; n >= 0; n--){
 				Lesson lesson = (Lesson) lessons.get(n);
 				
-				if(day == lesson.getWeekdayValue())
+				if(day != lesson.getWeekdayValue())
 					continue;
 				
-				//int lesStartTime = lesson.getStartHour() * 60 + lesson.getStartMinute();
 				int lesEndTime = lesson.getEndHour() * 60 + lesson.getEndMinute();
 				
-				if(curTime >= lesEndTime){
+				if(curTime <= lesEndTime){
 					Log.i("Schedule:getNextLesson", "Got next lesson");
 					found = true;
 					if(n + 1< lessons.size()){
@@ -234,7 +232,7 @@ public class Schedule {
 			day++;
 			if(day == Calendar.SATURDAY)
 				day = Calendar.MONDAY;
-			curTime = 1500;
+			curTime = 0;
 		}
 		
 		return tempLesson;

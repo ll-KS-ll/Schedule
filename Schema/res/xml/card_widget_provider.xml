@@ -3,4 +3,4 @@
     android:initialLayout="@layout/widget_no_lessons"
     android:minWidth="294dp"
     android:minHeight="142dp"
-    android:updatePeriodMillis="60000" />
+    android:updatePeriodMillis="0" />
