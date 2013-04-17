@@ -1,7 +1,6 @@
 package com.schema.bro.widget;
 
 import java.util.Calendar;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -13,7 +12,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.Log;
 import android.widget.RemoteViews;
-
 import com.schema.bro.MainActivity;
 import com.schema.bro.R;
 import com.schema.bro.ks.Lesson;
