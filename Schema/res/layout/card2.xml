@@ -1,13 +1,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardWidget"
     style="@style/nowCardStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/cardWidget">
+    android:gravity="right" >
 
     <TextView
         android:id="@+id/cardStartTime"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -16,15 +17,15 @@
         android:text="12:00"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#707070"
-        android:textSize="@dimen/timeText"
-        android:textStyle="italic" />
+        android:textSize="@dimen/timeText"/>
 
     <ImageView
         android:id="@+id/cardLessonImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/cardEndTime"
+        android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/cardStartTime"
+        android:layout_marginRight="10dp"
         android:contentDescription="Lesson image"
         android:src="@drawable/pic1" />
 
@@ -51,16 +52,16 @@
 
     <TextView
         android:id="@+id/cardEndTime"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/cardTeacher"
         android:layout_marginRight="10dp"
         android:text="13:30"
+        android:gravity="right"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#707070"
-        android:textSize="@dimen/timeText"
-        android:textStyle="italic" />
+        android:textSize="@dimen/timeText"/>
 
     <TextView
         android:id="@+id/cardRoom"
