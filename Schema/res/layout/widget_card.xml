@@ -9,7 +9,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp" >
+        android:layout_marginBottom="11dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp" >
 
         <ImageView
             android:id="@+id/cardLessonImage"
@@ -18,7 +21,7 @@
             android:src="@drawable/pic9" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:orientation="vertical" >
@@ -28,27 +31,41 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Programmering C"
-                android:textStyle="bold"
-                android:textAppearance="?android:attr/textAppearanceMedium" 
-                android:textColor="#707070"/>
+                android:textSize="16dp"
+                android:textColor="#707070"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/cardTeacher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Anders Andersson"
-                android:textAppearance="?android:attr/textAppearanceSmall" 
-                android:textColor="#707070"/>
+                android:textSize="12dp"
+                android:textColor="#707070" />
 
             <TextView
                 android:id="@+id/cardRoom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="E2"
-                android:textAppearance="?android:attr/textAppearanceSmall" 
-                android:textColor="#707070"/>
-
+                android:textSize="12dp"
+                android:textColor="#707070" />
         </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <ImageButton
+                android:id="@+id/refreshButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@null"
+                android:src="@drawable/navigation_refresh" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
@@ -58,47 +75,35 @@
         android:layout_margin="10dp" >
 
         <TextView
-            android:id="@+id/cardStartTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="12:00"
-            android:textStyle="italic"
-            android:textAppearance="?android:attr/textAppearanceLarge" 
-            android:textColor="#707070"/>
-
-        <TextView
             android:id="@+id/cardTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="-"
-            android:textStyle="italic"
-            android:textAppearance="?android:attr/textAppearanceLarge" 
-            android:textColor="#707070"/>
-
-        <TextView
-            android:id="@+id/cardEndTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="13:00"
-            android:textStyle="italic"
-            android:textAppearance="?android:attr/textAppearanceLarge" 
-            android:textColor="#707070"/>
+            android:layout_weight="0.13"
+            android:text="12:00-13:00"
+            android:textColor="#707070"
+            android:textSize="22dp"
+            android:textStyle="italic" />
 
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent" >
-
         </FrameLayout>
 
         <TextView
-            android:id="@+id/cardTimeLeft"
-            android:layout_width="match_parent"
+            android:id="@+id/cardTimeLeftText"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Tid kvar:"
-            android:textAppearance="?android:attr/textAppearanceMedium" 
-            android:textColor="#707070"/>
+            android:layout_weight="0.45"
+            android:gravity="right"
+            android:text="Tid kvar: "
+            android:textColor="#707070" />
 
+        <TextView
+            android:id="@+id/cardTimeLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="0" />
     </LinearLayout>
 
 </LinearLayout>
