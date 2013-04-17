@@ -10,6 +10,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -85,6 +86,11 @@ public class CardWidget extends AppWidgetProvider {
 		Intent intent = new Intent(context, MainActivity.class);
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 		remoteViews.setOnClickPendingIntent(R.id.cardWidget, pendingIntent);
+		
+		Intent intentRefresh = new Intent(context, CardWidget.class);
+		intentRefresh.setAction(CardWidget.ACTION_UPDATE);
+		PendingIntent pendingIntentRefresh = PendingIntent.getBroadcast(context, 0, intentRefresh, PendingIntent.FLAG_UPDATE_CURRENT);
+		remoteViews.setOnClickPendingIntent(R.id.refreshButton, pendingIntentRefresh);
 
 		Lesson lesson = database.getCurrentLesson();
 
@@ -99,10 +105,19 @@ public class CardWidget extends AppWidgetProvider {
 		Calendar c = Calendar.getInstance();
 		final int currentTime = c.get(Calendar.HOUR_OF_DAY) * 60 + c.get(Calendar.MINUTE);
 		final int lessonStartTime = (lesson.getEndHour() * 60 + lesson.getEndMinute() - currentTime);
-		if (currentTime < lessonStartTime)
-			remoteViews.setTextViewText(R.id.cardTimeLeft,"Tid kvar: " + lesson.getTimeLeft(false) + "m");
-		else
-			remoteViews.setTextViewText(R.id.cardTimeLeft,"Tid kvar: " + lesson.getTimeLeft(true) + "m");
+		if (currentTime < lessonStartTime){
+			remoteViews.setTextViewText(R.id.cardTimeLeft,lesson.getTimeLeft(false) + " min");
+			if (Integer.parseInt(lesson.getTimeLeft(false)) > 5 )
+				remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#99CC00"));
+			else
+				remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#FF4444"));
+		}else{
+			remoteViews.setTextViewText(R.id.cardTimeLeft,lesson.getTimeLeft(true) + " min");
+			if (Integer.parseInt(lesson.getTimeLeft(true)) > 5 )
+				remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#99CC00"));
+			else
+				remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#FF4444"));
+		}
 		images.recycle();
 
 		ComponentName schemaWidget = new ComponentName(context, CardWidget.class);
