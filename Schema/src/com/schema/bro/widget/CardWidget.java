@@ -1,5 +1,7 @@
 package com.schema.bro.widget;
 
+import java.util.Calendar;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -70,7 +72,15 @@ public class CardWidget extends AppWidgetProvider {
 	private void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
 		Schedule database = new Schedule(context);
 
-		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.card);
+		if(database.isEmpty()){
+			RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_no_lessons);
+			Intent intent = new Intent(context, MainActivity.class);
+			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+			remoteViews.setOnClickPendingIntent(R.id.cardWidget, pendingIntent);
+			return;
+		}
+		
+		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_card);
 
 		Intent intent = new Intent(context, MainActivity.class);
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
@@ -86,6 +96,13 @@ public class CardWidget extends AppWidgetProvider {
 		remoteViews.setTextViewText(R.id.cardStartTime, lesson.getStartTime());
 		remoteViews.setTextViewText(R.id.cardEndTime, lesson.getEndTime());
 		remoteViews.setTextViewText(R.id.cardRoom, lesson.getRoom());
+		Calendar c = Calendar.getInstance();
+		final int currentTime = c.get(Calendar.HOUR_OF_DAY) * 60 + c.get(Calendar.MINUTE);
+		final int lessonStartTime = (lesson.getEndHour() * 60 + lesson.getEndMinute() - currentTime);
+		if (currentTime < lessonStartTime)
+			remoteViews.setTextViewText(R.id.cardTimeLeft,"Tid kvar: " + lesson.getTimeLeft(false) + "m");
+		else
+			remoteViews.setTextViewText(R.id.cardTimeLeft,"Tid kvar: " + lesson.getTimeLeft(true) + "m");
 		images.recycle();
 
 		ComponentName schemaWidget = new ComponentName(context, CardWidget.class);

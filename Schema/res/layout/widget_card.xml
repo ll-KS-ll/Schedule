@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardWidget"
+    style="@style/nowCardStyle"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp" >
+
+        <ImageView
+            android:id="@+id/cardLessonImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/pic9" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/cardLessonText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Programmering C"
+                android:textStyle="bold"
+                android:textAppearance="?android:attr/textAppearanceMedium" 
+                android:textColor="#707070"/>
+
+            <TextView
+                android:id="@+id/cardTeacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anders Andersson"
+                android:textAppearance="?android:attr/textAppearanceSmall" 
+                android:textColor="#707070"/>
+
+            <TextView
+                android:id="@+id/cardRoom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="E2"
+                android:textAppearance="?android:attr/textAppearanceSmall" 
+                android:textColor="#707070"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp" >
+
+        <TextView
+            android:id="@+id/cardStartTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:00"
+            android:textStyle="italic"
+            android:textAppearance="?android:attr/textAppearanceLarge" 
+            android:textColor="#707070"/>
+
+        <TextView
+            android:id="@+id/cardTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textStyle="italic"
+            android:textAppearance="?android:attr/textAppearanceLarge" 
+            android:textColor="#707070"/>
+
+        <TextView
+            android:id="@+id/cardEndTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="13:00"
+            android:textStyle="italic"
+            android:textAppearance="?android:attr/textAppearanceLarge" 
+            android:textColor="#707070"/>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" >
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/cardTimeLeft"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Tid kvar:"
+            android:textAppearance="?android:attr/textAppearanceMedium" 
+            android:textColor="#707070"/>
+
+    </LinearLayout>
+
+</LinearLayout>
