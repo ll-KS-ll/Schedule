@@ -99,8 +99,7 @@ public class CardWidget extends AppWidgetProvider {
 		remoteViews.setImageViewResource(R.id.cardLessonImage, images.getResourceId(lesson.getImage(), -1));
 		remoteViews.setTextViewText(R.id.cardLessonText, lesson.getName());
 		remoteViews.setTextViewText(R.id.cardTeacher, lesson.getMaster());
-		remoteViews.setTextViewText(R.id.cardStartTime, lesson.getStartTime());
-		remoteViews.setTextViewText(R.id.cardEndTime, lesson.getEndTime());
+		remoteViews.setTextViewText(R.id.cardTime, lesson.getStartTime() + "-" + lesson.getEndTime());
 		remoteViews.setTextViewText(R.id.cardRoom, lesson.getRoom());
 		Calendar c = Calendar.getInstance();
 		final int currentTime = c.get(Calendar.HOUR_OF_DAY) * 60 + c.get(Calendar.MINUTE);
