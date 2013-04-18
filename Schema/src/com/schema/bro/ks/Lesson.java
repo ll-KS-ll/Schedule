@@ -162,7 +162,15 @@ public class Lesson implements Comparable<Lesson>{
 	 * @return timeLeft - the time left in minutes until start or end time.
 	 */
 	public String getTimeLeft(boolean during){
-		return String.valueOf(getTimeLeftVal(during));
+		final int timeLeft = getTimeLeftVal(during);
+		if (timeLeft/(24*60) >= 1)
+			return timeLeft/(24*60) + " d";
+		else if (timeLeft/60 >= 1){
+			final int hours = (int) Math.floor(timeLeft/60);
+			final int minutes = (int) (timeLeft - Math.floor(timeLeft/60)*60);
+			return hours + " h " + minutes + " m";
+		}else
+			return timeLeft + " m";
 	}
 	
 	/** Get the time until this lesson starts or until it ends.
@@ -180,6 +188,14 @@ public class Lesson implements Comparable<Lesson>{
 		}else{
 			int hourDif = hour - startHour;
 			int minuteDif = minute - startMinute;
+			if (hourDif * 60 + minuteDif > 0){
+				int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+				int lessonDay = setWeekdayValue(weekday);
+				if (day >= lessonDay)
+					return Math.abs(7-lessonDay+day)*24*60;
+				else
+					return Math.abs(day-lessonDay)*24*60;
+			}else
 			return Math.abs(hourDif * 60 + minuteDif);
 		}
 	}

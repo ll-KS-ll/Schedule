@@ -102,19 +102,18 @@ public class CardWidget extends AppWidgetProvider {
 		Calendar c = Calendar.getInstance();
 		final int currentTime = c.get(Calendar.HOUR_OF_DAY) * 60 + c.get(Calendar.MINUTE);
 		final int lessonStartTime = (lesson.getStartHour() * 60 + lesson.getStartMinute());
-		if (currentTime <= lessonStartTime)
-			remoteViews.setTextViewText(R.id.cardTimeLeft,"Tid kvar: " + lesson.getTimeLeft(false) + "m");
-		else
-			remoteViews.setTextViewText(R.id.cardTimeLeft,"Tid kvar: " + lesson.getTimeLeft(true) + "m");
-		if (currentTime < lessonStartTime){
-			remoteViews.setTextViewText(R.id.cardTimeLeft,lesson.getTimeLeft(false) + " min");
-			if (Integer.parseInt(lesson.getTimeLeft(false)) > 5 )
+		final int lessonEndTime = (lesson.getEndHour() * 60 + lesson.getEndMinute());
+		if (currentTime < lessonEndTime & currentTime > lessonStartTime){
+			remoteViews.setTextViewText(R.id.cardTimeLeftText,"Slutar om: ");
+			remoteViews.setTextViewText(R.id.cardTimeLeft,lesson.getTimeLeft(true));
+			if (lesson.getTimeLeftVal(true) > 5 )
 				remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#99CC00"));
 			else
 				remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#FF4444"));
 		}else{
-			remoteViews.setTextViewText(R.id.cardTimeLeft,lesson.getTimeLeft(true) + " min");
-			if (Integer.parseInt(lesson.getTimeLeft(true)) > 5 )
+			remoteViews.setTextViewText(R.id.cardTimeLeftText,"Börjar om: ");
+			remoteViews.setTextViewText(R.id.cardTimeLeft,lesson.getTimeLeft(false));
+			if (lesson.getTimeLeftVal(false) > 5 )
 				remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#99CC00"));
 			else
 				remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#FF4444"));
