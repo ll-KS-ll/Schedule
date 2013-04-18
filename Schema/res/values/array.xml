@@ -86,6 +86,7 @@
         <item>@drawable/pic24</item>
         <item>@drawable/pic25</item>
         <item>@drawable/pic26</item>
+        <item>@drawable/pic27</item>
     </string-array>
 
 </resources>
