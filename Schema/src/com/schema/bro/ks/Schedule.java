@@ -335,8 +335,16 @@ public class Schedule {
 		int count = 0;
 		while(token.hasMoreTokens()){
 			String lesson = token.nextToken();
-			data.edit().putString("lesson_" + count, lesson).commit();
-			count++;
+			StringTokenizer tok = new StringTokenizer(lesson, "|");
+			Log.e("Schedule", lesson);
+			for(int n=0; n<7; n++)
+				tok.nextToken(); 
+			String id = tok.nextToken();
+			data.edit().putString("lesson_" + id, lesson).commit();
+			int n = Integer.parseInt(id) + 1;
+			if(n > count ){
+				count = n;
+			}
 		}
 		data.edit().putInt("count", count).commit();
 		Log.d("Schedule:addSchedule", count + " lessons where added");

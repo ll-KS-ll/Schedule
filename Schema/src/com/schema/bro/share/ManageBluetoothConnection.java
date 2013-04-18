@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.util.Log;
+
 import com.schema.bro.ks.Schedule;
 
 public class ManageBluetoothConnection extends Thread {
@@ -33,9 +35,9 @@ public class ManageBluetoothConnection extends Thread {
     }
  
     public void run() {
-        byte[] buffer = new byte[1024];  // buffer store for the stream
+    	byte[] buffer = new byte[4096];  // buffer store for the stream (4KB)
         int bytes; // bytes returned from read()
- 
+        
         // Keep listening to the InputStream until an exception occurs
         while (true) {
             try {
@@ -44,7 +46,7 @@ public class ManageBluetoothConnection extends Thread {
                 byte[] readableBytes = new byte[bytes];
                 System.arraycopy(buffer, 0, readableBytes, 0, bytes);
                 String data = new String(readableBytes);
-                
+                Log.e("Bluetooth", bytes + " bytes received");
                 Schedule database = new Schedule(context);
                 database.addSchedule(data);
                 
@@ -60,7 +62,7 @@ public class ManageBluetoothConnection extends Thread {
     /* Call this from the main activity to send data to the remote device */
     public void write(byte[] bytes) {
         try {
-            mmOutStream.write(bytes);
+            mmOutStream.write(bytes, 0, bytes.length);
             mmOutStream.flush();
         } catch (IOException e) { }
     }
