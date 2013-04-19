@@ -20,9 +20,7 @@ import com.schema.bro.schoolmeal.SchoolMealFragment;
 public class MainActivity extends FragmentActivity implements ActionBar.OnNavigationListener {
 
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-
-	}
+	protected void onSaveInstanceState(Bundle outState) {}
 
 	public static final int SCHEDULE = 0;
 	public static final int NOVA = 1;

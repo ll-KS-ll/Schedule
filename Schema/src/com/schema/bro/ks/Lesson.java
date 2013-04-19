@@ -164,13 +164,18 @@ public class Lesson implements Comparable<Lesson>{
 	public String getTimeLeft(boolean during){
 		final int timeLeft = getTimeLeftVal(during);
 		if (timeLeft/(24*60) >= 1)
-			return timeLeft/(24*60) + " d";
+			if(timeLeft/(24*60) < 2)
+				return timeLeft/(24*60) + " dag";
+			else
+				return timeLeft/(24*60) + " dagar";
 		else if (timeLeft/60 >= 1){
 			final int hours = (int) Math.floor(timeLeft/60);
 			final int minutes = (int) (timeLeft - Math.floor(timeLeft/60)*60);
-			return hours + " h " + minutes + " m";
+			return hours + "h " + minutes + "m";
 		}else
-			return timeLeft + " m";
+			return timeLeft + "min";
+		// Brolund has been here!
+		// This is no code of K-S!
 	}
 	
 	/** Get the time until this lesson starts or until it ends.
@@ -190,13 +195,19 @@ public class Lesson implements Comparable<Lesson>{
 			int minuteDif = minute - startMinute;
 			if (hourDif * 60 + minuteDif > 0){
 				int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-				int lessonDay = setWeekdayValue(weekday);
+				int lessonDay = getWeekdayValue();
 				if (day >= lessonDay)
-					return Math.abs(7-lessonDay+day)*24*60;
+					if(lessonDay - day >= 0)
+						return (lessonDay-day)*24*60;
+					else
+						return (lessonDay-day+7)*24*60;
+					//return Math.abs(7-lessonDay+day)*24*60;
 				else
 					return Math.abs(day-lessonDay)*24*60;
 			}else
 			return Math.abs(hourDif * 60 + minuteDif);
+			// Brolund has been here!
+			// K-S is not responsible for any faults here!
 		}
 	}
 

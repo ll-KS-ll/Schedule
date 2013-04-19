@@ -182,7 +182,7 @@ public class Schedule {
 				}
 			}
 			day++;
-			if(day == Calendar.SATURDAY)
+			if(day >= Calendar.SATURDAY)
 				day = Calendar.MONDAY;
 			curTime = 0;
 		}
@@ -230,7 +230,7 @@ public class Schedule {
 				}
 			}
 			day++;
-			if(day == Calendar.SATURDAY)
+			if(day >= Calendar.SATURDAY)
 				day = Calendar.MONDAY;
 			curTime = 0;
 		}
@@ -269,7 +269,6 @@ public class Schedule {
 		Log.d("Schedule:getOngoingLesson", "There is no lessons right now");
 		return null;
 	}
-	
 	
 	/*
 	public int showNextLessonCard(){
