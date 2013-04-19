@@ -14,6 +14,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import com.schema.bro.MainActivity;
 import com.schema.bro.R;
+import com.schema.bro.R.color;
 import com.schema.bro.ks.Lesson;
 import com.schema.bro.ks.Schedule;
 
@@ -113,7 +114,10 @@ public class CardWidget extends AppWidgetProvider {
 			remoteViews.setTextViewText(R.id.cardTimeLeftText,"Börjar om: ");
 			remoteViews.setTextViewText(R.id.cardTimeLeft,lesson.getTimeLeft(false));
 			if (lesson.getTimeLeftVal(false) > 5 )
-				remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#99CC00"));
+				if (lesson.getTimeLeftVal(false)/(24*60) >= 1) // <--- Make time left gray if there is a day or more left
+					remoteViews.setTextColor(R.id.cardTimeLeft, color.gray); // <--- Make time left gray if there is a day or more left
+				else // <--- Make time left gray if there is a day or more left
+					remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#99CC00"));
 			else
 				remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#FF4444"));
 		}

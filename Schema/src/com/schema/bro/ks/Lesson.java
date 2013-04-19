@@ -230,7 +230,6 @@ public class Lesson implements Comparable<Lesson>{
 		this.name = name;
 	}
 	
-
 	public void setRoom(String room) {
 		this.room = room;
 	}
