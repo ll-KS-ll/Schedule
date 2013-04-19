@@ -9,10 +9,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="11dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp" >
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp" >
 
         <ImageView
             android:id="@+id/cardLessonImage"
@@ -22,7 +22,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="68dp"
             android:layout_marginLeft="10dp"
             android:orientation="vertical" >
 
@@ -30,26 +30,30 @@
                 android:id="@+id/cardLessonText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top"
                 android:text="Programmering C"
-                android:textSize="16dp"
                 android:textColor="#707070"
+                android:textSize="18dp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/cardTeacher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top"
                 android:text="Anders Andersson"
-                android:textSize="12dp"
-                android:textColor="#707070" />
+                android:textColor="#707070"
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/cardRoom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top"
                 android:text="E2"
-                android:textSize="12dp"
-                android:textColor="#707070" />
+                android:textColor="#707070"
+                android:textSize="12dp" />
+
         </LinearLayout>
 
         <RelativeLayout
@@ -72,7 +76,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp" >
+        android:layout_margin="10dp"
+        android:layout_weight="0.28" >
 
         <TextView
             android:id="@+id/cardTime"
@@ -96,6 +101,7 @@
             android:layout_weight="0.45"
             android:gravity="right"
             android:text="Tid kvar: "
+            android:textSize="12dp"
             android:textColor="#707070" />
 
         <TextView
@@ -103,6 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="right"
+            android:textSize="18dp"
             android:text="0" />
     </LinearLayout>
 
