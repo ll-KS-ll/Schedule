@@ -33,26 +33,17 @@
                 android:layout_gravity="top"
                 android:text="Programmering C"
                 android:textColor="#707070"
-                android:textSize="18dp"
+                android:textSize="22dp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/cardTeacher"
-                android:layout_width="wrap_content"
+                android:layout_width="178dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:text="Anders Andersson"
+                android:layout_gravity="left"
+                android:text="Anders Andersson | E2"
                 android:textColor="#707070"
-                android:textSize="12dp" />
-
-            <TextView
-                android:id="@+id/cardRoom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:text="E2"
-                android:textColor="#707070"
-                android:textSize="12dp" />
+                android:textSize="16dp" />
 
         </LinearLayout>
 
