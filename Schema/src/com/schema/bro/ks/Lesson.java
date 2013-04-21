@@ -173,9 +173,7 @@ public class Lesson implements Comparable<Lesson>{
 			final int minutes = (int) (timeLeft - Math.floor(timeLeft/60)*60);
 			return hours + "h " + minutes + "m";
 		}else
-			return timeLeft + "min";
-		// Brolund has been here!
-		// This is no code of K-S!
+			return timeLeft + " min";
 	}
 	
 	/** Get the time until this lesson starts or until it ends.
@@ -186,29 +184,29 @@ public class Lesson implements Comparable<Lesson>{
 	public int getTimeLeftVal(boolean during){
 		int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 		int minute = Calendar.getInstance().get(Calendar.MINUTE);
+		int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+		int lessonDay = getWeekdayValue();
+		int hourDif;
+		int minuteDif;
+		
 		if(during){
-			int hourDif = hour - endHour;
-			int minuteDif = minute - endMinute;
-			return Math.abs(hourDif * 60 + minuteDif);
+			hourDif = hour - endHour;
+			minuteDif = minute - endMinute;
 		}else{
-			int hourDif = hour - startHour;
-			int minuteDif = minute - startMinute;
-			if (hourDif * 60 + minuteDif > 0){
-				int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-				int lessonDay = getWeekdayValue();
-				if (day >= lessonDay)
-					if(lessonDay - day >= 0)
-						return (lessonDay-day)*24*60;
-					else
-						return (lessonDay-day+7)*24*60;
-					//return Math.abs(7-lessonDay+day)*24*60;
-				else
-					return Math.abs(day-lessonDay)*24*60;
-			}else
-			return Math.abs(hourDif * 60 + minuteDif);
-			// Brolund has been here!
-			// K-S is not responsible for any faults here!
+			hourDif = hour - startHour;
+			minuteDif = minute - startMinute;
 		}
+		
+		if (hourDif * 60 + minuteDif > 0 || lessonDay != day){
+			if (day >= lessonDay)
+				if(lessonDay - day >= 0)
+					return (lessonDay-day)*24*60;
+				else
+					return (lessonDay-day+7)*24*60;
+			else
+				return Math.abs(day-lessonDay)*24*60;
+		}else
+			return Math.abs(hourDif * 60 + minuteDif);
 	}
 
 	public void setWeekday(String weekday){

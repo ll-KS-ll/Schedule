@@ -103,11 +103,11 @@ public class CardWidget extends AppWidgetProvider {
 		final int currentTime = c.get(Calendar.HOUR_OF_DAY) * 60 + c.get(Calendar.MINUTE);
 		final int lessonStartTime = (lesson.getStartHour() * 60 + lesson.getStartMinute());
 		final int lessonEndTime = (lesson.getEndHour() * 60 + lesson.getEndMinute());
-		if (currentTime < lessonEndTime & currentTime > lessonStartTime){
+		if (currentTime < lessonEndTime && currentTime > lessonStartTime && lesson.getWeekdayValue() == c.get(Calendar.DAY_OF_WEEK)){
 			remoteViews.setTextViewText(R.id.cardTimeLeftText,"Slutar om: ");
 			remoteViews.setTextViewText(R.id.cardTimeLeft,lesson.getTimeLeft(true));
 			if (lesson.getTimeLeftVal(true) > 5 )
-				remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#99CC00"));
+				remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#33B5E5"));
 			else
 				remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#FF4444"));
 		}else{
@@ -117,7 +117,7 @@ public class CardWidget extends AppWidgetProvider {
 				if (lesson.getTimeLeftVal(false)/(24*60) >= 1) // <--- Make time left gray if there is a day or more left
 					remoteViews.setTextColor(R.id.cardTimeLeft, color.gray); // <--- Make time left gray if there is a day or more left
 				else // <--- Make time left gray if there is a day or more left
-					remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#99CC00"));
+					remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#33B5E5"));
 			else
 				remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#FF4444"));
 		}
