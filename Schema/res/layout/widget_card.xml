@@ -34,10 +34,11 @@
                 android:text="Programmering C"
                 android:textColor="#707070"
                 android:textSize="22dp"
+                android:singleLine="true"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/cardTeacher"
+                android:id="@+id/cardTeacherClassText"
                 android:layout_width="178dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"

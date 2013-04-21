@@ -75,6 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:ems="10"
+            android:maxLength="17"
             android:hint="Lektions namn" >
         </EditText>
 
@@ -114,6 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:ems="10"
+            android:maxLength="16"
             android:hint="Lärare" />
 
         <EditText
@@ -122,6 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:ems="10"
+            android:maxLength="10"
             android:hint="Lektions sal" />
     </LinearLayout>
 

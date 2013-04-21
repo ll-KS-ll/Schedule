@@ -184,8 +184,8 @@ public class Lesson implements Comparable<Lesson>{
 	 * @return timeLeft - the time left in minutes until start or end time.
 	 */
 	public int getTimeLeftVal(boolean during){
-		int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-		int minute = Calendar.getInstance().get(Calendar.MINUTE);
+		final int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		final int minute = Calendar.getInstance().get(Calendar.MINUTE);
 		if(during){
 			int hourDif = hour - endHour;
 			int minuteDif = minute - endMinute;
@@ -193,9 +193,9 @@ public class Lesson implements Comparable<Lesson>{
 		}else{
 			int hourDif = hour - startHour;
 			int minuteDif = minute - startMinute;
-			if (hourDif * 60 + minuteDif > 0){
-				int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-				int lessonDay = getWeekdayValue();
+			final int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+			final int lessonDay = getWeekdayValue();
+			if (hourDif * 60 + minuteDif > 0 | day != lessonDay){
 				if (day >= lessonDay)
 					if(lessonDay - day >= 0)
 						return (lessonDay-day)*24*60;
