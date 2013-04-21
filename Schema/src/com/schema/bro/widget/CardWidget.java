@@ -97,7 +97,7 @@ public class CardWidget extends AppWidgetProvider {
 
 		remoteViews.setImageViewResource(R.id.cardLessonImage, images.getResourceId(lesson.getImage(), -1));
 		remoteViews.setTextViewText(R.id.cardLessonText, lesson.getName());
-		remoteViews.setTextViewText(R.id.cardTeacher, lesson.getMaster() + " | " + lesson.getRoom());
+		remoteViews.setTextViewText(R.id.cardTeacherClassText, lesson.getMaster() + " | " + lesson.getRoom());
 		remoteViews.setTextViewText(R.id.cardTime, lesson.getStartTime() + "-" + lesson.getEndTime());
 		Calendar c = Calendar.getInstance();
 		final int currentTime = c.get(Calendar.HOUR_OF_DAY) * 60 + c.get(Calendar.MINUTE);

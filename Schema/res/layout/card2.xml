@@ -38,7 +38,8 @@
         android:text="Programmering C"
         android:textColor="#707070"
         android:textSize="@dimen/lessonText"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:singleLine="true" />
 
     <TextView
         android:id="@+id/cardTeacher"
@@ -48,7 +49,8 @@
         android:layout_below="@+id/cardLessonText"
         android:text="Anders Andersson"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#707070" />
+        android:textColor="#707070" 
+        android:singleLine="true"/>
 
     <TextView
         android:id="@+id/cardEndTime"
@@ -72,6 +74,7 @@
         android:layout_alignLeft="@+id/cardTeacher"
         android:text="E3"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#707070" />
+        android:textColor="#707070"
+        android:maxLength="10" />
 
 </RelativeLayout>
