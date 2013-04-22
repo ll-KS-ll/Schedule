@@ -107,7 +107,7 @@ public class CardWidget extends AppWidgetProvider {
 			remoteViews.setTextViewText(R.id.cardTimeLeftText,"Slutar om: ");
 			remoteViews.setTextViewText(R.id.cardTimeLeft,lesson.getTimeLeft(true));
 			if (lesson.getTimeLeftVal(true) > 5 )
-				remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#33B5E5"));
+				remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#669900"));
 			else
 				remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#FF4444"));
 		}else{
@@ -117,7 +117,7 @@ public class CardWidget extends AppWidgetProvider {
 				if (lesson.getTimeLeftVal(false)/(24*60) >= 1) // <--- Make time left gray if there is a day or more left
 					remoteViews.setTextColor(R.id.cardTimeLeft, color.gray); // <--- Make time left gray if there is a day or more left
 				else // <--- Make time left gray if there is a day or more left
-					remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#33B5E5"));
+					remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#669900"));
 			else
 				remoteViews.setTextColor(R.id.cardTimeLeft, Color.parseColor("#FF4444"));
 		}
