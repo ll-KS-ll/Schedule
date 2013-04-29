@@ -81,9 +81,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 			spinClass.setSelection(pos);
 			if(fragment != null)
 				spinClass.setOnItemSelectedListener(new NovaOnItemSelectedListener(fragment));
-		}else{
+		}else if(state == SCHEDULE){
 			getMenuInflater().inflate(R.menu.schedule, menu);
+		}else{
+			getMenuInflater().inflate(R.menu.food, menu);
 		}
+		
 		return true;
 	}
 

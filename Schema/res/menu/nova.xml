@@ -8,9 +8,11 @@
         android:showAsAction="always"
         android:title="Klass"
         tools:ignore="HardcodedText"/>
+    <!--
     <item
         android:id="@+id/share"
         android:title="@string/title_share_activity"/>
+        -->
     <item
         android:id="@+id/settings"
         android:title="@string/title_settings_activity"/>
