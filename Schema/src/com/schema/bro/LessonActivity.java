@@ -60,9 +60,18 @@ public class LessonActivity extends Activity implements OnClickListener{
 						spinny.setSelection(lesson.getWeekdayValue() - 2);
 						startTimePicker.init(lesson.getStartHour(), lesson.getStartMinute());
 						endTimePicker.init(lesson.getEndHour(), lesson.getEndMinute());
-						((EditText) findViewById(R.id.editName)).setText(lesson.getName());
-						((EditText) findViewById(R.id.editRoom)).setText(lesson.getRoom());
-						((EditText) findViewById(R.id.editTeacher)).setText(lesson.getMaster());
+						String tempText = lesson.getName();
+						if(tempText.equals(" "))
+							tempText = "";
+						((EditText) findViewById(R.id.editName)).setText(tempText);
+						tempText = lesson.getRoom();
+						if(tempText.equals(" "))
+							tempText = "";
+						((EditText) findViewById(R.id.editRoom)).setText(tempText);
+						tempText = lesson.getMaster();
+						if(tempText.equals(" "))
+							tempText = "";
+						((EditText) findViewById(R.id.editTeacher)).setText(tempText);
 						val = lesson.getImage();
 						ID = lesson.getID();
 					}catch(Exception ex){}
