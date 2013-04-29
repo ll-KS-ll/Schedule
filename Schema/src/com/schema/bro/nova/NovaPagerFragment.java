@@ -56,6 +56,11 @@ public class NovaPagerFragment extends Fragment {
 	}
 
 	private void loadImages(){
+		for (int i = 0; i < 5; i++) {
+			NovaFragment novaFrag = adapter.getFragment(i);
+			novaFrag.notifyDownload();
+		}
+		
 		DisplayMetrics metrics = new DisplayMetrics();
 		getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
 		int screenWidth = metrics.widthPixels; 
