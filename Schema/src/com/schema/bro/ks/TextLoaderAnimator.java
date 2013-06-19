@@ -64,7 +64,11 @@ public class TextLoaderAnimator {
 		createNewAnimation(text);
 	}
 	
-	public BitmapDrawable getDrawableLoadingFrame(String text, int frame){
+	public BitmapDrawable getImage(){
+		return (BitmapDrawable) imageView.getDrawable().getCurrent();
+	}
+	
+	private BitmapDrawable getDrawableLoadingFrame(String text, int frame){
 		final float densityMultiplier = context.getResources().getDisplayMetrics().density;
 		final float scaledTextSize = textSize * densityMultiplier;
 		
