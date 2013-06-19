@@ -35,18 +35,32 @@ public class ManageBluetoothConnection extends Thread {
     }
  
     public void run() {
-    	byte[] buffer = new byte[4096];  // buffer store for the stream (4KB)
-        int bytes; // bytes returned from read()
+    	byte[] buffer = new byte[1024]; 
+        int bytes, totalBytes = 0; // bytes returned from read()
         
         // Keep listening to the InputStream until an exception occurs
         while (true) {
             try {
             	// Read from the InputStream
                 bytes = mmInStream.read(buffer);
-                byte[] readableBytes = new byte[bytes];
-                System.arraycopy(buffer, 0, readableBytes, 0, bytes);
-                String data = new String(readableBytes);
-                Log.e("Bluetooth", bytes + " bytes received");
+                byte[] byteArray = new byte[bytes];
+                System.arraycopy(buffer, 0, byteArray, 0, bytes);
+                String trans = new String(byteArray);
+                int transactions = Integer.parseInt(trans);
+                Log.e("Bluetooth", transactions + " transactions to receive");
+                
+                String data = "";
+                while(transactions > 0){
+                	bytes = mmInStream.read(buffer);
+                	totalBytes += bytes;
+                	byte[] readableBytes = new byte[bytes];
+                    System.arraycopy(buffer, 0, readableBytes, 0, bytes);
+                    String tempData = new String(readableBytes);
+                    data += tempData;
+                    transactions--;
+                }
+                Log.e("Bluetooth", totalBytes + " bytes received");
+                
                 Schedule database = new Schedule(context);
                 database.addSchedule(data);
                 
@@ -60,11 +74,34 @@ public class ManageBluetoothConnection extends Thread {
     }
  
     /* Call this from the main activity to send data to the remote device */
-    public void write(byte[] bytes) {
+    public void write(byte[] data) {
         try {
-            mmOutStream.write(bytes, 0, bytes.length);
+            int bytes = data.length;
+            double dBytes = bytes;
+        	int transactions = (int) Math.ceil(dBytes/1024);
+        	Log.e("Bluetooth", transactions + " transactions to send.");
+        	String trans = String.valueOf(transactions);
+        	mmOutStream.write(trans.getBytes());
             mmOutStream.flush();
-        } catch (IOException e) { }
+        	
+            int sent = 0;
+            while(transactions > sent){
+            	Log.e("Bluetooth", "Sent: " + sent);
+            	Log.e("Bluetooth", "Check: " + (bytes - 1024*sent));
+            	if(bytes - 1024*sent >= 1024)
+            		mmOutStream.write(data, 1024*sent, 1024);
+            	else
+            		mmOutStream.write(data, 1024*sent, bytes - 1024*sent);
+            	mmOutStream.flush();
+            	sent++;
+            	Thread.sleep(10);
+            }
+            Log.e("Bluetooth", bytes + " bytes sent.");
+            Log.e("Bluetooth", sent + " transactions sent.");
+            
+        } catch (IOException e) { } catch (InterruptedException e) {
+			e.printStackTrace();
+		}
     }
  
     /* Call this from the main activity to shutdown the connection */
