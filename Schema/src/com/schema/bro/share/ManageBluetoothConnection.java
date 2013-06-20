@@ -43,9 +43,11 @@ public class ManageBluetoothConnection extends Thread {
             try {
             	// Read from the InputStream
                 bytes = mmInStream.read(buffer);
+                Log.e("Bluetooth", bytes + " bytes to receive");
                 byte[] byteArray = new byte[bytes];
                 System.arraycopy(buffer, 0, byteArray, 0, bytes);
                 String trans = new String(byteArray);
+                Log.e("Bluetooth", trans + " transactions to receive");
                 int transactions = Integer.parseInt(trans);
                 Log.e("Bluetooth", transactions + " transactions to receive");
                 
@@ -84,12 +86,10 @@ public class ManageBluetoothConnection extends Thread {
         	mmOutStream.write(trans.getBytes());
             mmOutStream.flush();
         	
-            Thread.sleep(25);
+            Thread.sleep(55);
             
             int sent = 0;
             while(transactions > sent){
-            	Log.e("Bluetooth", "Sent: " + sent);
-            	Log.e("Bluetooth", "Check: " + (bytes - 1024*sent));
             	if(bytes - 1024*sent >= 1024)
             		mmOutStream.write(data, 1024*sent, 1024);
             	else

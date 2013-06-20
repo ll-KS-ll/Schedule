@@ -138,9 +138,10 @@ public class ShareSchedule extends DialogFragment implements OnItemClickListener
 	
 	@Override
 	public void onClick(View view){
-		if(mBluetoothAdapter != null)
-			if(mBluetoothAdapter.isEnabled() && !mBluetoothAdapter.isDiscovering())
-				mBluetoothAdapter.startDiscovery();
+		if(!connected && !connecting)
+			if(mBluetoothAdapter != null)
+				if(mBluetoothAdapter.isEnabled() && !mBluetoothAdapter.isDiscovering())
+					mBluetoothAdapter.startDiscovery();
 	}
 	
 	@Override
