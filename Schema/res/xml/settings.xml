@@ -11,6 +11,7 @@
             android:summary="Ändra vilken typ av schema som visas när appen startas"
             android:title="Start schema" />
 
+        <!-- No support for notifications.
         <CheckBoxPreference
             android:defaultValue="true"
             android:enabled="false"
@@ -24,6 +25,7 @@
             android:key="notification_sound"
             android:summary="Spela upp ett ljud när nästa lektion börjar"
             android:title="Notifications ljud" />
+        -->
         
         <Preference
             android:key="clear"
