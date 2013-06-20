@@ -32,7 +32,6 @@ public class ReceiveSchedule extends DialogFragment{
 	private View view;
 	private TextLoaderAnimator animator;
 	
-	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 	    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -58,6 +57,7 @@ public class ReceiveSchedule extends DialogFragment{
 	@Override
 	public void onResume(){
 		super.onResume();
+		getDialog().setCanceledOnTouchOutside(false);
 		
 		animator.start();
 		
@@ -157,6 +157,10 @@ public class ReceiveSchedule extends DialogFragment{
 	            	connectionManager = new ManageBluetoothConnection(context, socket);
 	                connectionManager.start();
 	                
+	                try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) { }
+	                
 	                while(connectionManager.isAlive()){
 	                	try {
 							Thread.sleep(5);
@@ -166,6 +170,10 @@ public class ReceiveSchedule extends DialogFragment{
 	                try {
 						mmServerSocket.close();
 					} catch (IOException e) { }
+	                
+	                try {
+	     	    	   Thread.sleep(100);
+	     	       } catch (InterruptedException e) { }
 	                
 	                onSent();
 	                break;

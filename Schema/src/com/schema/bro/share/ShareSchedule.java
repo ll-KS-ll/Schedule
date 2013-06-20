@@ -2,9 +2,7 @@ package com.schema.bro.share;
 
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.Set;
 import java.util.UUID;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -27,7 +25,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.schema.bro.R;
 import com.schema.bro.ShareActivity;
 import com.schema.bro.ks.Schedule;
@@ -78,6 +75,7 @@ public class ShareSchedule extends DialogFragment implements OnItemClickListener
 	@Override
 	public void onResume(){
 		super.onResume();
+		getDialog().setCanceledOnTouchOutside(false);
 		
 		if(mBluetoothAdapter == null)
 			mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -93,20 +91,8 @@ public class ShareSchedule extends DialogFragment implements OnItemClickListener
 
 	private void connectBluetooth() {
 		connected = true;
-		
 		context = getActivity();
 		
-		Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-		// If there are paired devices
-		if (pairedDevices.size() > 0) {
-			// Loop through paired devices
-			for (BluetoothDevice device : pairedDevices) {
-				adapter.add(device.getName());
-				addresses.add(device.getAddress());
-				adapter.notifyDataSetChanged();
-			}
-		}
-
 		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
 		filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
 		filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
@@ -240,6 +226,10 @@ public class ShareSchedule extends DialogFragment implements OnItemClickListener
 	       connectionManager = new ManageBluetoothConnection(context, mmSocket);
 	       Schedule database = new Schedule(context);
 	       connectionManager.write(database.getSchedule());
+	       
+	       try {
+	    	   Thread.sleep(100);
+	       } catch (InterruptedException e) { }
 	       
 	       this.cancel();
 	       onSent();

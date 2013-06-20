@@ -84,6 +84,8 @@ public class ManageBluetoothConnection extends Thread {
         	mmOutStream.write(trans.getBytes());
             mmOutStream.flush();
         	
+            Thread.sleep(25);
+            
             int sent = 0;
             while(transactions > sent){
             	Log.e("Bluetooth", "Sent: " + sent);
