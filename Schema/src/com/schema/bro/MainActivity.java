@@ -11,7 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import com.schema.bro.cards.CardPagerFragment;
+import com.schema.bro.cards.CardLayoutFragment;
 import com.schema.bro.ks.Customizer;
 import com.schema.bro.nova.NovaOnItemSelectedListener;
 import com.schema.bro.nova.NovaPagerFragment;
@@ -97,7 +97,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 		case R.id.add:
 			intent = new Intent(this, LessonActivity.class);
 			intent.putExtra("edit", false);
-			CardPagerFragment frag = (CardPagerFragment) fragment;
+			CardLayoutFragment frag = (CardLayoutFragment) fragment;
 			intent.putExtra("day", frag.getSelectedDay());
 			break;
 		case R.id.share:
@@ -119,7 +119,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 	public boolean onNavigationItemSelected(int position, long id) {
 		switch(position){
 		case SCHEDULE:
-			fragment = new CardPagerFragment();
+			fragment = new CardLayoutFragment();
 			break;
 		case NOVA:
 			fragment = new NovaPagerFragment();
@@ -134,7 +134,5 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 		invalidateOptionsMenu();
 		return true;
 	}
-	
-	
 
 }

@@ -10,6 +10,12 @@ import android.widget.LinearLayout;
 import com.schema.bro.R;
 import com.schema.bro.ks.Lesson;
 
+/** A custom widget layout that holds cards. It's used in the layout xml files as a widget.
+ * This is not an activity or a stand alone screen used in code. 
+ *	<br> 
+ * @author k-s
+ *
+ */
 public class CardLayout extends LinearLayout implements OnGlobalLayoutListener {
 
 	public CardLayout(Context context, AttributeSet attrs) {

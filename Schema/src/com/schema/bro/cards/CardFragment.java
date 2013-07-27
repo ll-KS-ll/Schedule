@@ -2,6 +2,7 @@ package com.schema.bro.cards;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,7 @@ public class CardFragment extends Fragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		final View view = inflater.inflate(R.layout.card_holder, container, false);
-		
 		cl = (CardLayout) view.findViewById(R.id.card_view);
-		
 		return view;
 	}
 	
@@ -33,13 +32,20 @@ public class CardFragment extends Fragment{
 
 	public void loadCards(Lesson[] lessons){
 		this.lessons = lessons;
+		showAllCards();
+		
+		if(lessons == null)
+			Log.e("CardFragment:loadCards", "Loaded lessons are null");
 		// checkIfToShowNextLessonCard();
 	}
 	
 	private void showAllCards(){
-		clearAllCards();
-		for(int n=0; n<lessons.length; n++)
-			cl.addCard(lessons[n]);
+		if(lessons != null && cl != null){
+			clearAllCards();
+			for(int n=0; n<lessons.length; n++)
+				cl.addCard(lessons[n]);
+		}else
+			Log.e("CardFragment:showAllCards", "Lessons and/or CardLayout view are null");
 	}
 	
 	/** Add a new card
@@ -53,7 +59,8 @@ public class CardFragment extends Fragment{
 	}
 	
 	public int getDay(){
-		return getArguments().getInt(CardPagerAdapter.ARG_SECTION_NUMBER);
+		/*return getArguments().getInt(CardPagerAdapter.ARG_SECTION_NUMBER);*/
+		return 1;
 	}
 	
 	/*
