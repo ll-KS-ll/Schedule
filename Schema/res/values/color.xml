@@ -20,4 +20,7 @@
     <color name="orange">#FFBB33</color>
     <color name="orange_dark">#FF8800</color>
 
+    <color name="lighter_gray">#ddd</color>
+    <color name="darker_gray">#aaa</color>
+    
 </resources>

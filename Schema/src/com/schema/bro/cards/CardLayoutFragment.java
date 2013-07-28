@@ -24,7 +24,6 @@ public class CardLayoutFragment extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		final View rootView = inflater.inflate(R.layout.card_layout, container, false);
 		database = new Schedule(getActivity());
-		
 		pager = (ViewPager) rootView.findViewById(R.id.pager);
 		if(pager == null)
 			tabletLayout = true;
@@ -53,16 +52,15 @@ public class CardLayoutFragment extends Fragment{
 		database.update();
 		
 		if(tabletLayout){
-			CardFragment frag1 = (CardFragment) this.getFragmentManager().findFragmentById(R.id.fragment1);
-			frag1.loadCards(database.getLessons(Calendar.MONDAY));
-			CardFragment frag2 = (CardFragment) this.getFragmentManager().findFragmentById(R.id.fragment2);
-			frag2.loadCards(database.getLessons(Calendar.TUESDAY));
-			CardFragment frag3 = (CardFragment) this.getFragmentManager().findFragmentById(R.id.fragment3);
-			frag3.loadCards(database.getLessons(Calendar.WEDNESDAY));
-			CardFragment frag4 = (CardFragment) this.getFragmentManager().findFragmentById(R.id.fragment4);
-			frag4.loadCards(database.getLessons(Calendar.THURSDAY));
-			CardFragment frag5 = (CardFragment) this.getFragmentManager().findFragmentById(R.id.fragment5);
-			frag5.loadCards(database.getLessons(Calendar.FRIDAY));
+			CardFragment[] cardFragments = new CardFragment[5];
+			
+			cardFragments[0] = (CardFragment) getFragmentManager().findFragmentById(R.id.fragment1);
+			cardFragments[1] = (CardFragment) getFragmentManager().findFragmentById(R.id.fragment2);
+			cardFragments[2] = (CardFragment) getFragmentManager().findFragmentById(R.id.fragment3);
+			cardFragments[3] = (CardFragment) getFragmentManager().findFragmentById(R.id.fragment4);
+			cardFragments[4] = (CardFragment) getFragmentManager().findFragmentById(R.id.fragment5);			
+			for(int n=0; n<5; n++)
+				cardFragments[n].loadCards(database.getLessons(n+2));
 		}else{
 			for(int n=0; n<5; n++){
 				Lesson[] lessons = database.getLessons(n+2);
@@ -73,7 +71,7 @@ public class CardLayoutFragment extends Fragment{
 	
 	public int getSelectedDay(){
 		if(tabletLayout)
-			return Calendar.MONDAY;
+			return 0;
 		else	
 			return pager.getCurrentItem();
 	}

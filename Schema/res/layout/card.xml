@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardWidget"
     style="@style/nowCardStyle"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/cardWidget">
+    tools:ignore="HardcodedText" >
 
     <ImageView
         android:id="@+id/cardLessonImage"
@@ -22,11 +22,11 @@
         android:layout_alignTop="@+id/cardLessonImage"
         android:layout_marginLeft="18dp"
         android:layout_toRightOf="@+id/cardLessonImage"
+        android:singleLine="true"
         android:text="Programmering C"
         android:textColor="#707070"
         android:textSize="@dimen/lessonText"
-        android:textStyle="bold"
-        android:singleLine="true" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/cardTime"
@@ -37,7 +37,7 @@
         android:text="-"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#707070"
-        android:textSize="@dimen/timeText"/>
+        android:textSize="@dimen/timeText" />
 
     <TextView
         android:id="@+id/cardEndTime"
@@ -48,7 +48,7 @@
         android:text="13:30"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#707070"
-        android:textSize="@dimen/timeText"/>
+        android:textSize="@dimen/timeText" />
 
     <TextView
         android:id="@+id/cardTeacher"
@@ -56,10 +56,10 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/cardLessonImage"
         android:layout_alignLeft="@+id/cardLessonText"
+        android:singleLine="true"
         android:text="Anders Andersson"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#707070" 
-        android:singleLine="true"/>
+        android:textColor="#707070" />
 
     <TextView
         android:id="@+id/cardRoom"
@@ -69,10 +69,10 @@
         android:layout_alignBottom="@+id/cardEndTime"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
+        android:maxLength="10"
         android:text="E3"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#707070"
-        android:maxLength="10" />
+        android:textColor="#707070" />
 
     <TextView
         android:id="@+id/cardStartTime"
@@ -84,7 +84,7 @@
         android:text="12:00"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#707070"
-        android:textSize="@dimen/timeText"/>
+        android:textSize="@dimen/timeText" />
 
     <TextView
         android:id="@+id/cardTimeTo"
@@ -92,8 +92,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/cardRoom"
         android:layout_alignRight="@+id/cardRoom"
-        android:textColor="#FF0000"
         android:text=""
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#FF0000" />
 
 </RelativeLayout>

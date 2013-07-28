@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+         Customize dimensions originally defined in res/values/dimens.xml (such as
+         screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
+    -->
+
+    <style name="nowCardStyle" parent="android:Widget.TextView">
+        <item name="android:background">@drawable/search_bg_shadow</item>
+        <item name="android:minHeight">150dp</item>
+        <item name="android:layout_width">380dp</item>
+    	<item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/gray</item>
+    </style>
+
+</resources>

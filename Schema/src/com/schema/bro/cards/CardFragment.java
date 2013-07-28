@@ -59,8 +59,7 @@ public class CardFragment extends Fragment{
 	}
 	
 	public int getDay(){
-		/*return getArguments().getInt(CardPagerAdapter.ARG_SECTION_NUMBER);*/
-		return 1;
+		return getArguments().getInt(CardPagerAdapter.ARG_SECTION_NUMBER);
 	}
 	
 	/*
