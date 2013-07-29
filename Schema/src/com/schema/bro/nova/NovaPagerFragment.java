@@ -32,7 +32,7 @@ public class NovaPagerFragment extends Fragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		final View rootView = inflater.inflate(R.layout.card_layout, container, false);
+		final View rootView = inflater.inflate(R.layout.nova_layout, container, false);
 
 		adapter = new NovaPagerAdapter(getFragmentManager());
 

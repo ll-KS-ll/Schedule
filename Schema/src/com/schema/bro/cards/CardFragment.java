@@ -2,10 +2,10 @@ package com.schema.bro.cards;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.schema.bro.R;
 import com.schema.bro.ks.Lesson;
 
@@ -33,9 +33,6 @@ public class CardFragment extends Fragment{
 	public void loadCards(Lesson[] lessons){
 		this.lessons = lessons;
 		showAllCards();
-		
-		if(lessons == null)
-			Log.e("CardFragment:loadCards", "Loaded lessons are null");
 		// checkIfToShowNextLessonCard();
 	}
 	
@@ -44,8 +41,7 @@ public class CardFragment extends Fragment{
 			clearAllCards();
 			for(int n=0; n<lessons.length; n++)
 				cl.addCard(lessons[n]);
-		}else
-			Log.e("CardFragment:showAllCards", "Lessons and/or CardLayout view are null");
+		}
 	}
 	
 	/** Add a new card

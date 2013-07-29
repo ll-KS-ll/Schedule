@@ -129,12 +129,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 			break;
 		default: return true;
 		}
-		
-		/*	Try this
-			Add all frags at start up.
-		
-			Then replace between them..
-		*/
+
 		getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 		state = getActionBar().getSelectedNavigationIndex();
 		invalidateOptionsMenu();

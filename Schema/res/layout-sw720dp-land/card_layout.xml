@@ -97,13 +97,13 @@
             android:orientation="horizontal" >
 
             <fragment
-                android:id="@+id/fragment1"
+                android:id="@+id/cardFragment1"
+                android:name="com.schema.bro.cards.CardFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                class="com.schema.bro.cards.CardFragment"
-                tools:layout="@layout/card_holder" />
+                android:tag="card_fragment_1" />
 
             <View
                 android:layout_width="2dp"
@@ -111,13 +111,13 @@
                 android:background="@color/gray" />
 
             <fragment
-                android:id="@+id/fragment2"
+                android:id="@+id/cardFragment2"
+                android:name="com.schema.bro.cards.CardFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                class="com.schema.bro.cards.CardFragment"
-                tools:layout="@layout/card_holder" />
+                android:tag="card_fragment_2" />
 
             <View
                 android:layout_width="2dp"
@@ -125,12 +125,13 @@
                 android:background="@color/gray" />
 
             <fragment
-                android:id="@+id/fragment3"
+                android:id="@+id/cardFragment3"
+                android:name="com.schema.bro.cards.CardFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                class="com.schema.bro.cards.CardFragment" />
+                android:tag="card_fragment_3" />
 
             <View
                 android:layout_width="2dp"
@@ -138,12 +139,13 @@
                 android:background="@color/gray" />
 
             <fragment
-                android:id="@+id/fragment4"
+                android:id="@+id/cardFragment4"
+                android:name="com.schema.bro.cards.CardFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                class="com.schema.bro.cards.CardFragment" />
+                android:tag="card_fragment_4" />
 
             <View
                 android:layout_width="2dp"
@@ -151,12 +153,13 @@
                 android:background="@color/gray" />
 
             <fragment
-                android:id="@+id/fragment5"
+                android:id="@+id/cardFragment5"
+                android:name="com.schema.bro.cards.CardFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                class="com.schema.bro.cards.CardFragment" />
+                android:tag="card_fragment_5" />
         </LinearLayout>
     </LinearLayout>
 

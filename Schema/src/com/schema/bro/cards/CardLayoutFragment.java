@@ -54,11 +54,11 @@ public class CardLayoutFragment extends Fragment{
 		if(tabletLayout){
 			CardFragment[] cardFragments = new CardFragment[5];
 			
-			cardFragments[0] = (CardFragment) getFragmentManager().findFragmentById(R.id.fragment1);
-			cardFragments[1] = (CardFragment) getFragmentManager().findFragmentById(R.id.fragment2);
-			cardFragments[2] = (CardFragment) getFragmentManager().findFragmentById(R.id.fragment3);
-			cardFragments[3] = (CardFragment) getFragmentManager().findFragmentById(R.id.fragment4);
-			cardFragments[4] = (CardFragment) getFragmentManager().findFragmentById(R.id.fragment5);			
+			cardFragments[0] = (CardFragment) getFragmentManager().findFragmentById(R.id.cardFragment1);
+			cardFragments[1] = (CardFragment) getFragmentManager().findFragmentById(R.id.cardFragment2);
+			cardFragments[2] = (CardFragment) getFragmentManager().findFragmentById(R.id.cardFragment3);
+			cardFragments[3] = (CardFragment) getFragmentManager().findFragmentById(R.id.cardFragment4);
+			cardFragments[4] = (CardFragment) getFragmentManager().findFragmentById(R.id.cardFragment5);			
 			for(int n=0; n<5; n++)
 				cardFragments[n].loadCards(database.getLessons(n+2));
 		}else{
@@ -69,6 +69,23 @@ public class CardLayoutFragment extends Fragment{
 		}
 	}
 	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		
+		if(tabletLayout && !getActivity().isFinishing()){
+			CardFragment[] cardFragments = new CardFragment[5];
+			
+			cardFragments[0] = (CardFragment) getFragmentManager().findFragmentById(R.id.cardFragment1);
+			cardFragments[1] = (CardFragment) getFragmentManager().findFragmentById(R.id.cardFragment2);
+			cardFragments[2] = (CardFragment) getFragmentManager().findFragmentById(R.id.cardFragment3);
+			cardFragments[3] = (CardFragment) getFragmentManager().findFragmentById(R.id.cardFragment4);
+			cardFragments[4] = (CardFragment) getFragmentManager().findFragmentById(R.id.cardFragment5);			
+			for(int n=0; n<5; n++)
+				getFragmentManager().beginTransaction().remove(cardFragments[n]).commitAllowingStateLoss();
+		}
+	}
+
 	public int getSelectedDay(){
 		if(tabletLayout)
 			return 0;

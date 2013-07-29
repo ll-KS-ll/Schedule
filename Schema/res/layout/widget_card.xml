@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardWidget"
     style="@style/nowCardStyle"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    tools:ignore="HardcodedText" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp" >
+        android:layout_marginTop="5dp"
+        android:layout_weight="1" >
 
         <ImageView
             android:id="@+id/cardLessonImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="Lesson icon"
             android:src="@drawable/pic9" />
 
         <LinearLayout
@@ -31,10 +35,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
+                android:singleLine="true"
                 android:text="Programmering C"
                 android:textColor="#707070"
-                android:textSize="22dp"
-                android:singleLine="true"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -44,8 +48,7 @@
                 android:layout_gravity="left"
                 android:text="Anders Andersson | E2"
                 android:textColor="#707070"
-                android:textSize="16dp" />
-
+                android:textSize="16sp" />
         </LinearLayout>
 
         <RelativeLayout
@@ -59,50 +62,52 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:background="@null"
+                android:contentDescription="Refresh button"
                 android:src="@drawable/navigation_refresh" />
-
         </RelativeLayout>
-
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_weight="0.28" >
+        android:layout_margin="10dp" >
 
         <TextView
             android:id="@+id/cardTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.13"
+            android:layout_gravity="left"
+            android:gravity="left"
             android:text="12:00-13:00"
             android:textColor="#707070"
-            android:textSize="22dp"
+            android:textSize="22sp"
             android:textStyle="italic" />
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" >
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/cardTimeLeftText"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.45"
-            android:gravity="right"
-            android:text="Tid kvar: "
-            android:textSize="12dp"
-            android:textColor="#707070" />
+            android:layout_gravity="bottom|right"
+            android:gravity="right" >
 
-        <TextView
-            android:id="@+id/cardTimeLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="18dp"
-            android:text="0" />
+            <TextView
+                android:id="@+id/cardTimeLeftText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:gravity="right"
+                android:text="Tid kvar: "
+                android:textColor="#707070"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/cardTimeLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:gravity="right"
+                android:text="1min"
+                android:textSize="18sp" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
