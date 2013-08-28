@@ -73,7 +73,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 
 			ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(
 					getActionBar().getThemedContext(), android.R.layout.simple_list_item_1, getResources()
-							.getStringArray(R.array.novaSpinner));
+							.getStringArray(R.array.class_list));
 
 			spinClass.setAdapter(spinnerAdapter);
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);

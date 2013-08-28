@@ -12,57 +12,17 @@
     <string name="action_add">Add</string>
     <string name="ok">Klar</string>
     <string name="cancel">Avbryt</string>
-    <string name="title_section1">Måndag</string>
-    <string name="title_section2">Tisdag</string>
-    <string name="title_section3">Onsdag</string>
-    <string name="title_section4">Torsdag</string>
-    <string name="title_section5">Fredag</string>
+    <string name="title_section1">@string/monday</string>
+    <string name="title_section2">@string/tuesday</string>
+    <string name="title_section3">@string/wednesday</string>
+    <string name="title_section4">@string/thursday</string>
+    <string name="title_section5">@string/friday</string>
     <string name="title_add_activity">Lägg till lektion</string>
+    <!-- Double -->
     <string name="title_share_activity">Dela scheman</string>
+    <string name="title_activity_share">Dela schema</string>
+    <!-- Double -->
     <string name="title_settings_activity">Inställningar</string>
     <string name="widget_text">Inga lektioner hittades</string>
-
-    <string-array name="labelMenu">
-        <item>Schema</item>
-        <item>Nova Software</item>
-        <item>Skolmat</item>
-    </string-array>
-    <string-array name="novaSpinner">
-        <item>BF1</item>
-        <item>BF2</item>
-        <item>BF3</item>
-        <item>EC3</item>
-        <item>EE1</item>
-        <item>EE2</item>
-        <item>EK1</item>
-        <item>EK2</item>
-        <item>ES1</item>
-        <item>ES2</item>
-        <item>ES3</item>
-        <item>HA1</item>
-        <item>HA2</item>
-        <item>HP3</item>
-        <item>HU2</item>
-        <item>HVLÄR3</item>
-        <item>IM</item>
-        <item>IM1</item>
-        <item>NA1</item>
-        <item>NA2</item>
-        <item>NV3</item>
-        <item>PRE</item>
-        <item>SA1A</item>
-        <item>SA2B</item>
-        <item>SA2</item>
-        <item>SMAS1</item>
-        <item>SMAS3</item>
-        <item>SMAS4</item>
-        <item>SP3</item>
-        <item>TE1</item>
-        <item>TE2</item>
-        <item>TE3</item>
-        <item>VUX</item>
-    </string-array>
-
-    <string name="title_activity_share">Dela schema</string>
 
 </resources>

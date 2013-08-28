@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.Calendar;
 
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -22,8 +23,8 @@ import com.schema.bro.R;
 
 public class NovaPagerFragment extends Fragment {
 
-	private static final String URL_FIRST = "http://www.novasoftware.se/ImgGen/schedulegenerator.aspx?format=png&schoolid=80740/sv-se&type=1&id={";
-	private static final String URL_SECOND = "}&period=&week=&mode=0&printer=0&colors=32&head=0&clock=0&foot=0&";
+	private static final String URL_FIRST = "http://www.novasoftware.se/ImgGen/schedulegenerator.aspx?format=png&schoolid=80740/sv-se&type=1&id=";
+	private static final String URL_SECOND = "&period=&week=&mode=0&printer=0&colors=32&head=0&clock=0&foot=0&";
 	private static final String URL_THIRD = "&maxwidth=2000&maxheight=2000.png";
 
 	private NovaPagerAdapter adapter;
@@ -65,7 +66,9 @@ public class NovaPagerFragment extends Fragment {
 		int screenHeight = metrics.heightPixels;
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		String classURL = prefs.getString("class_url", NovaOnItemSelectedListener.BF1);
+		TypedArray classIDs = getResources().obtainTypedArray(R.array.class_ids);
+		String classURL = prefs.getString("class_url", classIDs.getString(0));
+		classIDs.recycle();
 		
 		String url1 = assembleURL(classURL, 0, screenWidth, screenHeight);
 		String url2 = assembleURL(classURL, 1, screenWidth, screenHeight);
