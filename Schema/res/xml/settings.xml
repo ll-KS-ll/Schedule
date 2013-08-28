@@ -11,7 +11,8 @@
             android:summary="Ändra vilken typ av schema som visas när appen startas"
             android:title="Start schema" />
 
-        <!-- No support for notifications.
+        <!--
+        No support for notifications.
         <CheckBoxPreference
             android:defaultValue="true"
             android:enabled="false"
@@ -26,13 +27,12 @@
             android:summary="Spela upp ett ljud när nästa lektion börjar"
             android:title="Notifications ljud" />
         -->
-        
+
         <Preference
             android:key="clear"
             android:summary="Ta bort alla lektioner ifrån schemat"
             android:title="Rensa schema" />
     </PreferenceCategory>
-    
     <PreferenceCategory android:title="Utseende" >
         <ListPreference
             android:defaultValue="0"
@@ -42,7 +42,6 @@
             android:key="app_theme"
             android:summary="Ändra appens utseende"
             android:title="App tema" />
-        
         <ListPreference
             android:defaultValue="0"
             android:dialogTitle="Välj utseende"
@@ -51,24 +50,22 @@
             android:key="card_layout"
             android:summary="Ändra utsesndet på lektions korten"
             android:title="Kort utseende" />
-        
         <ListPreference
             android:defaultValue="0"
             android:dialogTitle="Välj utseende"
-             android:enabled="false"
+            android:enabled="false"
             android:entries="@array/widget_list"
             android:entryValues="@array/widget_list_values"
             android:key="widget_layout"
             android:summary="Ändra utseendet på hemskärms widgeten"
             android:title="Widget utseendet" />
     </PreferenceCategory>
-   
     <PreferenceCategory android:title="Om" >
         <Preference
             android:summary="Filip Brolund\nVictor Karlsson Sehlin"
             android:title="Skapare" />
         <Preference
-            android:summary="1.0.0"
+            android:summary="1.1.0"
             android:title="Version" />
         <Preference
             android:summary="fbrolund@gmail.com\nkarlssonsehlin@gmail.com"
