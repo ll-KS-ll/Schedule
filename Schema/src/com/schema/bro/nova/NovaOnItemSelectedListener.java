@@ -17,16 +17,18 @@ public class NovaOnItemSelectedListener implements OnItemSelectedListener {
 	}
 
 	@Override
-	public void onItemSelected(AdapterView<?> arg0, View view, int pos, long arg3) {
+	public void onItemSelected(AdapterView<?> adapter, View view, int pos, long arg3) {
 		String classURL = "not_set";
 		
-		TypedArray classIDs = view.getResources().obtainTypedArray(R.array.class_ids);
+		TypedArray classIDs = adapter.getResources().obtainTypedArray(R.array.class_ids);
 		if(classIDs.length() > pos)
 			classURL = classIDs.getString(pos);
 		classIDs.recycle();
 		
 		if(fragment.isResumed())
 			fragment.changeClass(classURL, pos);
+		else
+			fragment.notifyDownload(classURL, pos);
 	}
 
 	@Override

@@ -30,6 +30,9 @@ public class NovaPagerFragment extends Fragment {
 	private NovaPagerAdapter adapter;
 	private static final int[] days = {1, 2, 4, 8, 16};
 	
+	private boolean downloadNotified = false;
+	private String classURL = null;
+	private int pos;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +55,15 @@ public class NovaPagerFragment extends Fragment {
 			pager.setCurrentItem(4);
 
 		return rootView;
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if(downloadNotified){
+			downloadNotified = false;
+			changeClass(classURL, pos);
+		}
 	}
 
 	private void loadImages(){
@@ -91,6 +103,12 @@ public class NovaPagerFragment extends Fragment {
 		loadImages();
 	}
 
+	public void notifyDownload(String classURL, int pos){
+		downloadNotified = true;
+		this.classURL = classURL;
+		this.pos = pos;
+	}
+	
 	private class DownloadImageTask extends AsyncTask<String, Void, Bitmap[]> {
 
 		@Override

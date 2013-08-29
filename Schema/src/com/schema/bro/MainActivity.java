@@ -79,7 +79,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 			int pos = prefs.getInt("class_spinner_pos", 0);
 			spinClass.setSelection(pos);
-			if(fragment != null)
+			if(fragment != null && fragment instanceof NovaPagerFragment)
 				spinClass.setOnItemSelectedListener(new NovaOnItemSelectedListener(fragment));
 		}else if(state == SCHEDULE){
 			getMenuInflater().inflate(R.menu.schedule, menu);
