@@ -1,5 +1,6 @@
 package com.schema.bro.nova;
 
+import android.animation.Animator;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -64,13 +65,30 @@ public class NovaFragment extends Fragment {
 			final ImageView imageView = (ImageView) getView().findViewById(
 					R.id.novaFragmentImageViewLoading);
 
-			imageView.animate().alpha(1).withLayer()
-					.withEndAction(new Runnable() {
-						public void run() {
-							animator.changeText("Laddar");
-						}
-					});
-			image.animate().alpha(0).withLayer();
+			if (isJellyBean()) {
+				imageView.animate().alpha(1).withLayer()
+						.withEndAction(new Runnable() {
+							public void run() {
+								animator.changeText("Laddar");
+							}
+						});
+				image.animate().alpha(0).withLayer();
+			} else {
+				Animator.AnimatorListener listener = new Animator.AnimatorListener(){
+					@Override
+					public void onAnimationCancel(Animator arg0) {}
+					@Override
+					public void onAnimationEnd(Animator arg0) {
+						animator.changeText("Laddar");
+					}
+					@Override
+					public void onAnimationRepeat(Animator arg0) {}
+					@Override
+					public void onAnimationStart(Animator arg0) {}
+				};
+				imageView.animate().alpha(1).setListener(listener);
+				image.animate().alpha(0);
+			}
 		}
 	}
 
@@ -106,8 +124,10 @@ public class NovaFragment extends Fragment {
 			return;
 		}
 
-		final ImageView image = (ImageView) getView().findViewById(R.id.novaFragmentImageViewPicture);
-		final ImageView imageView = (ImageView) getView().findViewById(R.id.novaFragmentImageViewLoading);
+		final ImageView image = (ImageView) getView().findViewById(
+				R.id.novaFragmentImageViewPicture);
+		final ImageView imageView = (ImageView) getView().findViewById(
+				R.id.novaFragmentImageViewLoading);
 		if (image != null) {
 			animator.stop();
 
@@ -120,12 +140,23 @@ public class NovaFragment extends Fragment {
 			imageView.setImageDrawable(animator.getImage());
 			image.setImageDrawable(new BitmapDrawable(getResources(), novaImage));
 
-			imageView.animate().alpha(0).withLayer();
-			image.animate().alpha(1).withLayer();
+			if (isJellyBean()) {
+				imageView.animate().alpha(0).withLayer();
+				image.animate().alpha(1).withLayer();
+			} else {
+				imageView.animate().alpha(0);
+				image.animate().alpha(1);
+			}
+
 		} else {
 			Log.e("NovaFragment", "ImageView is null");
 		}
 		ready = true;
 	}
 
+	public boolean isJellyBean() {
+		final int curVersion = android.os.Build.VERSION.SDK_INT;
+		final int minVersion = android.os.Build.VERSION_CODES.JELLY_BEAN;
+		return curVersion >= minVersion ? true : false;
+	}
 }
